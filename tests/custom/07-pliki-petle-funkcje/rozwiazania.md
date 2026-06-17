@@ -1,0 +1,77 @@
+# Arkusz 07 — rozwiązania
+
+**Zad. 1.**
+```r
+pollutantmean <- function(directory, pollutant, id = 1:332) {
+  pliki <- list.files(directory, full.names = TRUE)
+  dat <- do.call(rbind, lapply(pliki[id], read.csv))
+  mean(dat[[pollutant]], na.rm = TRUE)
+}
+round(pollutantmean("data/specdata", "sulfate", 1:10), 3)   # 4.064
+```
+**Odp.: 4,064.**
+
+**Zad. 2.**
+```r
+round(pollutantmean("data/specdata", "nitrate", 70:72), 3)  # 1.706
+```
+**Odp.: 1,706.**
+
+**Zad. 3.**
+```r
+complete <- function(directory, id = 1:332) {
+  pliki <- list.files(directory, full.names = TRUE)
+  nobs <- sapply(id, function(i) {
+    d <- read.csv(pliki[i]); sum(complete.cases(d))
+  })
+  data.frame(id = id, nobs = nobs)
+}
+complete("data/specdata", 54)        # id=54, nobs=219
+```
+**Odp.: 219.**
+
+**Zad. 4.**
+```r
+sum(complete("data/specdata", 1:10)$nobs)   # 3562
+# wektor nobs (1:10): 117 1041 243 474 402 228 442 192 275 148
+```
+**Odp.: 3562.**
+
+**Zad. 5.**
+```r
+corr <- function(directory, threshold = 0) {
+  pliki <- list.files(directory, full.names = TRUE)
+  out <- numeric(0)
+  for (f in pliki) {
+    d  <- read.csv(f)
+    dc <- d[complete.cases(d), ]
+    if (nrow(dc) > threshold) out <- c(out, cor(dc$sulfate, dc$nitrate))
+  }
+  out
+}
+length(corr("data/specdata", 150))    # 234
+```
+**Odp.: 234.**
+
+**Zad. 6.**
+```r
+length(corr("data/specdata", 400))    # 127
+length(corr("data/specdata", 1000))   # 3
+```
+**Odp.: 127 oraz 3.**
+
+**Zad. 7.**
+```r
+mean(corr("data/specdata", 150))   # ≈ 0.125 (mediana ≈ 0.095)
+```
+**Odp.: ≈ 0,125.**
+
+**Zad. 8.** → **`list.files("specdata", full.names = TRUE)`**.
+
+**Zad. 9.** → **`do.call(rbind, lista)`** (albo `dplyr::bind_rows(lista)`).
+
+**Zad. 10.** → **wektor logiczny TRUE dla wierszy bez `NA`**.
+
+**Zad. 11.** → **`microbenchmark()`** (`profvis` profiluje fragmenty jednej funkcji).
+
+**Zad. 12.** → **wybranie wierszy bez `NA`** (żeby `cor()` dostało pełne pary).

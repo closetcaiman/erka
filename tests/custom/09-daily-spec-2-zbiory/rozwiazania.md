@@ -1,0 +1,84 @@
+# Arkusz 09 — rozwiązania
+
+```r
+library(readr); library(readxl); library(dplyr); library(tidyr)
+spec  <- read_csv("data/daily_SPEC_2014.csv.bz2")   # ~2,1 mln wierszy
+sites <- read_excel("data/aqs_sites.xlsx")
+# wspólny klucz całkowity (zera wiodące "06" -> 6):
+spec  <- spec  %>% mutate(skey = as.integer(`State Code`),  ckey = as.integer(`County Code`),  nkey = as.integer(`Site Num`))
+sites <- sites %>% mutate(skey = as.integer(`State Code`),  ckey = as.integer(`County Code`),  nkey = as.integer(`Site Number`))
+```
+
+**Zad. 1.** → **0.003960**
+```r
+spec %>% filter(`State Name` == "Wisconsin", `Parameter Name` == "Bromine PM2.5 LC") %>%
+  summarise(mean(`Arithmetic Mean`, na.rm = TRUE))
+```
+
+**Zad. 2.** → **OC CSN Unadjusted PM2.5 LC TOT** (≈ 67,8)
+```r
+spec %>% filter(`Parameter Name` %in%
+        c("Sulfur PM2.5 LC","OC CSN Unadjusted PM2.5 LC TOT","EC2 PM2.5 LC","Sodium PM2.5 LC")) %>%
+  group_by(`Parameter Name`) %>% summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE)) %>% arrange(desc(m))
+```
+(W całym zbiorze najwyższe są parametry meteo, np. ciśnienie — dlatego ograniczamy się do
+składników z listy odpowiedzi.)
+
+**Zad. 3.** → **39 / 081 / 0017** (≈ 3,18)
+```r
+spec %>% filter(`Parameter Name` == "Sulfate PM2.5 LC") %>%
+  group_by(`State Code`, `County Code`, `Site Num`) %>%
+  summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE), .groups = "drop") %>% arrange(desc(m)) %>% head(1)
+```
+
+**Zad. 4.** → **0.018567** (CA 0,198 − AZ 0,179)
+```r
+q4 <- spec %>% filter(`Parameter Name` == "EC PM2.5 LC TOR",
+                      `State Name` %in% c("California","Arizona")) %>%
+  group_by(`State Name`) %>% summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE))
+abs(diff(q4$m))
+```
+
+**Zad. 5.** → **0.4300**
+```r
+spec %>% filter(`Parameter Name` == "OC PM2.5 LC TOR", Longitude < -100) %>%
+  summarise(median(`Arithmetic Mean`, na.rm = TRUE))
+```
+
+**Zad. 6.** → **3527**
+```r
+sites %>% filter(`Land Use` == "RESIDENTIAL", `Location Setting` == "SUBURBAN") %>% nrow()
+```
+
+**Zad. 7.** → **0.6100** (kluczowe: **złączenie** pomiarów z metadanymi)
+```r
+rs <- sites %>% filter(`Land Use` == "RESIDENTIAL", `Location Setting` == "SUBURBAN") %>%
+  distinct(skey, ckey, nkey)
+spec %>% semi_join(rs, by = c("skey","ckey","nkey")) %>%
+  filter(`Parameter Name` == "EC PM2.5 LC TOR", Longitude >= -100) %>%
+  summarise(median(`Arithmetic Mean`, na.rm = TRUE))
+```
+`semi_join` zostawia wiersze `spec`, które mają parę w `rs` (nie dokleja kolumn).
+
+**Zad. 8.** → **luty** (miesiąc 2; ≈ 2,02)
+```r
+com <- sites %>% filter(`Land Use` == "COMMERCIAL") %>% distinct(skey, ckey, nkey)
+spec %>% semi_join(com, by = c("skey","ckey","nkey")) %>%
+  filter(`Parameter Name` == "Sulfate PM2.5 LC") %>%
+  mutate(miesiac = as.integer(format(`Date Local`, "%m"))) %>%
+  group_by(miesiac) %>% summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE)) %>% arrange(desc(m)) %>% head(1)
+```
+
+**Zad. 9.** → **11**
+```r
+q9 <- spec %>%
+  filter(skey == 6, ckey == 65, nkey == 8001,
+         `Parameter Name` %in% c("Sulfate PM2.5 LC","Total Nitrate PM2.5 LC")) %>%
+  group_by(`Date Local`, `Parameter Name`) %>%               # uśrednij duplikaty w dniu
+  summarise(v = mean(`Arithmetic Mean`, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = `Parameter Name`, values_from = v) %>%
+  mutate(suma = `Sulfate PM2.5 LC` + `Total Nitrate PM2.5 LC`)
+sum(q9$suma > 10, na.rm = TRUE)
+```
+**Pułapka:** `filter(\`State Code\` == 6, ...)` NIE zadziała — `State Code` to tekst `"06"`.
+Używaj klucza całkowitego `skey`/`ckey`/`nkey`.
