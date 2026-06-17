@@ -36,12 +36,22 @@ i wypełnieniem (`fill`) wg powłoki.
 
 **Zad. 11.** (zamknięte) Która funkcja w `tidymodels` dzieli dane na zbiór treningowy
 i testowy?
-`split_test_train()` · `train_test_split()` · `initial_split()` · `data_split()`
+
+- `split_test_train()`
+- `train_test_split()`
+- `initial_split()`
+- `data_split()`
 
 **Zad. 12.** (zamknięte) Jakich argumentów użyć w `facet_grid()`, aby podzielić wykres
 na siatkę wg dwóch zmiennych `var1` i `var2` ze skalami „free"?
-`facet_grid(var1 + var2, scales="free")` · `facet_grid(var1 ~ var2, scales="free")` ·
-`facet_grid(var1 | var2, scales="free")`
+
+- `facet_grid(var1 + var2, scales="free")`
+- `facet_grid(var1 ~ var2, scales="free")`
+- `facet_grid(var1 | var2, scales="free")`
 
 **Zad. 13.** (zamknięte) Co jest kluczową właściwością wektora atomowego w R?
-elementy różnych klas · elementy tej samej klasy · długość < 32768 · brak nazw
+
+- elementy różnych klas
+- elementy tej samej klasy
+- długość < 32768
+- brak nazw

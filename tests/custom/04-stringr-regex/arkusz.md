@@ -36,10 +36,20 @@ stanu**? (policz średnią stanu i porównaj z indywidualnym `les`)
 
 **Zad. 11.** (zamknięte) Którą funkcją `stringr` sprawdzisz, czy element tekstu
 **zawiera** wzorzec?
-`str_extract()` · `str_detect()` · `str_replace()` · `str_sub()`
+
+- `str_extract()`
+- `str_detect()`
+- `str_replace()`
+- `str_sub()`
 
 **Zad. 12.** (zamknięte) Wyrażenie regularne dla napisów zaczynających się od „United":
-`grep("United$", x)` · `grep("*United", x)` · `grep("^United", x)`
+
+- `grep("United$", x)`
+- `grep("*United", x)`
+- `grep("^United", x)`
 
 **Zad. 13.** (zamknięte) `gsub("a","b",x)` w przeciwieństwie do `sub("a","b",x)`:
-zamienia tylko pierwsze · zamienia wszystkie · usuwa litery
+
+- zamienia tylko pierwsze
+- zamienia wszystkie
+- usuwa litery

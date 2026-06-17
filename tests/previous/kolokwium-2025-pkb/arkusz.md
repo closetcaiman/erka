@@ -27,9 +27,15 @@ końcu). Jaki jest **13.** kraj w wyniku?
 ile kończy rok fiskalny w **czerwcu** (June)?
 
 **Zad. 7.** (zamknięte) Funkcja `tidymodels` do podziału na zbiór treningowy i testowy:
-`split()` · `train_test_split()` · `initial_split()` · `data_partition()`
+
+- `split()`
+- `train_test_split()`
+- `initial_split()`
+- `data_partition()`
 
 **Zad. 8.** (zamknięte) Argumenty `facet_grid()` dla siatki wg `var1` i `var2` ze skalami
 „free":
-`facet_grid(var1 + var2, scales="free")` · `facet_grid(var1 ~ var2, scales="free")` ·
-`facet_grid(var1 | var2, scales="free")`
+
+- `facet_grid(var1 + var2, scales="free")`
+- `facet_grid(var1 ~ var2, scales="free")`
+- `facet_grid(var1 | var2, scales="free")`

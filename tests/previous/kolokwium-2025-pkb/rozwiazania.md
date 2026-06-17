@@ -4,6 +4,7 @@
 > jest identyczna — zmienią się tylko wartości.
 
 Wczytanie i oczyszczenie GDP.csv:
+
 ```r
 raw <- read.csv("data/GDP.csv", skip = 5, header = FALSE, stringsAsFactors = FALSE)
 gdp <- raw[, c(1, 2, 4, 5)]
@@ -15,16 +16,19 @@ gdp$pkb     <- as.numeric(gsub("[ ,]", "", gdp$pkb))   # usuń przecinki I spacj
 ```
 
 **Zad. 1.** → **209 krajów; średni PKB ≈ 526 206,5 mln USD** (mediana 37 094)
+
 ```r
 nrow(gdp)                     # 209
 mean(gdp$pkb, na.rm = TRUE)   # 526206.5
 ```
+
 Sedno: `as.numeric(gsub(",", "", x))` — usunięcie przecinków tysięcy.
 
 **Zad. 2.** → **`grep("^United", gdp$kraj)` → 3** (United States, United Kingdom,
 United Arab Emirates).
 
 **Zad. 3.** → **199 dopasowań**
+
 ```r
 fed <- read.csv("data/FEDSTATS_Country.csv", stringsAsFactors = FALSE)
 m <- merge(gdp, fed, by.x = "kod", by.y = "CountryCode")
@@ -32,14 +36,17 @@ nrow(m)    # 199
 ```
 
 **Zad. 4.** → **St. Vincent and the Grenadines**
+
 ```r
 m2 <- m[order(m$ranking, decreasing = TRUE), ]   # albo dplyr::arrange(m, desc(ranking))
 m2$kraj[13]
 ```
+
 (Na samym GDP, bez złączenia, 13. byłby St. Kitts and Nevis — złączenie odsiewa część
 krajów, więc kolejność jest inna.)
 
-**Zad. 5.** → **OECD ≈ 32,0 · nonOECD ≈ 122,1**
+**Zad. 5.** → **OECD ≈ 32,0; nonOECD ≈ 122,1**
+
 ```r
 library(dplyr)
 m %>% filter(Income.Group %in% c("High income: OECD","High income: nonOECD")) %>%
@@ -47,6 +54,7 @@ m %>% filter(Income.Group %in% c("High income: OECD","High income: nonOECD")) %>
 ```
 
 **Zad. 6.** → **13**
+
 ```r
 library(stringr)
 sum(str_detect(m$Special.Notes, regex("fiscal year end", ignore_case = TRUE)) &

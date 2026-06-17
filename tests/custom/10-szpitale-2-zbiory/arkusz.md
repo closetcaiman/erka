@@ -24,11 +24,19 @@ A ile rekordów `outcome` nie ma pary w `hospital-data`?
 (`ha`). W ilu stanach ten najlepszy szpital jest typu `"Acute Care Hospitals"`?
 
 **Zad. 6.** (zamknięte) `anti_join(a, b, by="k")` zwraca:
-wiersze `a` które MAJĄ parę w `b` · wiersze `a` które NIE mają pary w `b` · wiersze wspólne
+
+- wiersze `a` które MAJĄ parę w `b`
+- wiersze `a` które NIE mają pary w `b`
+- wiersze wspólne
 
 **Zad. 7.** (zamknięte) Aby dla każdej grupy zostawić wiersz o najmniejszej wartości `x`:
-`filter(min(x))` · `group_by() %>% slice_min(x, n=1)` · `summarise(min(x))`
+
+- `filter(min(x))`
+- `group_by() %>% slice_min(x, n=1)`
+- `summarise(min(x))`
 
 **Zad. 8.** (zamknięte) `left_join(a, b)` w odróżnieniu od `inner_join(a, b)`:
-zostawia tylko wspólne klucze · zostawia wszystkie wiersze `a` (braki = NA) ·
-zostawia wszystkie wiersze `b`
+
+- zostawia tylko wspólne klucze
+- zostawia wszystkie wiersze `a` (braki = NA)
+- zostawia wszystkie wiersze `b`

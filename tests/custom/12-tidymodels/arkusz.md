@@ -12,28 +12,58 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 ## Część teoretyczna (zamknięte — to najczęściej pyta prowadzący)
 
 **T1.** Funkcja dzieląca dane na zbiór treningowy i testowy:
-`split()` · `train_test_split()` · `initial_split()` · `data_partition()`
+
+- `split()`
+- `train_test_split()`
+- `initial_split()`
+- `data_partition()`
 
 **T2.** Po `initial_split()` zbiory wyciągasz funkcjami:
-`train()` / `test()` · `training()` / `testing()` · `get_train()` / `get_test()`
+
+- `train()` / `test()`
+- `training()` / `testing()`
+- `get_train()` / `get_test()`
 
 **T3.** Przygotowanie/transformacja cech (np. normalizacja) w tidymodels:
-`recipe()` + `step_*()` · `prep_data()` · `mutate()` · `transform()`
+
+- `recipe()` + `step_*()`
+- `prep_data()`
+- `mutate()`
+- `transform()`
 
 **T4.** Definicję modelu (typ + silnik + tryb) tworzysz w pakiecie:
-`parsnip` · `ggplot2` · `dplyr` · `caret`
+
+- `parsnip`
+- `ggplot2`
+- `dplyr`
+- `caret`
 
 **T5.** Połączenie przepisu i modelu w jeden obiekt:
-`pipeline()` · `workflow()` · `bind_rows()` · `merge()`
+
+- `pipeline()`
+- `workflow()`
+- `bind_rows()`
+- `merge()`
 
 **T6.** Trenowanie modelu / predykcja:
-`fit()` / `predict()` · `train()` / `guess()` · `learn()` / `apply()`
+
+- `fit()` / `predict()`
+- `train()` / `guess()`
+- `learn()` / `apply()`
 
 **T7.** Ocena jakości (accuracy, rmse, roc_auc) — pakiet:
-`yardstick` · `metrics2` · `scales` · `broom`
+
+- `yardstick`
+- `metrics2`
+- `scales`
+- `broom`
 
 **T8.** Walidacja krzyżowa k-krotna:
-`vfold_cv()` · `crossval()` · `kfold()` · `cv_split()`
+
+- `vfold_cv()`
+- `crossval()`
+- `kfold()`
+- `cv_split()`
 
 ## Część praktyczna (do uruchomienia)
 

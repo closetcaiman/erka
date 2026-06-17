@@ -29,16 +29,31 @@ vs `nitrate` i zwraca wektor tych korelacji. Ile wynosi `length(corr("data/specd
 **Zad. 7.** Jaka jest **średnia** korelacja dla progu 150?
 
 **Zad. 8.** (zamknięte) Jak wczytać wszystkie ścieżki plików z katalogu?
-`read.csv("specdata")` · `list.files("specdata", full.names = TRUE)` · `dir.exists("specdata")`
+
+- `read.csv("specdata")`
+- `list.files("specdata", full.names = TRUE)`
+- `dir.exists("specdata")`
 
 **Zad. 9.** (zamknięte) Jak skleić listę ramek `lista` w jedną ramkę?
-`do.call(rbind, lista)` · `rbind(lista)` · `merge(lista)`
+
+- `do.call(rbind, lista)`
+- `rbind(lista)`
+- `merge(lista)`
 
 **Zad. 10.** (zamknięte) `complete.cases(df)` zwraca:
-liczbę kolumn · wektor logiczny TRUE dla wierszy bez `NA` · ramkę bez `NA`
+
+- liczbę kolumn
+- wektor logiczny TRUE dla wierszy bez `NA`
+- ramkę bez `NA`
 
 **Zad. 11.** (zamknięte) Aby porównać szybkość dwóch implementacji funkcji, użyjesz:
-`profvis()` · `microbenchmark()` · `traceback()`
+
+- `profvis()`
+- `microbenchmark()`
+- `traceback()`
 
 **Zad. 12.** (zamknięte) W funkcji `corr` `complete.cases(d)` służy do:
-usunięcia kolumn z NA · wybrania wierszy bez `NA` (do liczenia korelacji) · policzenia NA
+
+- usunięcia kolumn z NA
+- wybrania wierszy bez `NA` (do liczenia korelacji)
+- policzenia NA

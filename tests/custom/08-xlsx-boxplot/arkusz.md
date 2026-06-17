@@ -26,15 +26,26 @@ Przekształć je na **długi** (`frakcja`, `wartosc`) i policz średnią każdej
 **Zad. 8.** Ile pacjentów przypada na każdy `Rodzaj zawalu`?
 
 **Zad. 9.** (zamknięte) Którą funkcją wczytasz plik `.xlsx`?
-`read.csv("p.xlsx")` · `readxl::read_excel("p.xlsx")` · `load("p.xlsx")`
+
+- `read.csv("p.xlsx")`
+- `readxl::read_excel("p.xlsx")`
+- `load("p.xlsx")`
 
 **Zad. 10.** (zamknięte) Kolumna z nazwą zawierającą spację (`Cholesterol calkowity`)
 w dplyr wymaga ujęcia w:
-cudzysłowy `"..."` · backticki `` `...` `` · nawiasy `(...)`
+
+- cudzysłowy `"..."`
+- backticki `` `...` ``
+- nawiasy `(...)`
 
 **Zad. 11.** (zamknięte) W `testthat` sprawdzenie, że funkcja **rzuca błąd**, to:
-`expect_equal()` · `expect_true()` · `expect_error()`
+
+- `expect_equal()`
+- `expect_true()`
+- `expect_error()`
 
 **Zad. 12.** (zamknięte) Aby wczytać konkretny arkusz „Dane" z xlsx:
-`read_excel("p.xlsx", tab="Dane")` · `read_excel("p.xlsx", sheet="Dane")` ·
-`read_excel("p.xlsx", page="Dane")`
+
+- `read_excel("p.xlsx", tab="Dane")`
+- `read_excel("p.xlsx", sheet="Dane")`
+- `read_excel("p.xlsx", page="Dane")`

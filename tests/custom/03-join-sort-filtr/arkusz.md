@@ -28,17 +28,35 @@ jest stanie?
 **Zad. 8.** Ile szpitali w TX ma śmiertelność po zawale `<= 14`?
 
 **Zad. 9.** (zamknięte) Którą funkcją dplyr zostawisz tylko rekordy pasujące w OBU ramkach?
-`left_join()` · `full_join()` · `inner_join()` · `bind_rows()`
+
+- `left_join()`
+- `full_join()`
+- `inner_join()`
+- `bind_rows()`
 
 **Zad. 10.** (zamknięte) Jak policzyć, ile wartości w wektorze `x` to braki?
-`length(x == NA)` · `sum(is.na(x))` · `count(NA, x)`
+
+- `length(x == NA)`
+- `sum(is.na(x))`
+- `count(NA, x)`
 
 **Zad. 11.** (zamknięte) Przykładem **wektorowego** urządzenia graficznego jest:
-PNG · JPEG · PDF · TIFF
+
+- PNG
+- JPEG
+- PDF
+- TIFF
 
 **Zad. 12.** (zamknięte) Po `initial_split()` zbiór treningowy wyciągasz funkcją:
-`train()` · `training()` · `get_train()` · `analysis_set()`
+
+- `train()`
+- `training()`
+- `get_train()`
+- `analysis_set()`
 
 **Zad. 13.** (zamknięte) W tym zbiorze (każdy rekord `out` ma parę w `hos`)
 `left_join(out, hos)` vs `inner_join(out, hos)`:
-dadzą różną liczbę wierszy · dadzą tę samą liczbę wierszy · left_join zgłosi błąd
+
+- dadzą różną liczbę wierszy
+- dadzą tę samą liczbę wierszy
+- left_join zgłosi błąd

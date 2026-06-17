@@ -28,7 +28,13 @@ słodzącej. Która substancja ma najwyższą średnią?
 obserwacji i jaki procent polis zakończył się szkodą?
 
 **Zad. 7.** (zamknięte) Funkcja z tidymodels do podziału na train/test:
-`initial_split()` · `train_test_split()` · `data_split()`
+
+- `initial_split()`
+- `train_test_split()`
+- `data_split()`
 
 **Zad. 8.** (zamknięte) Funkcja ggplot2 robiąca siatkę wykresów wg dwóch kategorii:
-`facet_wrap()` · `facet_grid()` · `facet_panel()`
+
+- `facet_wrap()`
+- `facet_grid()`
+- `facet_panel()`

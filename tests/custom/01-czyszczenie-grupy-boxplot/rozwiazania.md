@@ -1,70 +1,89 @@
 # Arkusz 01 — rozwiązania
 
 **Zad. 1.**
+
 ```r
 pol <- read.csv2("data/Polisy.csv")   # ; separator + , dziesiętne
 nrow(pol)                             # 348
 ```
+
 **Odp.: 348 obserwacji.** Przy `read.csv()` R potraktuje `,` (z liczb typu `48,6`) jako
 separator → błąd „more columns than column names" / liczby jako tekst.
 
 **Zad. 2.**
+
 ```r
 library(dplyr)
 pol %>% group_by(Plec) %>% summarise(sredni_wiek = mean(Wiek_kierowcy))
 # baza R: tapply(pol$Wiek_kierowcy, pol$Plec, mean)
 ```
+
 **Odp.: Kobieta ≈ 39,7; Mężczyzna ≈ 46,6.**
 
 **Zad. 3.**
+
 ```r
 mean(pol$Szkoda == "Tak") * 100      # 20.40 %
 sum(pol$Szkoda == "Tak")             # 71
 ```
+
 **Odp.: ≈ 20,4% (71 z 348).**
 
 **Zad. 4.**
+
 ```r
 pol %>% group_by(Szkoda) %>% summarise(sredni_czas = mean(Czas_eksploatacji))
 ```
+
 **Odp.: ze szkodą 8,03 vs bez szkody 4,74 → ze szkodą DŁUŻSZY czas eksploatacji.**
 
 **Zad. 5.**
+
 ```r
 kor <- read.csv2("data/Korozja.csv")
 names(kor)   # "Rodzaj.powłoki" "Głębokość.uszkodzenia"
 boxplot(Głębokość.uszkodzenia ~ Rodzaj.powłoki, data = kor)
 tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, median)
 ```
+
 **Odp.: mediana A = 55, B = 44. Kreska w pudełku to MEDIANA.** (średnie: A 54,2; B 46,2)
 
 **Zad. 6.**
+
 ```r
 pol %>% group_by(Plec, Szkoda) %>% summarise(n = n(), wiek = mean(Wiek_kierowcy), .groups = "drop")
 ```
-**Odp.: Kobieta/Nie 39,8 · Kobieta/Tak 38,8 · Mężczyzna/Nie 49,9 · Mężczyzna/Tak 35,4.**
+
+**Odp.: Kobieta/Nie 39,8; Kobieta/Tak 38,8; Mężczyzna/Nie 49,9; Mężczyzna/Tak 35,4.**
 Zaskoczenie: mężczyźni **ze szkodą** są dużo MŁODSI (35,4) niż bez (49,9).
 
 **Zad. 7.**
+
 ```r
 cor(pol$Wiek_kierowcy, pol$Czas_eksploatacji)   # -0.244
 ```
+
 **Odp.: ≈ −0,24 (słaba ujemna).**
 
 **Zad. 8.**
+
 ```r
 mean(pol$Plec[pol$Szkoda == "Tak"] == "Kobieta") * 100   # 15.49
 ```
+
 **Odp.: ≈ 15,5%.**
 
 **Zad. 9.**
+
 ```r
 tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, sd)    # A 11,58 ; B 10,77
 tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, IQR)   # A 12,5  ; B 11,5
 ```
+
 **Odp.: powłoka A ma większy rozrzut.**
 
 **Zad. 10.**
+
 ```r
 library(ggplot2)
 ggplot(kor, aes(x = Rodzaj.powłoki, y = Głębokość.uszkodzenia, fill = Rodzaj.powłoki)) +

@@ -31,15 +31,27 @@ pogorszenia i pokaż 3 osoby z największym pogorszeniem.
 na osi y, połącz pomiary tej samej osoby linią (`group = id`).
 
 **Zad. 8.** (zamknięte) Którą funkcją `tidyr` przechodzisz z formatu szerokiego na długi?
-`pivot_wider()` · `pivot_longer()` · `separate()` · `unite()`
+
+- `pivot_wider()`
+- `pivot_longer()`
+- `separate()`
+- `unite()`
 
 **Zad. 9.** (zamknięte) Aby z kolumny `"PL-KRK"` zrobić kolumny `kraj` i `miasto`:
-`unite(df, kraj, miasto, sep="-")` · `separate(df, kol, into=c("kraj","miasto"), sep="-")` ·
-`str_split(df$kol)`
+
+- `unite(df, kraj, miasto, sep="-")`
+- `separate(df, kol, into=c("kraj","miasto"), sep="-")`
+- `str_split(df$kol)`
 
 **Zad. 10.** (zamknięte) Wykres hantelkowy (dumbbell, `geom_dumbbell` z `ggalt`) wymaga
 danych w formacie:
-długim (long) · szerokim (wide) · zagnieżdżonym (nested)
+
+- długim (long)
+- szerokim (wide)
+- zagnieżdżonym (nested)
 
 **Zad. 11.** (zamknięte) `pivot_wider()` zastosowane do danych z zad. 2:
-wróci do formatu szerokiego · da to samo co pivot_longer · zwróci błąd
+
+- wróci do formatu szerokiego
+- da to samo co pivot_longer
+- zwróci błąd
