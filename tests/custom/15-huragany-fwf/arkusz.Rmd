@@ -1,0 +1,122 @@
+---
+title: "Arkusz 15 — huragany: read_fwf, wide→long, analiza wiatru"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Dane:** `data/ebtrk_atlc_1988_2015.txt` (11 824 wierszy, format stałej szerokości).
+**Czas:** ~45 min.
+
+Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.Rmd`.
+
+> Plik tekstowy **bez nagłówka** w formacie FWF (fixed-width format).
+> Każdy wiersz = jeden pomiar huraganowy (co 6 godzin).
+> Wczytanie przez `readr::read_fwf()` z `fwf_widths(c(...), c("nazwa", ...))`.
+> Kolumny (szerokości i nazwy w rozwiązaniach).
+> Kluczowe kolumny: `storm_id`, `storm_name`, `year`, `wind_kts` (prędkość wiatru w węzłach),
+> 12 kolumn promieni wiatru:
+> `ts_radius_{NE,SE,SW,NW}` (≥34 kt), `r50_{NE,SE,SW,NW}` (≥50 kt), `r64_{NE,SE,SW,NW}` (≥64 kt).
+> Wartość -99 = brak danych.
+
+**Zad. 1.** Wczytaj plik za pomocą `read_fwf()` z `fwf_widths()`. Sprawdź `dim()` i `names()`.
+Ile unikalnych huraganów (`storm_id`) jest w zbiorze?
+
+```{r}
+
+```
+
+**Zad. 2.** Zamień kolumny `wind_kts`, `year`, `lat`, `lon` na typ `numeric`.
+Zastąp wartości -99 w kolumnach promieni wiatru przez `NA`.
+
+```{r}
+
+```
+
+**Zad. 3.** Jaki jest zakres lat w danych? Ile obserwacji (pomiarów) ma każdy rok —
+który rok miał najwięcej aktywności huraganowej?
+
+```{r}
+
+```
+
+**Zad. 4.** Jaka jest maksymalna prędkość wiatru w zbiorze? Który huragan (`storm_name`)
+ją osiągnął i w którym roku?
+
+```{r}
+
+```
+
+**Zad. 5.** Ile obserwacji ma prędkość wiatru ≥ 64 węzłów (siła huraganu wg skali
+Beauforta)? Jaki procent wszystkich pomiarów to stanowi?
+
+```{r}
+
+```
+
+**Zad. 6.** Przekształć dane z szerokiego do długiego formatu (`pivot_longer`) dla
+12 kolumn promieni wiatru (`ts_radius_NE` do `r64_NW`). Wynikowa ramka powinna mieć
+kolumny `quadrant` i `radius`. Odfiltruj wiersze z `radius <= 0` lub `NA`.
+
+```{r}
+
+```
+
+**Zad. 7.** Po przekształceniu: ile wierszy pozostaje po odfiltrowania NA i ≤ 0?
+
+```{r}
+
+```
+
+**Zad. 8.** Rozdziel kolumnę `quadrant` (np. „r50_NE") na `threshold` (np. „r50")
+i `direction` (np. „NE"). Który kierunek (NE/SE/SW/NW) ma średnio największy promień
+dla progu 50kt (`r50`)?
+
+```{r}
+
+```
+
+**Zad. 9.** Dla każdego roku oblicz maksymalną prędkość wiatru wśród wszystkich pomiarów.
+Który rok miał najsilniejszy huragan? Jaka była jego nazwa?
+
+```{r}
+
+```
+
+**Zad. 10.** Oblicz średnią prędkość wiatru per huragan (`storm_id`). Który huragan
+miał najwyższą **średnią** (nie maksymalną) prędkość wiatru w całym swoim życiu?
+
+```{r}
+
+```
+
+**Zad. 11.** (zamknięte) `fwf_widths(c(7, 10, 6), c("id", "name", "date"))` określa:
+
+- liczbę wierszy, które należy pominąć
+- szerokości (w znakach) kolejnych kolumn i ich nazwy
+- separatory kolumn na pozycjach 7, 10, 6
+- typy danych kolumn
+
+**Zad. 12.** (zamknięte) `pivot_longer(cols = a:z, names_to = "zmienna", values_to = "wartosc")` powoduje, że:
+
+- nazwy kolumn a…z stają się wartościami w kolumnie `zmienna`
+- kolumna `zmienna` zawiera liczby od 1 do 26
+- kolumny a…z zostają zduplikowane
+- wartości trafiają do wielu nowych kolumn
+
+**Zad. 13.** (zamknięte) Wartość -99 w tej bazie oznacza:
+
+- huragan kategorii -99
+- brak danych pomiarowych
+- 99 mil morskich w kierunku zachodnim
+- błąd odczytu GPS
+
+**Zad. 14.** Sklasyfikuj każdą obserwację wg prędkości wiatru:
+„TS" (≥34 kt), „Cat1" (≥64 kt), „Cat3" (≥96 kt), „Cat5" (≥137 kt).
+Policz liczbę obserwacji w każdej kategorii.
+
+```{r}
+
+```

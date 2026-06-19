@@ -1,0 +1,169 @@
+---
+title: "Arkusz 15 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Zad. 1.**
+
+```{r}
+library(readr)
+hur <- read_fwf(
+  "data/ebtrk_atlc_1988_2015.txt",
+  fwf_widths(
+    c(7, 10, 6, 5, 5, 6, 4, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 6),
+    c("storm_id", "storm_name", "date", "year", "lat", "lon",
+      "wind_kts", "pressure",
+      "ts_radius_NE", "ts_radius_SE", "ts_radius_SW", "ts_radius_NW",
+      "r50_NE", "r50_SE", "r50_SW", "r50_NW",
+      "r64_NE", "r64_SE", "r64_SW", "r64_NW",
+      "r100_NE", "r100_SE", "r100_SW", "r100_NW",
+      "ts_type", "distance")
+  ),
+  col_types = cols(.default = col_character())
+)
+dim(hur)   # 11824 × 26
+length(unique(hur$storm_id))   # 377
+```
+
+**Odp.: 11 824 pomiarów, 377 unikalnych huraganów.**
+
+**Zad. 2.**
+
+```{r}
+library(dplyr)
+
+radius_cols <- c("ts_radius_NE","ts_radius_SE","ts_radius_SW","ts_radius_NW",
+                 "r50_NE","r50_SE","r50_SW","r50_NW",
+                 "r64_NE","r64_SE","r64_SW","r64_NW")
+
+hur <- hur %>%
+  mutate(
+    wind_kts = as.numeric(wind_kts),
+    year     = as.integer(year),
+    lat      = as.numeric(lat),
+    lon      = as.numeric(lon),
+    across(all_of(radius_cols), ~ ifelse(as.numeric(.) == -99, NA, as.numeric(.)))
+  )
+```
+
+**Zad. 3.**
+
+```{r}
+range(hur$year, na.rm = TRUE)   # 1988 2015
+
+hur %>%
+  count(year) %>%
+  arrange(desc(n)) %>%
+  slice(1:5)
+```
+
+**Odp.: Zakres 1988–2015. Lata o największej aktywności: zwykle lata z dużą liczbą sezonów (np. 2005).**
+
+**Zad. 4.**
+
+```{r}
+hur %>%
+  filter(wind_kts == max(wind_kts, na.rm = TRUE)) %>%
+  select(storm_name, year, wind_kts)
+```
+
+**Odp.: GILBERT, 1988, 160 węzłów.**
+
+**Zad. 5.**
+
+```{r}
+hur_force <- sum(hur$wind_kts >= 64, na.rm = TRUE)   # 2984
+hur_force
+hur_force / nrow(hur) * 100   # ~25.2%
+```
+
+**Odp.: 2984 obserwacji (≈25% wszystkich pomiarów) miało siłę huraganu.**
+
+**Zad. 6.**
+
+```{r}
+library(tidyr)
+
+long <- hur %>%
+  select(storm_id, storm_name, year, date, wind_kts, all_of(radius_cols)) %>%
+  pivot_longer(cols = all_of(radius_cols),
+               names_to  = "quadrant",
+               values_to = "radius") %>%
+  filter(!is.na(radius), radius > 0)
+```
+
+**Zad. 7.**
+
+```{r}
+nrow(long)   # 27 635
+```
+
+**Odp.: 27 635 wierszy po odfiltrowaniu NA i wartości ≤ 0.**
+
+**Zad. 8.**
+
+```{r}
+long %>%
+  tidyr::separate(quadrant, into = c("threshold", "direction"), sep = "_(?=[A-Z]{2}$)") %>%
+  filter(threshold == "r50") %>%
+  group_by(direction) %>%
+  summarise(mean_radius = mean(radius, na.rm = TRUE)) %>%
+  arrange(desc(mean_radius))
+```
+
+**Odp.: NE zazwyczaj ma największy promień (prawa przednia ćwiartka jest najniebezpieczniejsza).**
+
+**Zad. 9.**
+
+```{r}
+hur %>%
+  group_by(year) %>%
+  summarise(max_wind = max(wind_kts, na.rm = TRUE)) %>%
+  arrange(desc(max_wind)) %>%
+  slice(1)
+
+# Który huragan w tym roku?
+hur %>%
+  filter(year == 1988) %>%
+  filter(wind_kts == max(wind_kts, na.rm = TRUE)) %>%
+  select(storm_name, wind_kts, year)
+```
+
+**Odp.: Rok 1988 (GILBERT, 160 kt).**
+
+**Zad. 10.**
+
+```{r}
+hur %>%
+  group_by(storm_id, storm_name) %>%
+  summarise(mean_wind = mean(wind_kts, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(mean_wind)) %>%
+  slice(1:3)
+```
+
+**Zad. 11.** → **szerokości (w znakach) kolejnych kolumn i ich nazwy.**
+
+**Zad. 12.** → **nazwy kolumn a…z stają się wartościami w kolumnie `zmienna`.**
+
+**Zad. 13.** → **brak danych pomiarowych** (-99 to standardowy placeholder „missing" w tej bazie).
+
+**Zad. 14.**
+
+```{r}
+hur %>%
+  mutate(kategoria = case_when(
+    wind_kts >= 137 ~ "Cat5",
+    wind_kts >= 96  ~ "Cat3",
+    wind_kts >= 64  ~ "Cat1",
+    wind_kts >= 34  ~ "TS",
+    TRUE            ~ "poniżej_TS"
+  )) %>%
+  count(kategoria) %>%
+  arrange(desc(n))
+```
+
+**Odp.: Większość to TS (34–63 kt); Cat1–Cat5 to ~25% obserwacji.**
