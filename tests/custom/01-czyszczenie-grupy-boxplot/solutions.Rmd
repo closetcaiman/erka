@@ -1,0 +1,75 @@
+---
+title: "01-rozwiazania"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+data <- read.csv2("data/Polisy.csv")
+print(dim(data))
+```
+
+```{r}
+women <- data[data$Plec == "Kobieta",]
+men <- data[data$Plec == "Mezczyzna",]
+print(mean(women$Wiek_kierowcy))
+print(mean(men$Wiek_kierowcy))
+```
+
+```{r}
+aggregate(Wiek_kierowcy ~ Plec, data, mean)
+```
+
+```{r}
+data %>% 
+  group_by(Plec) %>% 
+  summarise(sredni_wiek = mean(Wiek_kierowcy))
+```
+
+```{r}
+print(nrow(data %>% filter(Szkoda == "Tak"))/nrow(data)*100)
+```
+
+```{r}
+aggregate(Czas_eksploatacji ~ Szkoda, data, mean)
+```
+
+```{r}
+corrosion <- read.csv2("data/Korozja.csv")
+boxplot(corrosion$Głębokość.uszkodzenia ~ corrosion$Rodzaj.powłoki)
+```
+
+```{r}
+aggregate(Głębokość.uszkodzenia  ~ Rodzaj.powłoki, corrosion, median)
+```
+
+```{r}
+aggregate(Wiek_kierowcy ~ Plec + Szkoda, data, mean)
+```
+
+```{r}
+data %>%
+  group_by(Plec, Szkoda) %>%
+  summarise(Sredni_wiek = mean(Wiek_kierowcy))
+```
+
+```{r}
+cor(data$Czas_eksploatacji, data$Wiek_kierowcy)
+```
+
+```{r}
+corrosion %>%
+  group_by(Rodzaj.powłoki) %>%
+  summarise(std = sd(Głębokość.uszkodzenia), IQR = IQR(Głębokość.uszkodzenia))
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(data = corrosion, aes(x=Rodzaj.powłoki,y=Głębokość.uszkodzenia, fill = Rodzaj.powłoki)) + geom_boxplot()
+```

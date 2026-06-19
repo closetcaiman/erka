@@ -1,0 +1,49 @@
+---
+title: "solutions"
+output: html_document
+---
+
+```{r}
+data <- read.csv("data/q1_data.csv")
+```
+
+```{r}
+mean(data$Ozone, na.rm = TRUE)
+```
+
+```{r}
+sum(is.na(data$Ozone))
+```
+
+```{r}
+aggregate(Temp ~ Month, data, mean)
+```
+
+```{r}
+data %>% drop_na() %>% group_by(Month) %>% summarise(max_Ozone = max(Ozone)) %>% arrange(desc(max_Ozone)) %>% head(1)
+```
+
+```{r}
+clean_data <- na.omit(data)
+cor(clean_data$Ozone, clean_data$Temp)
+```
+
+```{r}
+sum(complete.cases(data))
+```
+
+```{r}
+nrow(data)
+```
+
+```{r}
+data %>% filter(Temp >80) %>% summarise(mean_ozone = mean(Ozone, na.rm = TRUE))
+```
+
+```{r}
+clean_data %>% select(Ozone, Solar.R, Temp, Wind) %>% cor(use = "complete.obs")
+```
+
+```{r}
+rbind(c(1,3,5), c(3,2,10))
+```

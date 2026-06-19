@@ -1,0 +1,57 @@
+---
+title: "solutions"
+output: html_document
+---
+
+```{r}
+pollutantmean <- function(dir, pollutant, ids) {
+  files <- list.files(dir, full.names = TRUE)
+  data <- do.call(rbind, lapply(files[ids], read.csv))
+  mean(data[[pollutant]], na.rm = TRUE)
+}
+```
+
+```{r}
+round(pollutantmean("data/specdata/", "sulfate", 1:10),3)
+```
+
+```{r}
+round(pollutantmean("data/specdata/", "nitrate", 1:10),3)
+```
+
+```{r}
+complete <- function(directory, id) {
+  pliki <- list.files(directory, full.names = TRUE)
+  nobs <- sapply(id, function(i) {
+    d <- read.csv(pliki[i]); sum(complete.cases(d))
+  })
+  data.frame(id = id, nobs = nobs)
+}
+```
+
+```{r}
+complete("data/specdata", 54) 
+```
+
+```{r}
+sum(complete("data/specdata", 1:10)$nobs)
+```
+
+```{r}
+corr <- function(directory, threshold = 0) {
+  files <- list.files(directory, full.names = TRUE)
+  out <- numeric(0)
+  for (f in files) {
+    data <- read.csv(f)
+    dc <- data[complete.cases(data), ]
+    if (nrow(dc) > threshold) { 
+      out <- c(out, cor(dc$sulfate, dc$nitrate))
+    }
+  }
+  return(out)
+}
+```
+
+```{r}
+mean(corr("data/specdata", 150))
+```

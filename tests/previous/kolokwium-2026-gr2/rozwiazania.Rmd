@@ -1,0 +1,112 @@
+---
+title: "Kolokwium 2026 Gr.2 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r wczytanie, warning=FALSE}
+library(dplyr); library(stringr)
+
+gdp_raw <- read.csv("data/GDP.csv", skip = 5, header = FALSE, stringsAsFactors = FALSE)
+gdp <- gdp_raw[, c(1, 2, 4, 5)]
+names(gdp) <- c("kod", "ranking", "kraj", "pkb")
+gdp <- gdp[!is.na(as.integer(gdp$ranking)) & gdp$kod != "", ]
+gdp$ranking <- as.integer(gdp$ranking)
+gdp$pkb     <- as.numeric(gsub("[ ,]", "", gdp$pkb))
+
+fed    <- read.csv("data/FEDSTATS_Country.csv", stringsAsFactors = FALSE)
+merged <- merge(gdp, fed, by.x = "kod", by.y = "CountryCode")
+```
+
+---
+
+**Zad. 1.**
+
+```{r}
+mean(gdp$pkb)   # 526206.5
+```
+
+**Odp.: 526 206,5.**
+
+> Dlaczego nie 293 700 (odpowiedź JHU)? JHU quiz używał starszej wersji GDP.csv
+> (190 krajów z lat ~2012). Nasz plik ma 209 krajów z nowszymi danymi → wyższa średnia.
+
+**Zad. 2.**
+
+```{r}
+merged %>%
+  filter(Income.Group %in% c("High income: OECD", "High income: nonOECD")) %>%
+  group_by(Income.Group) %>%
+  summarise(srednia_ranking = mean(ranking))
+```
+
+**Odp.: High income: OECD = 32,0 ; High income: nonOECD = 122,3.**
+
+**Zad. 3.**
+
+```{r}
+zad3 <- grep("^United", gdp$kraj)
+gdp$kraj[zad3]   # United States, United Kingdom, United Arab Emirates
+length(zad3)     # 3
+```
+
+**Odp.: 3 kraje** (USA, UK, UAE). `grep()` zwraca **indeksy** wierszy, `length()` liczy ile ich jest.
+
+**Zad. 4.**
+
+```{r}
+nrow(merged)   # 199
+
+zad4 <- merged %>% arrange(desc(ranking))
+head(zad4$kraj)
+zad4$kraj[13]   # St. Vincent and the Grenadines
+```
+
+**Odp.: 199 dopasowań; 13. kraj = St. Vincent and the Grenadines.**
+
+> `arrange(desc(ranking))` → ranking 209 (najmniejsze PKB) na górze → USA (ranking 1) na końcu.
+> JHU quiz (stara wersja) dawał 189 dopasowań i "St. Kitts and Nevis".
+
+**Zad. 5.**
+
+```{r}
+sum(str_detect(merged$Special.Notes,
+               regex("Fiscal year end: June", ignore_case = TRUE)),
+    na.rm = TRUE)   # 13
+```
+
+**Odp.: 13 krajów.**
+
+**Zad. 6.** → **250 wartości w 2012, 47 poniedziałków.**
+
+```r
+# Wymaga internetu — uruchom na komputerze z dostępem lub sprawdź wynik:
+library(quantmod)
+amzn        <- getSymbols("AMZN", auto.assign = FALSE)
+sampleTimes <- index(amzn)
+sum(format(sampleTimes, "%Y") == "2012")                          # 250
+sum(weekdays(sampleTimes[format(sampleTimes, "%Y") == "2012"])    # 47
+    == "poniedziałek")
+```
+
+> Uwaga: `weekdays()` zwraca nazwy po **polsku** jeśli locale jest pl_PL
+> → "poniedziałek", nie "Monday". Jeśli kolokwium jest po angielsku → zmień na `"Monday"`.
+
+**Zad. 7.** → **`initial_split()`** (potem `training()` / `testing()`).
+
+**Zad. 8.** → **`facet_grid(var1 ~ var2, scales="free")`** (tylda rozdziela zmienne).
+
+---
+
+## Dlaczego "wyniki się różniły" między grupami?
+
+Dwie najczęstsze przyczyny:
+
+1. **Niekompletne czyszczenie PKB** — niektórzy użyli tylko `gsub(",", "", pkb)` bez
+   usunięcia spacji, albo zapomnieli o `skip=5` → złe `mean()`.
+
+2. **`merge()` vs `inner_join()`** — oba robią inner join, ale `merge()` może zwrócić
+   więcej wierszy jeśli FEDSTATS ma zduplikowane `CountryCode`. Efekt: różne `nrow()`.

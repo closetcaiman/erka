@@ -1,0 +1,53 @@
+---
+title: "solutions"
+output: html_document
+---
+
+```{r}
+prochnica <- read.csv2("data/Prochnica.csv")
+```
+
+```{r}
+n_distinct(prochnica$Substancja_słodząca)
+```
+
+```{r}
+prochnica %>% group_by(Substancja_słodząca) %>% summarise(obs_count = n())
+```
+
+```{r}
+ggplot(data = prochnica, mapping = aes(x = Próchnica, y = Substancja_słodząca)) + geom_boxplot()
+```
+
+```{r}
+strokes <- readxl::read_xlsx("data/Zawaly.xlsx")
+dim(strokes)
+```
+
+```{r}
+aggregate(BMI ~ Plec, strokes, mean)
+```
+
+```{r}
+aggregate(`Cholesterol calkowity` ~ Palenie, strokes, mean)
+```
+
+```{r}
+aggregate(Próchnica ~ Substancja_słodząca, prochnica, sd)
+```
+
+```{r}
+panel <- strokes %>% pivot_longer(cols = c(HDL, LDL, Tg), names_to = "frakcja", values_to = "wartosc")
+```
+
+```{r}
+aggregate(wartosc ~ frakcja, panel, mean)
+```
+
+```{r}
+strokes %>% group_by(`Rodzaj zawalu`) %>% summarise(patient_count = n())
+```
+
+```{r}
+
+```
