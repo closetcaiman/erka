@@ -1,24 +1,59 @@
+---
+title: "Arkusz 06 — daty, sortowanie, ekstrakcja"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 06 — daty, sortowanie, ekstrakcja
 
-**Dane:** `data/gaData.csv` (kolumny: `date` jako tekst „RRRR-MM-DD", `visitsTumblr`).
-**Czas:** ~35 min.
+**Dane:** `data/gaData.csv` (kolumny: `date` jako tekst „RRRR-MM-DD", `visitsTumblr`). **Czas:** \~35 min.
 
 Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 
-**Zad. 1.** Wczytaj `data/gaData.csv`. Przekonwertuj `date` na klasę `Date`. Jaki jest
-zakres dat (od–do)? Jaka jest suma wszystkich wizyt?
+**Zad. 1.** Wczytaj `data/gaData.csv`. Przekonwertuj `date` na klasę `Date`. Jaki jest zakres dat (od–do)? Jaka jest suma wszystkich wizyt?
+
+```{r}
+
+```
 
 **Zad. 2.** W ilu dniach liczba wizyt była większa od 0?
 
+```{r}
+
+```
+
 **Zad. 3.** Ile łącznie wizyt zebrano w **2012** roku? (Wyciągnij rok z daty.)
+
+```{r}
+
+```
 
 **Zad. 4.** Który **dzień tygodnia** ma największą sumę wizyt?
 
+```{r}
+
+```
+
 **Zad. 5.** Który **miesiąc** (w formacie RRRR-MM) miał największą sumę wizyt?
+
+```{r}
+
+```
 
 **Zad. 6.** Który pojedynczy **dzień** miał najwięcej wizyt i ile?
 
+```{r}
+
+```
+
 **Zad. 7.** Ile dni przypada na rok 2011, a ile na 2012?
+
+```{r}
+
+```
 
 **Zad. 8.** (zamknięte) Jak wyciągnąć rok z obiektu klasy `Date` o nazwie `d`?
 

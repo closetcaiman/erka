@@ -1,3 +1,12 @@
+---
+title: "Arkusz 02 — format szeroki → długi (pivot_longer)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 02 — format szeroki → długi (pivot_longer)
 
 **Dane:** `data/Czas reakcji.csv`. **Czas:** ~35 min.
@@ -11,24 +20,52 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 **Zad. 1.** Wczytaj `data/Czas reakcji.csv`. Ile osób badano? Jaka jest średnia reakcja
 przed i po (osobno)?
 
+```{r}
+
+```
+
 **Zad. 2.** Przekształć dane z formatu **szerokiego na długi**: zamiast kolumn
 `Reakcja_przed` i `Reakcja_po` utwórz kolumnę `moment` (przed/po) i kolumnę `czas`.
 Pokaż pierwsze wiersze.
 
+```{r}
+
+```
+
 **Zad. 3.** Na danych w formacie długim policz średni czas reakcji w każdym momencie
 (grupowanie po `moment`). Czy wynik zgadza się z zad. 1?
+
+```{r}
+
+```
 
 **Zad. 4.** U ilu osób reakcja się **poprawiła** (czas po < czas przed)? Jaka była
 średnia różnica (`po − przed`)? Jaki był procent osób z poprawą i największe pogorszenie?
 
+```{r}
+
+```
+
 **Zad. 5.** Z danych długich wróć do formatu szerokiego za pomocą `pivot_wider`. Sprawdź,
 że odzyskałeś oryginalne kolumny.
+
+```{r}
+
+```
 
 **Zad. 6.** Dorób kolumnę `roznica = Reakcja_po − Reakcja_przed`, posortuj malejąco wg
 pogorszenia i pokaż 3 osoby z największym pogorszeniem.
 
+```{r}
+
+```
+
 **Zad. 7.** Zrób wykres „przed–po": dane długie, `ggplot` z `moment` na osi x, `czas`
 na osi y, połącz pomiary tej samej osoby linią (`group = id`).
+
+```{r}
+
+```
 
 **Zad. 8.** (zamknięte) Którą funkcją `tidyr` przechodzisz z formatu szerokiego na długi?
 

@@ -4,6 +4,7 @@ Reguła nr 1 na kolokwium: **zawsze dołącz kod** (nawet do pytań zamkniętych
 Sama odpowiedź bez kodu = nie zaliczone (tak piszą wytyczne).
 
 Nagłówek pliku z kodem (wymagany):
+
 ```r
 # Imię Nazwisko, nr indeksu: ......, grupa: ......
 # Data: ....-..-..
@@ -12,6 +13,7 @@ Nagłówek pliku z kodem (wymagany):
 ```
 
 Spis treści:
+
 1. Wczytywanie danych
 2. Czyszczenie / zmiana formatu danych
 3. Szybkie poznanie ramki
@@ -55,6 +57,7 @@ list.files("specdata")  # lista plików (np. do pętli)
 ```
 
 Wczytanie wielu plików (jak specdata 001.csv..332.csv):
+
 ```r
 pliki <- list.files("specdata", full.names = TRUE)      # wektor ścieżek
 lista <- lapply(pliki, read.csv)                        # lista ramek
@@ -362,7 +365,9 @@ metrics(bind_cols(testowe, pred), truth = Region, estimate = .pred_class)
 
 # Walidacja krzyżowa:  vfold_cv(treningowe, v = 5)
 ```
+
 **Najczęstsze pytania zamknięte (zapamiętaj nazwy!):**
+
 - podział na train/test → `initial_split()` (potem `training()` / `testing()`)
 - przygotowanie cech → `recipe()` + `step_*()`
 - definicja modelu → `parsnip` (`rand_forest`, `linear_reg`, `set_engine`, `set_mode`)
@@ -440,6 +445,7 @@ test_file("testy.R")    # uruchom plik z testami
    `facet_wrap(~ var)`.
 
 ### Zadania na DWA datasety (nieoczywiste złączenia)
+
 ```r
 # 1) wczytaj oba (uwaga na read.csv vs read.csv2 vs read_excel)
 # 2) ZNAJDŹ wspólny klucz (czasem złożony: State+County+Site)
@@ -453,6 +459,7 @@ duze %>% semi_join(b_klucz, by = c("k1","k2","k3")) %>%
 ```
 
 ### Najczęstsze błędy do uniknięcia
+
 - `read.csv` zamiast `read.csv2` na polskim pliku → wszystko w jednej kolumnie / liczby jako tekst.
 - Zapomniany `na.rm = TRUE` → `mean` zwraca `NA`.
 - `+` na początku linii w ggplot zamiast na końcu poprzedniej → błąd.

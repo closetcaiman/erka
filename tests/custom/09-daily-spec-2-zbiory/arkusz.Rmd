@@ -1,3 +1,12 @@
+---
+title: "Arkusz 09 — DWA zbiory: codzienne pomiary PM2.5 + metadane stacji"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 09 — DWA zbiory: codzienne pomiary PM2.5 + metadane stacji
 
 **Dane:** `data/daily_SPEC_2014.csv.bz2` (pomiary), `data/aqs_sites.xlsx` (metadane stacji).
@@ -21,12 +30,20 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 - 0.515084
 - 0.458098
 
+```{r}
+
+```
+
 **Zad. 2.** Który składnik (`Parameter Name`) ma najwyższą średnią?
 
 - Sulfur PM2.5 LC
 - OC CSN Unadjusted PM2.5 LC TOT
 - EC2 PM2.5 LC
 - Sodium PM2.5 LC
+
+```{r}
+
+```
 
 **Zad. 3.** Które miejsce (State/County/Site) ma najwyższy średni `"Sulfate PM2.5 LC"`?
 
@@ -35,6 +52,10 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 - 10/001/0003
 - 39/081/0017
 
+```{r}
+
+```
+
 **Zad. 4.** Bezwzględna różnica średnich `"EC PM2.5 LC TOR"` między Kalifornią a Arizoną?
 
 - 0.018567
@@ -42,12 +63,20 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 - 0.17648069
 - 0.09476190
 
+```{r}
+
+```
+
 **Zad. 5.** Mediana `"OC PM2.5 LC TOR"` na **zachodzie** (Longitude < −100)?
 
 - 0.5175
 - 0.4300
 - 0.2600
 - 0.0269
+
+```{r}
+
+```
 
 **Zad. 6.** (2 zbiory) Ile stacji ma jednocześnie `Land Use == "RESIDENTIAL"` i
 `Location Setting == "SUBURBAN"`?
@@ -57,6 +86,10 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 - 2233
 - 1008
 
+```{r}
+
+```
+
 **Zad. 7.** (2 zbiory) Mediana `"EC PM2.5 LC TOR"` wśród stacji RESIDENTIAL+SUBURBAN na
 **wschodzie** (Longitude ≥ −100)?
 
@@ -64,6 +97,10 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 - 0.0460
 - 0.5880
 - 0.1740
+
+```{r}
+
+```
 
 **Zad. 8.** (2 zbiory) Wśród stacji `Land Use == "COMMERCIAL"`, który **miesiąc** ma
 najwyższy średni `"Sulfate PM2.5 LC"`?
@@ -73,6 +110,10 @@ najwyższy średni `"Sulfate PM2.5 LC"`?
 - sierpień
 - czerwiec
 
+```{r}
+
+```
+
 **Zad. 9.** Dla monitora State 6 / County 65 / Site 8001: przez ile **dni** suma
 `"Sulfate PM2.5 LC"` i `"Total Nitrate PM2.5 LC"` przekracza 10? (gdy dzień ma wiele
 wartości składnika — uśrednij je najpierw)
@@ -81,3 +122,7 @@ wartości składnika — uśrednij je najpierw)
 - 11
 - 24
 - 50
+
+```{r}
+
+```

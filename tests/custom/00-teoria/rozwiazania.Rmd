@@ -1,3 +1,12 @@
+---
+title: "Arkusz 11 — klucz odpowiedzi"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 11 — klucz odpowiedzi
 
 **A. Podstawy R**

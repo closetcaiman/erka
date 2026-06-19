@@ -1,3 +1,12 @@
+---
+title: "Arkusz 11 — TEORIA (szybka powtórka, 56 pytań zamkniętych)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 11 — TEORIA (szybka powtórka, 56 pytań zamkniętych)
 
 Pytania zebrane z 11 rozwiązanych quizów (mogą się powtórzyć 1:1). Zakres zgodny z

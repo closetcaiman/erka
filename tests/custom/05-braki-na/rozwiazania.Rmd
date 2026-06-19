@@ -1,8 +1,17 @@
+---
+title: "Arkusz 05 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 05 — rozwiązania
 
 **Zad. 1.**
 
-```r
+```{r}
 aq <- read.csv("data/q1_data.csv")
 mean(aq$Ozone)                 # NA — każde działanie z NA daje NA
 mean(aq$Ozone, na.rm = TRUE)   # 42.1293
@@ -14,7 +23,7 @@ sum(is.na(aq$Ozone))           # 37
 
 **Zad. 2.**
 
-```r
+```{r}
 library(dplyr)
 aq %>% group_by(Month) %>% summarise(srednia_temp = mean(Temp))
 # baza: tapply(aq$Temp, aq$Month, mean)
@@ -24,7 +33,7 @@ aq %>% group_by(Month) %>% summarise(srednia_temp = mean(Temp))
 
 **Zad. 3.**
 
-```r
+```{r}
 aq %>% group_by(Month) %>%
   summarise(o = mean(Ozone, na.rm = TRUE)) %>% arrange(desc(o)) %>% head(1)
 ```
@@ -33,7 +42,7 @@ aq %>% group_by(Month) %>%
 
 **Zad. 4.**
 
-```r
+```{r}
 cor(aq$Ozone, aq$Temp, use = "complete.obs")   # 0.6984
 ```
 
@@ -41,7 +50,7 @@ cor(aq$Ozone, aq$Temp, use = "complete.obs")   # 0.6984
 
 **Zad. 5.**
 
-```r
+```{r}
 sum(complete.cases(aq))    # 111
 nrow(aq)                   # 153
 ```
@@ -50,7 +59,7 @@ nrow(aq)                   # 153
 
 **Zad. 6.**
 
-```r
+```{r}
 mean(aq$Ozone[aq$Temp > 80], na.rm = TRUE)   # 64.148
 ```
 
@@ -58,7 +67,7 @@ mean(aq$Ozone[aq$Temp > 80], na.rm = TRUE)   # 64.148
 
 **Zad. 7.**
 
-```r
+```{r}
 cor(aq[, c("Ozone","Solar.R","Wind","Temp")], use = "complete.obs")
 ```
 

@@ -1,3 +1,12 @@
+---
+title: "Arkusz 12 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 12 — rozwiązania
 
 ## Teoria
@@ -13,7 +22,7 @@
 
 ## Praktyka — pełny, działający kod
 
-```r
+```{r}
 library(tidymodels)   # albo: rsample, recipes, parsnip, workflows, yardstick
 load("data/olive.rda")
 
@@ -52,7 +61,7 @@ Inne modele zamiast `decision_tree()`: `rand_forest()` (silnik `"ranger"`),
 
 ## Wariant BEZ tidymodels (gdyby pakietów nie było)
 
-```r
+```{r}
 load("data/olive.rda")
 ol <- olive; ol$Region <- factor(ol$Region); ol$Area <- NULL
 set.seed(123)

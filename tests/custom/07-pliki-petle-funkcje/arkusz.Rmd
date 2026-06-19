@@ -1,3 +1,12 @@
+---
+title: "Arkusz 07 — wiele plików, pętle, własne funkcje (specdata)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 07 — wiele plików, pętle, własne funkcje (specdata)
 
 **Dane:** `data/specdata/` — pliki `001.csv` … `332.csv` (każdy: `Date`, `sulfate`,
@@ -13,20 +22,48 @@ wczytuje pliki o numerach `id`, skleja je i zwraca średnią wskazanego zanieczy
 (pomijając `NA`). Ile wynosi `pollutantmean("data/specdata", "sulfate", 1:10)`?
 (zaokrąglij do 3 miejsc)
 
+```{r}
+
+```
+
 **Zad. 2.** Ile wynosi `pollutantmean("data/specdata", "nitrate", 70:72)`? (3 miejsca)
+
+```{r}
+
+```
 
 **Zad. 3.** Napisz funkcję `complete(directory, id)` zwracającą ramkę `id, nobs` (liczba
 kompletnych wierszy). Ile kompletnych obserwacji ma plik 54?
 
+```{r}
+
+```
+
 **Zad. 4.** Korzystając z `complete`, ile kompletnych obserwacji mają łącznie pliki 1–10?
+
+```{r}
+
+```
 
 **Zad. 5.** Napisz funkcję `corr(directory, threshold = 0)`, która dla każdego monitora
 o liczbie **kompletnych** obserwacji większej od `threshold` liczy korelację `sulfate`
 vs `nitrate` i zwraca wektor tych korelacji. Ile wynosi `length(corr("data/specdata", 150))`?
 
+```{r}
+
+```
+
 **Zad. 6.** Ile wynosi `length(corr("data/specdata", 400))` oraz `length(corr("data/specdata", 1000))`?
 
+```{r}
+
+```
+
 **Zad. 7.** Jaka jest **średnia** korelacja dla progu 150?
+
+```{r}
+
+```
 
 **Zad. 8.** (zamknięte) Jak wczytać wszystkie ścieżki plików z katalogu?
 

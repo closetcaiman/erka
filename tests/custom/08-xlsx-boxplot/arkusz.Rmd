@@ -1,3 +1,12 @@
+---
+title: "Arkusz 08 — Excel (xlsx), boxplot, grupy, teoria"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 08 — Excel (xlsx), boxplot, grupy, teoria
 
 **Dane:** `data/Prochnica.csv` (separator `;`), `data/Zawaly.xlsx`. **Czas:** ~40 min.
@@ -7,23 +16,55 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 **Zad. 1.** Wczytaj `data/Prochnica.csv`. Ile jest poziomów zmiennej `Substancja_słodząca`
 i ile obserwacji na poziom?
 
+```{r}
+
+```
+
 **Zad. 2.** Narysuj boxplot `Próchnica` w zależności od `Substancja_słodząca`. Która
 substancja ma najwyższą **średnią** próchnicę?
 
+```{r}
+
+```
+
 **Zad. 3.** Wczytaj `data/Zawaly.xlsx` (pakiet `readxl`). Ile jest wierszy i kolumn?
 
+```{r}
+
+```
+
 **Zad. 4.** Oblicz średnie `BMI` osobno dla kobiet i mężczyzn (kolumna `Plec`).
+
+```{r}
+
+```
 
 **Zad. 5.** Czy palący mają wyższy średni `Cholesterol calkowity` niż niepalący
 (kolumna `Palenie`)?
 
+```{r}
+
+```
+
 **Zad. 6.** Która substancja w `Prochnica.csv` daje najbardziej **zmienne** wyniki
 (najwyższe odchylenie standardowe)?
+
+```{r}
+
+```
 
 **Zad. 7.** Kolumny `HDL`, `LDL`, `Tg` w `Zawaly` to panel lipidowy (format szeroki).
 Przekształć je na **długi** (`frakcja`, `wartosc`) i policz średnią każdej frakcji.
 
+```{r}
+
+```
+
 **Zad. 8.** Ile pacjentów przypada na każdy `Rodzaj zawalu`?
+
+```{r}
+
+```
 
 **Zad. 9.** (zamknięte) Którą funkcją wczytasz plik `.xlsx`?
 

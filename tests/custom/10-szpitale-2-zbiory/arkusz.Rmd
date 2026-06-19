@@ -1,3 +1,12 @@
+---
+title: "Arkusz 10 — DWA zbiory: szpitale (wyniki leczenia + dane szpitali)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 10 — DWA zbiory: szpitale (wyniki leczenia + dane szpitali)
 
 **Dane:** `data/outcome-of-care-measures.csv` (śmiertelność), `data/hospital-data.csv`
@@ -11,17 +20,37 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 
 **Zad. 1.** Połącz oba zbiory (inner join) po `Provider.Number`. Ile rekordów pasuje?
 
+```{r}
+
+```
+
 **Zad. 2.** Ile szpitali z `hospital-data.csv` NIE ma odpowiednika w `outcome` (anti-join)?
 A ile rekordów `outcome` nie ma pary w `hospital-data`?
+
+```{r}
+
+```
 
 **Zad. 3.** Po złączeniu policz średnią śmiertelność po **zapaleniu płuc** (`pn`) wg
 `Hospital.Type`. Który typ ma najniższą?
 
+```{r}
+
+```
+
 **Zad. 4.** Który `Hospital.Ownership` ma najniższą średnią śmiertelność po
 **niewydolności serca** (`hf`)?
 
+```{r}
+
+```
+
 **Zad. 5.** Dla każdego stanu znajdź szpital o najniższej śmiertelności po **zawale**
 (`ha`). W ilu stanach ten najlepszy szpital jest typu `"Acute Care Hospitals"`?
+
+```{r}
+
+```
 
 **Zad. 6.** (zamknięte) `anti_join(a, b, by="k")` zwraca:
 

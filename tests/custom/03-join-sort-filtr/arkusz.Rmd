@@ -1,3 +1,12 @@
+---
+title: "Arkusz 03 — łączenie ramek (join), sortowanie, filtrowanie, NA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 03 — łączenie ramek (join), sortowanie, filtrowanie, NA
 
 **Dane:** `data/outcome-of-care-measures.csv`, `data/hospital-data.csv`. **Czas:** ~40 min.
@@ -11,21 +20,53 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 **Zad. 1.** Wczytaj oba pliki. Połącz je po kluczu `Provider.Number` (inner join). Ile
 rekordów pasuje?
 
+```{r}
+
+```
+
 **Zad. 2.** Przekonwertuj kolumnę 11 na liczbę. Ile powstaje braków (`NA`) i dlaczego?
+
+```{r}
+
+```
 
 **Zad. 3.** Dla stanu **TX** znajdź szpital o **najniższej** śmiertelności po zawale.
 Jak się nazywa i jaka to wartość? (Pomiń `NA`.)
 
+```{r}
+
+```
+
 **Zad. 4.** Który stan ma najwięcej szpitali w zbiorze `outcome`? Podaj top 3.
 
+```{r}
+
+```
+
 **Zad. 5.** Jaka jest **krajowa** średnia śmiertelności po zawale (z pominięciem `NA`)?
+
+```{r}
+
+```
 
 **Zad. 6.** Który szpital ma **najwyższą** (najgorszą) śmiertelność po zawale i w jakim
 jest stanie?
 
+```{r}
+
+```
+
 **Zad. 7.** Który szpital jest **drugim** najlepszym (2. najniższa wartość) w TX?
 
+```{r}
+
+```
+
 **Zad. 8.** Ile szpitali w TX ma śmiertelność po zawale `<= 14`?
+
+```{r}
+
+```
 
 **Zad. 9.** (zamknięte) Którą funkcją dplyr zostawisz tylko rekordy pasujące w OBU ramkach?
 

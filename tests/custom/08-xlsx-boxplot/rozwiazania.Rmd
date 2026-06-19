@@ -1,8 +1,17 @@
+---
+title: "Arkusz 08 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 08 — rozwiązania
 
 **Zad. 1.**
 
-```r
+```{r}
 pr <- read.csv2("data/Prochnica.csv")
 table(pr$Substancja_słodząca)
 ```
@@ -11,7 +20,7 @@ table(pr$Substancja_słodząca)
 
 **Zad. 2.**
 
-```r
+```{r}
 boxplot(Próchnica ~ Substancja_słodząca, data = pr)
 tapply(pr$Próchnica, pr$Substancja_słodząca, mean)
 # Glicyna 20.18; Glukoza 13.01; Sacharoza 38.70; Sorbitol 13.09
@@ -21,7 +30,7 @@ tapply(pr$Próchnica, pr$Substancja_słodząca, mean)
 
 **Zad. 3.**
 
-```r
+```{r}
 library(readxl)
 za <- read_excel("data/Zawaly.xlsx")
 dim(za)        # 239 15
@@ -31,7 +40,7 @@ dim(za)        # 239 15
 
 **Zad. 4.**
 
-```r
+```{r}
 library(dplyr)
 za %>% group_by(Plec) %>% summarise(srednie_BMI = mean(BMI, na.rm = TRUE))
 ```
@@ -40,7 +49,7 @@ za %>% group_by(Plec) %>% summarise(srednie_BMI = mean(BMI, na.rm = TRUE))
 
 **Zad. 5.**
 
-```r
+```{r}
 za %>% group_by(Palenie) %>%
   summarise(chol = mean(`Cholesterol calkowity`, na.rm = TRUE))
 ```
@@ -49,7 +58,7 @@ za %>% group_by(Palenie) %>%
 
 **Zad. 6.**
 
-```r
+```{r}
 tapply(pr$Próchnica, pr$Substancja_słodząca, sd)
 # Glicyna 2.73; Glukoza 2.85; Sacharoza 4.80; Sorbitol 2.62
 ```
@@ -58,7 +67,7 @@ tapply(pr$Próchnica, pr$Substancja_słodząca, sd)
 
 **Zad. 7.**
 
-```r
+```{r}
 library(tidyr)
 za %>% select(HDL, LDL, Tg) %>%
   pivot_longer(everything(), names_to = "frakcja", values_to = "wartosc") %>%
@@ -69,7 +78,7 @@ za %>% select(HDL, LDL, Tg) %>%
 
 **Zad. 8.**
 
-```r
+```{r}
 table(za[["Rodzaj zawalu"]])
 ```
 

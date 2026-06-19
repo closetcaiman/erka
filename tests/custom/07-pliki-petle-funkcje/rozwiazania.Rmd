@@ -1,7 +1,17 @@
+---
+title: "Arkusz 07 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 07 — rozwiązania
 
 **Zad. 1.**
-```r
+
+```{r}
 pollutantmean <- function(directory, pollutant, id = 1:332) {
   pliki <- list.files(directory, full.names = TRUE)
   dat <- do.call(rbind, lapply(pliki[id], read.csv))
@@ -9,16 +19,20 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
 }
 round(pollutantmean("data/specdata", "sulfate", 1:10), 3)   # 4.064
 ```
+
 **Odp.: 4,064.**
 
 **Zad. 2.**
-```r
+
+```{r}
 round(pollutantmean("data/specdata", "nitrate", 70:72), 3)  # 1.706
 ```
+
 **Odp.: 1,706.**
 
 **Zad. 3.**
-```r
+
+```{r}
 complete <- function(directory, id = 1:332) {
   pliki <- list.files(directory, full.names = TRUE)
   nobs <- sapply(id, function(i) {
@@ -28,17 +42,21 @@ complete <- function(directory, id = 1:332) {
 }
 complete("data/specdata", 54)        # id=54, nobs=219
 ```
+
 **Odp.: 219.**
 
 **Zad. 4.**
-```r
+
+```{r}
 sum(complete("data/specdata", 1:10)$nobs)   # 3562
 # wektor nobs (1:10): 117 1041 243 474 402 228 442 192 275 148
 ```
+
 **Odp.: 3562.**
 
 **Zad. 5.**
-```r
+
+```{r}
 corr <- function(directory, threshold = 0) {
   pliki <- list.files(directory, full.names = TRUE)
   out <- numeric(0)
@@ -51,19 +69,24 @@ corr <- function(directory, threshold = 0) {
 }
 length(corr("data/specdata", 150))    # 234
 ```
+
 **Odp.: 234.**
 
 **Zad. 6.**
-```r
+
+```{r}
 length(corr("data/specdata", 400))    # 127
 length(corr("data/specdata", 1000))   # 3
 ```
+
 **Odp.: 127 oraz 3.**
 
 **Zad. 7.**
-```r
+
+```{r}
 mean(corr("data/specdata", 150))   # ≈ 0.125 (mediana ≈ 0.095)
 ```
+
 **Odp.: ≈ 0,125.**
 
 **Zad. 8.** → **`list.files("specdata", full.names = TRUE)`**.

@@ -1,3 +1,12 @@
+---
+title: "Arkusz 12 — tidymodels (ML): klasyfikacja oliwy"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 12 — tidymodels (ML): klasyfikacja oliwy
 
 **Dane:** `data/olive.rda` (obiekt `olive`). **Czas:** ~35 min.
@@ -69,9 +78,25 @@ Ustaw katalog roboczy na ten folder. Rozwiązania: `rozwiazania.md`.
 
 **P1.** Wczytaj `data/olive.rda`. Zamień `Region` na `factor`, usuń kolumnę `Area`.
 
+```{r}
+
+```
+
 **P2.** Podziel dane 75/25 ze stratyfikacją po `Region` (ustaw `set.seed(123)`).
+
+```{r}
+
+```
 
 **P3.** Zbuduj przepis: `Region ~ .` + normalizacja predyktorów numerycznych.
 
+```{r}
+
+```
+
 **P4.** Zdefiniuj model drzewa decyzyjnego (silnik `rpart`, tryb klasyfikacja), zepnij
 w `workflow`, wytrenuj i policz **accuracy** na zbiorze testowym.
+
+```{r}
+
+```

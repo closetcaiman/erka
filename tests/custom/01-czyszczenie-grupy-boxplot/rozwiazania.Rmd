@@ -1,8 +1,17 @@
+---
+title: "Arkusz 01 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 01 — rozwiązania
 
 **Zad. 1.**
 
-```r
+```{r}
 pol <- read.csv2("data/Polisy.csv")   # ; separator + , dziesiętne
 nrow(pol)                             # 348
 ```
@@ -12,7 +21,7 @@ separator → błąd „more columns than column names" / liczby jako tekst.
 
 **Zad. 2.**
 
-```r
+```{r}
 library(dplyr)
 pol %>% group_by(Plec) %>% summarise(sredni_wiek = mean(Wiek_kierowcy))
 # baza R: tapply(pol$Wiek_kierowcy, pol$Plec, mean)
@@ -22,7 +31,7 @@ pol %>% group_by(Plec) %>% summarise(sredni_wiek = mean(Wiek_kierowcy))
 
 **Zad. 3.**
 
-```r
+```{r}
 mean(pol$Szkoda == "Tak") * 100      # 20.40 %
 sum(pol$Szkoda == "Tak")             # 71
 ```
@@ -31,7 +40,7 @@ sum(pol$Szkoda == "Tak")             # 71
 
 **Zad. 4.**
 
-```r
+```{r}
 pol %>% group_by(Szkoda) %>% summarise(sredni_czas = mean(Czas_eksploatacji))
 ```
 
@@ -39,7 +48,7 @@ pol %>% group_by(Szkoda) %>% summarise(sredni_czas = mean(Czas_eksploatacji))
 
 **Zad. 5.**
 
-```r
+```{r}
 kor <- read.csv2("data/Korozja.csv")
 names(kor)   # "Rodzaj.powłoki" "Głębokość.uszkodzenia"
 boxplot(Głębokość.uszkodzenia ~ Rodzaj.powłoki, data = kor)
@@ -50,7 +59,7 @@ tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, median)
 
 **Zad. 6.**
 
-```r
+```{r}
 pol %>% group_by(Plec, Szkoda) %>% summarise(n = n(), wiek = mean(Wiek_kierowcy), .groups = "drop")
 ```
 
@@ -59,7 +68,7 @@ Zaskoczenie: mężczyźni **ze szkodą** są dużo MŁODSI (35,4) niż bez (49,9
 
 **Zad. 7.**
 
-```r
+```{r}
 cor(pol$Wiek_kierowcy, pol$Czas_eksploatacji)   # -0.244
 ```
 
@@ -67,7 +76,7 @@ cor(pol$Wiek_kierowcy, pol$Czas_eksploatacji)   # -0.244
 
 **Zad. 8.**
 
-```r
+```{r}
 mean(pol$Plec[pol$Szkoda == "Tak"] == "Kobieta") * 100   # 15.49
 ```
 
@@ -75,7 +84,7 @@ mean(pol$Plec[pol$Szkoda == "Tak"] == "Kobieta") * 100   # 15.49
 
 **Zad. 9.**
 
-```r
+```{r}
 tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, sd)    # A 11,58 ; B 10,77
 tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, IQR)   # A 12,5  ; B 11,5
 ```
@@ -84,7 +93,7 @@ tapply(kor$Głębokość.uszkodzenia, kor$Rodzaj.powłoki, IQR)   # A 12,5  ; B 
 
 **Zad. 10.**
 
-```r
+```{r}
 library(ggplot2)
 ggplot(kor, aes(x = Rodzaj.powłoki, y = Głębokość.uszkodzenia, fill = Rodzaj.powłoki)) +
   geom_boxplot()

@@ -1,7 +1,16 @@
+---
+title: "Arkusz 02 — rozwiązania"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 # Arkusz 02 — rozwiązania
 
 **Zad. 1.**
-```r
+```{r}
 cr <- read.csv2("data/Czas reakcji.csv")
 nrow(cr)        # 25
 colMeans(cr)    # Reakcja_przed 0.2012, Reakcja_po 0.2688
@@ -9,7 +18,7 @@ colMeans(cr)    # Reakcja_przed 0.2012, Reakcja_po 0.2688
 **Odp.: 25 osób; przed = 0,2012; po = 0,2688.**
 
 **Zad. 2.**
-```r
+```{r}
 library(dplyr); library(tidyr)
 cr_long <- cr %>%
   mutate(id = row_number()) %>%
@@ -19,13 +28,13 @@ head(cr_long)
 ```
 
 **Zad. 3.**
-```r
+```{r}
 cr_long %>% group_by(moment) %>% summarise(srednia = mean(czas))
 # po 0.2688 ; przed 0.2012  -> ZGADZA SIĘ
 ```
 
 **Zad. 4.**
-```r
+```{r}
 sum(cr$Reakcja_po < cr$Reakcja_przed)               # 4 osoby
 mean(cr$Reakcja_po - cr$Reakcja_przed)              # 0.0676
 mean(cr$Reakcja_po < cr$Reakcja_przed) * 100        # 16 %
@@ -35,19 +44,19 @@ max(cr$Reakcja_po - cr$Reakcja_przed)               # 0.16
 największe pogorszenie +0,16.**
 
 **Zad. 5.**
-```r
+```{r}
 cr_wide <- cr_long %>% pivot_wider(names_from = moment, values_from = czas)
 # kolumny: id, Reakcja_przed, Reakcja_po (jak oryginał)
 ```
 
 **Zad. 6.**
-```r
+```{r}
 cr %>% mutate(roznica = Reakcja_po - Reakcja_przed) %>%
   arrange(desc(roznica)) %>% head(3)
 ```
 
 **Zad. 7.**
-```r
+```{r}
 library(ggplot2)
 ggplot(cr_long, aes(x = moment, y = czas, group = id)) +
   geom_line(alpha = 0.4) + geom_point()
