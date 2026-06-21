@@ -1,0 +1,590 @@
+Debugowanie to proces
+A) pisania kodu, który efektywnie wykorzystuje pamięć
+B) pisania kodu, który jest tak szybki, jak to możliwe
+C) obsługi błędów w niestandardowy sposób
+>>>D) doprowadzania do zgodności twoich oczekiwań dotyczących zachowania kodu z rzeczywistością
+
+Która z poniższych funkcji inicjuje interaktywne środowisko debugowania, które pozwala na przechodzenie przez kod krok po kroku, wyrażenie po wyrażeniu?
+>>>A) browser()
+B) stop()
+C) tryCatch()
+D) try()
+
+Która z poniższych funkcji pozwala na tymczasowe wstawianie fragmentów kodu do innych funkcji w celu modyfikacji ich zachowania?
+A) browser()
+B) recover()
+>>>C) trace()
+D) debug()
+
+Co robi funkcja traceback()?
+>>>A) zwraca stan stosu wywołań funkcji tuż przed wystąpieniem błędu
+B) ustawia flagę debugowania dla funkcji
+C) wstrzymuje wykonanie funkcji
+D) oblicza wyrażenie i zwraca obiekt "try-error", jeśli wystąpi błąd
+
+Kiedy należy wywołać funkcję traceback()?
+>>>A) natychmiast po wystąpieniu błędu
+B) tylko podczas debugowania wewnątrz funkcji
+C) w dowolnym momencie po wystąpieniu błędu
+D) natychmiast po wystąpieniu ostrzeżenia
+
+Co robi wywołanie trace("f") dla funkcji "f()"?
+>>>A) Za każdym razem, gdy f() jest wywoływane, w konsoli wyświetlany jest komunikat informujący o wywołaniu funkcji.
+B) Za każdym razem, gdy f() jest wywoływane, stos wywołań funkcji jest zapisywany do pliku.
+C) Generuje plik dziennika zawierający informacje debugowania.
+D) Za każdym razem, gdy f() jest wywoływane, wchodzi w interaktywny debuger.
+
+Do czego przydaje się pakiet microbenchmark?
+A) do interaktywnego debugowania funkcji
+B) do obsługi ostrzeżeń i błędów w niestandardowy sposób
+C) do modyfikowania kodu w pakietach innych programistów
+>>>D) do porównywania szybkości kilku funkcji, które robią to samo
+
+Co robi funkcja RProf()?
+A) analizuje twój kod pod kątem potencjalnych błędów
+>>>B) wypisuje stos wywołań funkcji w interwałach czasu określonych przez użytkownika
+C) przeformatowuje twój kod, aby był zgodny ze standardami
+D) wizualizuje zachowanie czasowe kodu R
+
+Co robi funkcja profvis()?
+A) zapisuje plik dziennika stosu wywołań funkcji
+B) wizualizuje kod, który działa szybko (w mniej niż 10 milisekund)
+>>>C) wyświetla informacje profilowania w interaktywnej wizualizacji w RStudio
+D) wypisuje informacje debugowania w konsoli
+
+Która z podanych opcji (funkcji) jest lepsza do analizowania szybkości działania elementów napisanej funkcji: profvis() czy microbenchmark()?
+A) microbenchmark
+>>>B) profvis
+
+Używając system.time(), czym jest czas użytkownika (user time)?
+>>>A) Jest to czas spędzony przez CPU na obliczaniu wyrażenia.
+B) Jest to czas spędzony przez CPU na oczekiwaniu na zakończenie innych zadań.
+C) Jest to "czas zegara ściennego" (wall-clock time) potrzebny do obliczenia wyrażenia.
+D) Jest to miara opóźnienia sieci.
+
+Jeśli komputer ma więcej niż jeden dostępny procesor, a R jest w stanie to wykorzystać, to które z poniższych stwierdzeń jest prawdziwe podczas używania system.time()?
+A) czas użytkownika wynosi 0
+>>>B) czas rzeczywisty może być mniejszy niż czas użytkownika
+C) czas rzeczywisty (elapsed time) wynosi 0
+D) czas użytkownika (user time) jest zawsze mniejszy niż czas rzeczywisty
+
+Jaka geometria (geom) jest używana do rysowania granic geograficznych za pomocą ggplot?
+A) geom_spatial()
+B) geom_map()
+>>>C) geom_polygon()
+
+Jakiej estetyki (aes) używasz, aby wybrać zmienną do kolorowania na mapie kartogramowej (choropleth)?
+A) color
+B) map
+>>>C) fill
+D) shape
+
+Jaka geometria (geom) jest używana do umieszczania punktów na mapie przy użyciu danych o szerokości i długości geograficznej?
+A) geom_bubble()
+B) geom_spatial()
+>>>C) geom_point()
+D) geom_area()
+
+Kiedy chcesz użyć pliku .geojson lub .shp do narysowania mapy z prostymi obiektami, co powinieneś zrobić z innymi plikami, które mogą być powiązane z tymi plikami podczas pobierania danych?
+>>>A) Upewnij się, że wszystkie te pliki znajdują się w katalogu roboczym wraz z plikiem .shp lub .geojson.
+B) Możesz je zignorować - wszystkie potrzebne informacje znajdują się w plikach .geojson lub .shp.
+C) Zaimportuj wszystkie te pliki do R, używając odpowiednich poleceń.
+
+Jakiego pakietu R potrzebujesz, aby rysować mapy z prostymi obiektami (Simple Features) w R w połączeniu z ggplot?
+A) rmaps
+B) simplefeatures
+>>>C) sf
+D) maps
+
+Jaka geometria (geom) jest używana do rysowania map przy użyciu danych prostych obiektów (simple features)?
+>>>A) geom_sf()
+B) geom_polygon()
+C) geom_map()
+
+Które z poniższych najlepiej opisuje, jak wypełnić kolory dla mapy kartogramowej (choropleth) utworzonej za pomocą danych prostych obiektów (simple features)?
+>>>A) Ustaw estetykę fill w geometrii (geom) dla odpowiedniej zmiennej.
+B) Ustaw estetykę color_sf w geometrii (geom) dla odpowiedniej zmiennej.
+C) Ustaw estetykę fill_sf w geometrii (geom) dla odpowiedniej zmiennej.
+
+Jaka jest najlepsza praktyka dodawania etykiet do punktów na wykresie bąbelkowym utworzonym za pomocą danych prostych obiektów (simple features)?
+A) Użyj geom_label i upewnij się, że opcja spacing jest ustawiona na "high".
+B) Użyj geom_text, używając danych przestrzennych i mapowania estetyki label.
+>>>C) Użyj geom_text_repel, używając danych przestrzennych i mapowania estetyki label.
+
+Funkcja ggplot() wymaga, aby wartość dostarczona do argumentu 'data' była:
+>>>A) data frame
+B) listą
+C) character vector
+D) geom
+
+Wykonujesz kod: ggplot(nepali, aes(x = ht, y = wt)) + geom_point(). Pojawia się błąd. Co się stało?
+A) Nie załadowałeś jeszcze ramki danych nepali.
+B) Próbujesz utworzyć wykres punktowy (scatterplot) dla zmiennej kategorycznej.
+C) Zestaw danych nepali nie zawiera jednej lub obu kolumn (ht, wt), których użyłeś w instrukcji aes.
+>>>D) Ponieważ umieściłeś + na początku drugiej linii, zamiast na końcu pierwszej linii, R uznał, że wywołanie się zakończyło.
+
+Masz zbiór danych z wzrostem i wagą badanych w wielu punktach czasowych. Chcesz narysować każdego badanego innym kolorem. Które rozwiązanie jest dobre?
+>>>A) Przekonwertuj kolumnę "id" na czynnik (factor) i użyj ggplot2 z "color = id" w aes().
+B) Pozostaw kolumnę "id" jako numeryczną i użyj ggplot do utworzenia wykresu, a następnie użyj "+" do dodania color(aes(id)).
+C) Przekonwertuj kolumnę "id" na czynnik i określ "color = id" jako jedyny argument w geom_point().
+D) Pozostaw kolumnę "id" jako numeryczną i określ "color = id" w aes().
+
+Chcesz zapisać wykres z R jako plik PDF o nazwie "MyFig.pdf". Które kroki są właściwe?
+A) Owiń cały swój kod w instrukcję pdf().
+B) Uruchom dev.on("MyFig.pdf"), skonstruuj wykres, potem dev.off().
+C) Skonstruuj wykres, uruchom pdf("MyFig.pdf"), potem dev.off().
+>>>D) Uruchom pdf("MyFig.pdf"), skonstruuj wykres, potem dev.off().
+
+Rozważ zbiór danych barley. Które wyrażenie ggplot2 utworzy scatterplot roku i plonu, kolorując każdy punkt według odmiany?
+A) ggplot(data = barley, aes(year, yield)) + geom_point()
+B) ggplot(data = barley, aes(year, yield, color = variety))
+C) ggplot(data = barley, aes(year, yield)) + geom_point(color = variety)
+>>>D) ggplot(data = barley, aes(year, yield)) + geom_point(aes(color = variety))
+
+Chcesz utworzyć scatterplot obwodu na osi x, wysokości na osi y i objętości za pomocą rozmiaru punktu dla danych trees. Które rozwiązania są prawidłowe?
+A) ggplot() + geom_point(trees, aes(x = Girth, y = Height, size = Volume))
+>>>B) ggplot() + geom_point(data = trees, aes(x = Girth, y = Height, size = Volume))
+>>>C) trees %>% ggplot(aes(x = Girth, y = Height, size = Volume)) + geom_point()
+>>>D) trees %>% ggplot(aes(x = Girth, y = Height)) + geom_point(aes(size = Volume))
+E) trees %>% ggplot() + geom_point(x = Girth, y = Height, size = Volume)
+F) trees %>% ggplot(aes(x = Girth, y = Height)) + geom_point(size = Volume)
+>>>G) trees %>% ggplot() + geom_point(aes(x = Girth, y = Height, size = Volume))
+>>>H) ggplot(trees, aes(x = Girth, y = Height, size = Volume)) + geom_point()
+
+Jak można utworzyć małe wielokrotności (small multiples) za pomocą ggplot2?
+>>>A) Dodaj facet_wrap do geometrii, określając formułę do fasetowania.
+B) Dodaj wiele geometrii (geoms) do wykresu za pomocą składni "+".
+>>>C) Dodaj facet_grid do geometrii, określając jedną lub dwie kolumny do fasetowania.
+D) Dodaj element scales, aby zmniejszyć zakres skal wykresu.
+
+Co robi geom_smooth(method = "lm"), gdy jest dodane do obiektu ggplot?
+>>>A) Dodaje dopasowaną linię regresji liniowej do wykresu.
+B) Dodaje przezroczystość do punktów, aby uniknąć nadmiernego nakładania się.
+C) Dodaje paletę kolorów do rysowania punktów.
+D) Dodaje nieliniową funkcję wygładzającą do wykresu.
+
+Podczas rysowania wielu paneli za pomocą fasetowania dla pojedynczej zmiennej, co kontroluje kolejność rysowania paneli?
+A) Panele są uporządkowane losowo.
+B) Kolejność paneli musi być określona przez użytkownika.
+C) Panele są uporządkowane według liczby punktów danych w każdym panelu.
+>>>D) Panele są uporządkowane alfabetycznie lub według kolejności poziomów zmiennej fasetującej.
+
+Jakiej funkcji użyłbyś, aby ograniczyć zakres osi x na scatterplot?
+A) scale_y_continuous()
+B) scale()
+>>>C) scale_x_continuous()
+D) geom_scale()
+
+Jaki jest najbliższy animowany odpowiednik facet_wrap z zmienną kategoryczną?
+A) transition_filter()
+B) transition_time()
+>>>C) transition_states()
+
+Jaki jest najprostszy sposób zapisania animacji?
+A) Wyeksportuj ją jako animację Flash za pomocą flash_save.
+>>>B) Wyeksportuj ją jako animowany gif za pomocą anim_save.
+C) Wyeksportuj ją jako plik .mp4 za pomocą mp4_save.
+
+Czym jest "easing" w animacjach?
+A) Opisuje proces wyboru czasu wyświetlania każdej klatki.
+B) Opisuje proces przyspieszania renderowania animacji dla złożonych wykresów.
+>>>C) Opisuje sposób, w jaki wartości w animacji zmieniają się z klatki na klatkę.
+
+Kiedy używasz transition_layers()?
+A) Gdy chcesz użyć zagnieżdżonych, hierarchicznych danych.
+B) Gdy chcesz dać czytelnikowi możliwość wyboru różnych warstw do wyświetlenia.
+>>>C) Gdy chcesz sekwencyjnie budować różne geometrie (geoms) na wykresie.
+
+Jak możesz kontrolować prędkość przejścia między klatkami w transition_states?
+>>>A) Wypróbuj różne wartości numeryczne dla argumentu transition_length.
+B) Zmodyfikuj opcję frames w anim_save podczas eksportowania animacji.
+C) Wybierz jeden z kilku predefiniowanych ustawień prędkości w argumencie transition_speed.
+
+Jaka jest podstawowa funkcja dodająca interaktywny interfejs plotly do wykresu ggplot?
+A) plotly()
+>>>B) ggplotly()
+C) gg_plotly()
+
+Który z tych sposobów pozwala wyeksportować interaktywny wykres plotly?
+A) Wyeksportuj go za pomocą funkcji plotly_save().
+>>>B) Prześlij wykres na swoje konto RPubs.
+>>>C) Zapisz go jako plik .html za pomocą okna Viewer w R Studio.
+
+Jaką estetykę ustawiasz w ggplot(), która pozwala ggplotly animować wykres?
+>>>A) frame
+B) animate
+C) transition
+
+Jak wyeksportować animację utworzoną za pomocą ggplotly()?
+A) Wyeksportować ją jako animację Flash.
+>>>B) Zapisać ją jako plik .html za pomocą okna Viewer w R Studio.
+C) Wyeksportować ją jako animowany gif za pomocą anim_save.
+
+Jaki jest cel mapowania estetyki ids podczas animowania wykresu ggplot za pomocą ggplotly()?
+A) Dodaje etykiety do znaczników na wykresie, dzięki czemu łatwiej będzie śledzić zmiany w czasie.
+B) Sprawia, że wykres staje się interaktywny, gdy użytkownik zatrzyma animację.
+>>>C) Dodaje stałość obiektu do wykresu, dzięki czemu animacja będzie płynniejsza i będziesz mógł śledzić poszczególne jednostki obserwacji.
+
+Jaka jest domyślna metoda dopasowywania linii najlepszego dopasowania za pomocą geom_smooth?
+A) GLM
+>>>B) Loess
+C) GAN
+D) GAM
+E) Model liniowy (zwykłe najmniejsze kwadraty)
+
+Jaka funkcja jest wymagana do utworzenia scatter plota?
+A) ggalt
+B) ggally
+>>>C) ggscatter
+D) ggpairs
+
+Jakiej geometrii (geom) musisz użyć, aby narysować wykres punktowy Cleveland?
+>>>A) geom_point()
+B) geom_lollipop()
+C) geom_cleveland()
+
+W funkcji ggcorrplot(), jaka jest rola argumentu "type="?
+>>>A) Określa, czy wykres powinien przedstawiać kompletną macierz korelacji, czy tylko górną lub dolną część.
+B) Określa współczynnik korelacji, który będzie używany do obliczania wartości dla wykresu.
+C) Określa kształt wykresu korelacji.
+
+Jaka jest poprawna geometria (geom) do wypełnienia obszaru pod linią na wykresie liniowym?
+>>>A) geom_area()
+B) geom_stack_line()
+C) geom_fill_line()
+
+W jakiej strukturze muszą być Twoje dane, aby utworzyć wykres hantelkowy (dumbbell plot)?
+>>>A) Wide
+B) Long
+C) Nested
+D) Tibble
+
+Używając pakietu ggalt, jaka geometria (geom) jest używana do narysowania wykresu hantelkowego?
+>>>A) geom_dumbbell()
+B) geom_line()
+C) geom_point() i geom_segment()
+
+Jaką estetykę (aes()) musisz ustawić, aby utworzyć skumulowany wykres obszarowy (stacked area chart)?
+A) stack
+B) color
+C) linetype
+>>>D) fill
+
+Jakiego rodzaju pliku używasz do utworzenia flexdashboardu?
+A) .rdash
+>>>B) .rmd
+C) .r
+D) .html
+
+Te linie to pierwsza część twojego flexdashboardu: --- flexdashboard::flex_dashboard: output: title: "My First Dashboard" --- vertical_layout: scroll ---. Który z poniższych kodów poprawnie ustawi orientację dashboardu na wiersze?
+A) Dodaj orientation: long do linii 5.
+B) Dodaj orientation: wide do linii 5.
+C) Dodaj orientation: tall do linii 5.
+>>>D) Dodaj orientation: rows do linii 5.
+
+Twój kolega, który ma problemy z tworzeniem dashboardu, wysyła Ci następujący fragment kodu. Nie może zrozumieć, jak umieścić podziały kolumn w swoim dashboardzie. Próbuje różnych rzeczy. Który z poniższych kodów zadziała, aby utworzyć dashboard z dwiema kolumnami?
+>>>A) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ### Chart A ggplot(dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ### Chart B ggplot(dat,aes(x=var3))+geom_bar()
+B) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- x ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() y ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+C) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column
+>>>D) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+
+Twój kolega przychodzi do ciebie i ma dashboard z dwiema wykresami jeden pod drugim. Chciałby żeby wyglądał z zakładkami. Jego kod ma: Column ----- ### Chart 1 ggplot(mtcars,aes(x=cyl))+geom_bar() ### Chart 2 ggplot(mtcars,aes(x=wt,y=mpg))+geom_point(). Co poradzisz?
+A) Zastąp słowo "Chart" słowem "Tab" w liniach 15 i 21.
+B) Zastąp "Column" słowem "Tabs" w linii 12.
+C) Dodaj {.tab} do linii 12.
+>>>D) Dodaj {.tabset} do linii 12.
+
+Twój kolega próbuje utworzyć flexdashboard z wieloma stronami, ale robi coś źle. Jego kod ma: Page 1 --- ### Chart 1 ### Chart 2 Page 2 --- ### Chart 3 ### Chart 4. Jaką poprawkę wprowadzasz do tego pliku .rmd, aby utworzyć osobną stronę dla Wykresu 3 i Wykresu 4?
+A) W liniach 7 i 19 zastąp "---" znakiem ".*
+B) Po linii 3 wstaw nową linię zawierającą "orientation: pages".
+>>>C) W liniach 7 i 19 zastąp "---" znakiem "===".
+
+Twój kolega uczy się tworzyć flexdashboardy z wbudowanym Shiny. Ale coś jest nie tak z jej nagłówkiem. Nagłówek ma: --- title: "Shiny w Dashboardzie" output: flexdashboard::flex_dashboard: orientation: columns vertical_layout: fill ---. Jeśli twój kolega próbuje osadzić aplikację Shiny w swoim flexdashboardzie, jaką zmianę musi wprowadzić do poniższego nagłówka?
+A) Musi dodać "interact: shiny" w nowej linii po linii 6.
+B) Powinna w linii 4 zastąpić drugie "flex_dashboard" słowami "shiny_dashboard".
+>>>C) Musi dodać "runtime: shiny" w nowej linii po linii 6.
+
+Twój kolega tworzy flexdashboard i integruje Shiny. Chce użyć układu paska bocznego. Ma kod: --- title: "Shiny in a Dashboard" output: flexdashboard::flex_dashboard: orientation: columns vertical_layout: fill runtime: shiny --- Input ---------------------------------------------- ### User Input radioButtons(inputId="my_cyl",label="Cylinders",choices=c(4,6,8)) Column --- ### ggplot(filter(mtcars,cyl==input$my_cyl),aes(x=mpg,y=wt))+geom_point(). Co jest nie tak z tym kodem?
+A) W linii 18 powinno być "Sidebar".
+B) W linii 23 powinna znaleźć się funkcja sidebarLayout().
+>>>C) W linii 18 powinno być "Input{.sidebar}".
+
+Podczas przeglądania kodu kolegi z poprzedniego problemu zauważyłeś coś jeszcze nie tak z tym, jak współpracownik próbował wyświetlić wykres. Kod ma: ggplot(filter(mtcars,cyl==input$my_cyl),aes(x=mpg,y=wt))+geom_point(). Jaką zmianę należy wprowadzić, aby wykres się wyświetlił?
+A) Zmodyfikuj linię: plotOutput(ggplot(filter(mtcars, cyl == input$my_cyl), aes(x = mpg, y = wt)) + geom_point())
+B) Zmodyfikuj linię: plotOutput(renderPlot(ggplot(filter(mtcars, cyl == input$my_cyl), aes(x = mpg, y = wt)) + geom_point()))
+>>>C) Zmodyfikuj linię: renderPlot(ggplot(filter(mtcars, cyl == input$my_cyl), aes(x = mpg, y = wt)) + geom_point())
+D) Zmodyfikuj linię: output <- (ggplot(filter(mtcars, cyl == input$my_cyl), aes(x = mpg, y = wt)) + geom_point())
+
+Jeśli chcesz udostępnić flexdashboard komuś, które z poniższych opcji są dostępne?
+>>>A) Opublikuj pliki .rmd i dane na swoim koncie shinyapps.io.
+>>>B) Wyślij plik .rmd wraz z danymi i poproś, aby sam go skompilował.
+>>>C) Opublikuj pliki .rmd i dane za pomocą R Studio Connect.
+D) Wyślij mu/jej plik .html i poproś, aby otworzył go w przeglądarce internetowej.
+
+Które z poniższych najlepiej opisuje język R?
+>>>A) R jest językiem programowania dedykowanym do statystyki
+B) R ma graficzny interfejs typu "wskaż i kliknij" (jak Photoshop)
+C) R jest systemem operacyjnym
+
+Który z tych sposobów jest najłatwiejszy do zapisania kodu R do wykorzystania w przyszłości?
+A) Napisanie kod w konsoli R w RStudio
+>>>B) Użycie panelu skryptów w RStudio
+C) Napisanie kodu R w edytorze tekstu, takim jak Microsoft Word, a następnie zaimportowanie go do R/Rstudio
+
+Po zakończeniu okresu próbnego, czy korzystanie z R będzie kosztować setki dolarów?
+A) Prawda
+>>>B) Fałsz
+
+W R, wszystkie poniższe są atomowymi typami danych Z WYJĄTKIEM (zaznacz wszystkie pasujące):
+>>>A) matrix
+B) numeric
+C) integer
+D) logical
+>>>E) list
+>>>F) table
+>>>G) array
+>>>H) data frame
+I) character
+J) complex
+
+Co robi funkcja class() w R?
+A) tworzy nową klasę obiektu
+B) przypisuje klasę do obiektu
+>>>C) zwraca linię wyjściową, która identyfikuje klasy obiektu
+
+Jeśli wykonasz wyrażenie x <- 4 w R, jaka będzie klasa obiektu x, określona przez funkcję class()?
+>>>A) numeric
+B) vector
+C) complex
+D) list
+E) integer
+F) real
+G) matrix
+
+Co się stanie, jeśli spróbujesz uruchomić: 10variable1 <- c(5, 19, 10, "apple")?
+A) R zapisze wektor do obiektu 10variable1
+>>>B) R zwróci błąd, ponieważ 10variable1 nie jest prawidłową nazwą obiektu
+C) R zwróci błąd, ponieważ nie można łączyć liczb i ciągów znaków w tym samym wektorze w R
+
+Jaka jest klasa obiektu zdefiniowanego przez x <- c(4, TRUE)?
+A) list
+B) character
+C) logical
+D) integer
+>>>E) numeric
+F) matrix
+
+Jeśli mam dwa wektory x <- c(1, 3, 5) i y <- c(3, 2, 10), co jest wynikiem wyrażenia rbind(x, y)?
+A) wektor o długości 2
+B) macierz 3 na 2
+C) macierz 2 na 2
+D) macierz 3 na 3
+E) wektor o długości 3
+>>>F) macierz z dwoma wierszami i trzema kolumnami
+
+Kluczową właściwością wektorów w R jest to, że:
+>>>A) elementy wektora muszą być tej samej klasy
+B) wektor nie może mieć atrybutów takich jak wymiary
+C) długość wektora musi być mniejsza niż 32 768
+D) elementy wektora mogą być różnych klas
+E) elementy wektora mogą być tylko znakowe lub numeryczne
+
+Załóżmy, że mam listę zdefiniowaną jako x <- list(2, "a", "b", TRUE). Co daje mi x[[2]]? Zaznacz wszystkie pasujące.
+A) lista zawierająca wektor znakowy z elementami "a" i "b"
+B) lista zawierająca wektor znakowy z literą "a"
+>>>C) wektor znakowy zawierający literę "a"
+>>>D) wektor znakowy o długości 1
+E) wektor znakowy z elementami "a" i "b"
+
+Załóżmy, że mam wektor x <- 1:4 i wektor y <- 2. Co jest wynikiem wyrażenia x + y?
+A) wektor całkowity z elementami 3, 2, 3, 4
+>>>B) wektor numeryczny z elementami 3, 4, 5, 6
+C) wektor numeryczny z elementami 1, 2, 3, 6
+D) wektor numeryczny z elementami 3, 2, 3, 4
+E) wektor numeryczny z elementami 3, 2, 3, 6
+
+Załóżmy, że mam wektor x <- c(17, 14, 4, 5, 13, 12, 10) i chcę ustawić wszystkie elementy tego wektora, które są większe niż 10, na 4. Jaki kod R to osiągnie? Zaznacz wszystkie pasujące
+A) x[x < 10] <- 4
+B) x[x == 4] > 10
+>>>C) x[x >= 11] <- 4
+>>>D) x[x > 10] <- 4
+E) x[x == 10] <- 4
+F) x[x > 10] == 4
+G) x[x >= 10] <- 4
+H) x[x > 4] <- 10
+
+Która z poniższych jest zasadą grafiki analitycznej (principle of analytic graphics)?
+A) Pokazuj wykresy pudełkowe (podsumowania jednowymiarowe).
+B) Rób tylko to, na co pozwalają Ci Twoje narzędzia.
+C) Nie rysuj więcej niż dwóch zmiennych naraz.
+D) Rozsądnie używaj kolorów na wykresach punktowych (scatterplot).
+>>>E) Pokazuj porównania.
+
+Jaka jest rola wykresów eksploracyjnych w analizie danych?
+A) Są używane zamiast formalnego modelowania.
+B) Osie, legendy i inne szczegóły są czyste i dokładnie opisane.
+C) Konstruuje się ich tylko kilka.
+>>>D) Celem jest osobiste zrozumienie.
+
+Które z poniższych stwierdzeń jest prawdziwe o podstawowym systemie wykresów (base plotting system)?
+>>>A) Wykresy są tworzone i opisywane za pomocą oddzielnych funkcji.
+B) System jest najbardziej przydatny do wykresów warunkowych.
+C) Marginesy i odstępy są automatycznie dostosowywane w zależności od typu wykresu i danych.
+D) Wykresy są zazwyczaj tworzone za pomocą pojedynczego wywołania funkcji.
+
+Które z poniższych jest przykładem prawidłowego urządzenia graficznego w R?
+A) Klawiatura
+>>>B) Plik PDF
+C) CSV
+D) Folder plików
+E) Połączenie socketowe
+
+Które z poniższych jest przykładem wektorowego urządzenia graficznego w R?
+A) TIFF
+B) PNG
+C) GIF
+D) JPEG
+>>>E) Postscript
+
+Formaty plików bitmapowych mogą być najbardziej przydatne dla:
+>>>A) Wykresów rozrzutu (scatterplot) z bardzo dużą liczbą punktów.
+B) Wykresów, które mogą wymagać zmiany rozmiaru.
+C) Wykresów, które nie są skalowane do określonej rozdzielczości.
+D) Wykresów, które wymagają animacji lub interaktywności.
+
+Która z poniższych funkcji jest zazwyczaj używana do dodawania elementów do wykresu w podstawowym systemie graficznym?
+A) hist()
+>>>B) points()
+C) boxplot()
+D) plot()
+
+Która funkcja otwiera ekranowe urządzenie graficzne w systemie Windows?
+A) postscript()
+B) jpeg()
+C) xfig()
+>>>D) windows()
+
+Co kontroluje opcja 'pch' w par()?
+A) orientację etykiet osi na wykresie
+>>>B) symbol/znak rysowania w podstawowym systemie graficznym
+C) rozmiar symbolu rysowania na wykresie rozrzutu
+D) szerokość linii w podstawowym systemie graficznym
+
+Jeśli chcesz zapisać wykres do pliku PDF, która z poniższych opcji jest poprawnym sposobem na to?
+A) Skonstruuj wykres na urządzeniu ekranowym, a następnie skopiuj go do pliku PDF za pomocą dev.copy2pdf().
+B) Otwórz urządzenie ekranowe za pomocą quartz(), skonstruuj wykres, a następnie zamknij urządzenie za pomocą dev.off().
+C) Skonstruuj wykres na urządzeniu PNG za pomocą png(), a następnie skopiuj go do PDF za pomocą dev.copy2pdf().
+>>>D) Otwórz urządzenie PostScript za pomocą postscript(), skonstruuj wykres, a następnie zamknij urządzenie za pomocą dev.off().
+
+Które z poniższych najlepiej opisuje podstawowy cel Shiny?
+>>>A) Shiny to podejście do projektowania interaktywnych aplikacji internetowych opartych na R.
+B) Shiny to platforma do hostowania danych, do których użytkownicy mogą uzyskać dostęp w celu pisania kodu R.
+C) Shiny to zaawansowany zestaw opcji estetycznych dla wykresów R, aby uczynić je publikacji.
+
+Jaka jest rola funkcji fluidPage() w aplikacji Shiny?
+A) fluidPage() pozwala wybrać z zestawu gotowych układów dla aplikacji Shiny.
+>>>B) fluidPage() ustawia układ aplikacji
+C) fluidPage() umieszcza w sekcji UI aplikacji Shiny, gdy chcesz zapisać obiekt do wyświetlenia w interfejsie użytkownika.
+
+Jaki jest pierwszy argument w dowolnej funkcji wejściowej w Shiny, np. sliderInput(), selectInput(), numericInput()?
+A) value
+B) name
+>>>C) inputId
+
+Załóżmy, że używasz funkcji takiej jak sliderInput(), aby użytkownik wprowadził pewne informacje do aplikacji Shiny. Przypisujeszinput - do "my_input". Jak wywołać to wejście w funkcji servera?
+A) Dane wejściowe użytkownika zostają przypisane do wartości sliderInput$my_input.
+B) Dane wejściowe użytkownika zostają przypisane do wartości my_input$sliderInput.
+>>>C) Dane wejściowe użytkownika zostają przypisane do wartości input$my_input.
+
+Jaki jest cel plotOutput()?
+>>>A) plotOutput() może być dołączone jako część funkcji fluidPage w sekcji UI aplikacji Shiny, aby wyświetlić obiekt wykresu utworzony w funkcji serwera.
+B) plotOutput() powinno być dołączone w funkcji serwera aplikacji Shiny, gdy chcesz zapisać obiekt do wyświetlenia w interfejsie użytkownika.
+C) plotOutput() powinno być dołączone w sekcji UI aplikacji Shiny, i użytkownik umieszcza kod do tworzenia wykresu w tej funkcji plotOutput().
+
+Jaki jest cel funkcji renderPlot()?
+A) renderPlot() to funkcja umieszczania w sekcji UI aplikacji, wskazująca, że aplikacja powinna wygenerować wykresy.
+B) renderPlot() powinno być dołączone w funkcji serwera aplikacji Shiny, gdy chcesz zapisać obiekt do wyświetlenia.
+>>>C) renderPlot() przyjmuje wyrażenie, które generuje wykresy (np. ggplot()), i przypisuje je do plotOutput().
+
+Które z poniższych są odpowiednimi sposobami odpalenia aplikacji Shiny?
+>>>A) Po napisaniu całego kodu zaznacz cały kod i wciśnij go, a shinyApp() będzie ostatnią linią.
+>>>B) Weksportuj aplikację do pliku HTML, a następnie otwórz ją z systemu plików komputera.
+>>>C) Po napisaniu całego kodu kliknij "Run app" w RStudio.
+D) Wyślij plik z aplikacją, a następnie użyj programu ShinyViewer, aby go uruchomić i prześlać do Internetu.
+
+Tworzysz aplikację Shiny i chcesz dodać tytuł dla aplikacji. Tytuł brzmi "Tygodniowo liczby sprzedaży". Masz następujący kod: library(shiny) ui <- fluidPage( tableOutput("table1") ) server <- function(input, output) { output$table1 <- renderTable(weekly_sales) } shinyApp(ui, server). Jaki jest właściwy kod do dodania na linii 3, aby utworzyć tytuł dla aplikacji?
+>>>A) titlePanel("Weekly Sales Numbers")
+B) title <- appTitle("Weekly Sales Numbers")
+C) appTitle("Weekly Sales Numbers")
+D) title <- titlePanel("Weekly Sales Numbers")
+
+Chcesz utworzyć aplikację Shiny z układem dwukolumnowym. Masz następujące podejścia - który z poniższych kodów utworzy aplikację z dwiema kolumnami?
+>>>A) library(shiny) ui <- fluidPage( column(6, textInput(inputId = "text1", label = "Some text", value = "Test text"), textOutput("text1") ), column(6, numericInput(inputId = "number1", label = "A number", value = "10"), textOutput("number1") ) ) server <- function(input, output) { output$text1 <- renderText(input$text1) output$number1 <- renderText(input$number1) } shinyApp(ui, server)
+B) library(shiny) ui <- fluidPage( textInput(inputId = "text1", label = "Some text", value = "Test text"), textOutput("text1"), numericInput(inputId = "number1", label = "A number", value = "10"), textOutput("number1") ) server <- function(input, output) { output$text1 <- renderText(input$text1) output$number1 <- renderText(input$number1) } shinyApp(ui, server)
+
+Chcesz utworzyć aplikację Shiny z paskiem bocznym i panelem głównym. Jaki kod dodać do linii 4 do 6?
+>>>A) sidebarLayout( sidebarPanel( selectInput(inputId = "feature", "feature", c("mpg", "cyl")) ) )
+B) sidebarLeftPanel( sidePanel( selectInput(inputId = "feature", "feature", c("mpg", "cyl")) ) )
+C) sidebarLayout( sidebar( selectInput(inputId = "feature", "feature", c("mpg", "cyl")) ) )
+
+Chcesz utworzyć aplikację Shiny z gównym tytułem i zestawem zakładkami z dwiema zakładkami. Masz następujący kod początkowy: ui <- fluidPage(titlePanel("The Title"),mainPanel(textInput(inputId = "texti", label = "Type some letters", value = ""),numericInput(inputId = "numberi", label = "Type some numbers", value = ""))) server <- function(input, output) {output$tab_text <- renderText(input$text1) output$tab_number <- renderText(input$number1)} shinyApp(ui, server) Gdzie wstawiasz to w swoim kodzie, aby uformatować zakładki?
+A) tabPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "Numbers", textOutput("tab_number")))
+>>>B) tabsetPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "Numbers", textOutput("tab_number")))
+C) tabsetPanel(tab(title = "Text", textOutput("tab_text")),tab(title = "Numbers", textOutput("tab_number")))
+
+Załóżmy, że piszesz aplikację Shiny i chcesz wyświetlić tabelę dla ramki danych w interfejsie użytkownika. Jedyne linie, które napisaliśmy to: my_dat <- read_csv("my_dat.csv") ui <- fluidPage(tableOutput("table1")) server <- function(input, output) {} Której funkcji używasz do wyświetlenia tabeli ramki danych w interfejsie użytkownika?
+>>>A) output$table1 <- renderTable(my_dat)
+B) output$table1 <- renderDataTable(my_dat)
+C) output$table1 <- renderTable(my_dat)
+
+Która z poniższych funkcji byłaby używana do wyświetlenia dropdown-u, który pozwala użytkownikowi wybrać z zestawu opcji "Firma A", "Firma B", "Firma C" i przypisać do inputId "company"?
+>>>A) selectInput(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
+B) selectDropdown(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
+C) dropdown_value<-dropdownInput(choices=c("Company A","Company B","Company C"))
+
+Załóżmy, że piszesz aplikację Shiny i chcesz, aby użytkownik mógł wprowadzić tekst do pola tekstowego, przypisując dane wejściowe użytkownika do nazwy "user_name" i chcesz, aby pole było automatycznie wypełnione ciągiem "Your name here". Który kod jest poprawny?
+A) textInput("Enter your Name", "user_name", value="Your name here")
+>>>B) textInput("user_name", "Enter your Name", value="Your name here")
+C) typeInput("user_name", "Enter your Name", value="Your name here")
+
+Pracujesz nad aplikacją Shiny. Kod: dat <- rnorm(1000, 0, 1) ui <- fluidPage(titlePanel("Sampling the Normal Distribution"),sliderInput("obs", "Number of observations:",min = 1, max = 1000, value = 500),plotOutput("distPlot")) server <- function(input, output) {output$disPlot <- renderPlot(hist(sample(dat, input$obs)))} shinyApp(ui, server). Twój szef lubi motyw superbohatera. Jak go zaimplementować?
+A) Zainstaluj pakiet ggthemes(). W linii 1 dodaj: library(ggthemes). W linii 2 dodaj: ggthemes("superhero")
+B) Zainstaluj pakiet shinythemes(). W linii 1 dodaj: library(shinythemes). W linii 2 dodaj: shinytheme("theme_superhero")
+C) Zainstaluj pakiet ggthemes(). W linii 1 dodaj: library(ggthemes). W linii 4 dodaj: theme = getTheme("superhero")
+>>>D) Zainstaluj pakiet shinythemes(). W linii 1 dodaj: library(shinythemes). W linii 4 dodaj: theme = shinyTheme("superhero")
+
+Załóżmy, że piszesz aplikację Shiny i chcesz wyświetlić tabelę dla ramki danych w interfejsie użytkownika Twojej aplikacji. Masz: my_dat <- read_csv("my_dat.csv") ui <- fluidPage(tableOutput("table1")) server <- function(input, output) {}. Którą linię kodu umieszczasz w funkcji server, aby utworzyć tabelę ramki danych?
+>>>A) output$table1 <- renderTable(my_dat)
+B) output$table1 <- renderDataTable(my_dat)
+C) table1 <- renderTable(my_dat)
+
+Pracujesz nad aplikacją Shiny z kodem: dat <- rnorm(1000, 0, 1) ui <- fluidPage(titlePanel("Sampling the Normal Distribution"),sliderInput("obs", "Number of observations:",min = 1, max = 1000, value = 500),plotOutput("distPlot")) server <- function(input, output) {output$disPlot <- renderPlot(hist(sample(dat, input$obs)))} shinyApp(ui, server). Twój szef bardzo lubi motyw superbohatera dla aplikacji Shiny. Jak możesz to zaimplementować?
+A) Zainstaluj ggthemes(). W linii 1: library(ggthemes). W linii 2: ggthemes("superhero")
+B) Zainstaluj shinythemes(). W linii 1: library(shinythemes). W linii 2: shinytheme("theme_superhero")
+C) Zainstaluj ggthemes(). W linii 1: library(ggthemes). W linii 4: theme = getTheme("superhero")
+>>>D) Zainstaluj shinythemes(). W linii 1: library(shinythemes). W linii 4: theme = shinyTheme("superhero")
+
+Na czym skupia się język R?
+>>>A) analizie statystycznej
+B) sztucznej inteligencji
+C) mapowaniu
+
+Co to jest RStudio?
+>>>A) GUI dla R
+B) system kontroli wersji
+C) język programowania
+
+Jak nazywa się okno w lewym dolnym rogu w domyślnym układzie RStudio?
+A) wykresy
+>>>B) konsola
+C) historia
+
+Jakie polecenie wyświetla wersję R, system operacyjny i załadowane pakiety?
+>>>A) sessionInfo()
+B) version()
+C) SessionInfo()
+
+Jakie rozszerzenie pliku używają projekty w R?
+A) .R
+>>>B) .Rproj
+C) .RPROJECT
