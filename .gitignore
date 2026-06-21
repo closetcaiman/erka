@@ -3,3 +3,9 @@
 .Rproj.user/
 .Rhistory
 .RData
+
+# renv — track renv.lock and renv/activate.R, ignore the local library
+renv/library/
+renv/python/
+renv/staging/
+renv/sandbox/

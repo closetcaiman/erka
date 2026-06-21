@@ -15,9 +15,13 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: lintr
+      - name: Install renv
+        run: install.packages("renv")
+        shell: Rscript {0}
+
+      - name: Restore dependencies
+        run: renv::restore()
+        shell: Rscript {0}
 
       - name: Lint
         run: Rscript scripts/check.R

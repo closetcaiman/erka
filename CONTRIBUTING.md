@@ -2,9 +2,24 @@
 
 ## Setup
 
+Some packages (`sf`, `mapsf`, `gganimate`) require system libraries before `make deps` will work:
+
 ```bash
-make setup   # installs R dependencies and git hooks
+# Arch Linux
+sudo pacman -S gdal proj geos gcc-fortran
+yay -S udunits          # AUR
+
+# Ubuntu / Debian
+sudo apt install libgdal-dev libproj-dev libgeos-dev libudunits2-dev gfortran
 ```
+
+Then:
+
+```bash
+make setup   # restores renv lockfile and installs git hooks
+```
+
+Dependencies are managed with [renv](https://rstudio.github.io/renv/). The `renv.lock` file pins every package version — no manual `install.packages()` needed.
 
 ## Making changes
 
