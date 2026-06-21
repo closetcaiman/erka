@@ -1,11 +1,13 @@
 # Force GitHub Linguist to count .Rmd as R (not as Markdown)
 *.Rmd linguist-language=R
 *.Rmd linguist-detectable=true
-*.bz2 filter=lfs diff=lfs merge=lfs -text
-*.rds filter=lfs diff=lfs merge=lfs -text
-*.rda filter=lfs diff=lfs merge=lfs -text
-*.xlsx filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 *.pdf filter=lfs diff=lfs merge=lfs -text
+*.rda filter=lfs diff=lfs merge=lfs -text
+*.xlsx filter=lfs diff=lfs merge=lfs -text
+*.parquet filter=lfs diff=lfs merge=lfs -text
+*.bz2 filter=lfs diff=lfs merge=lfs -text
+*.rds filter=lfs diff=lfs merge=lfs -text
 lab-exams/**/data/*.csv filter=lfs diff=lfs merge=lfs -text
 lab-exams/**/data/*.txt filter=lfs diff=lfs merge=lfs -text
+materials/**/*.csv filter=lfs diff=lfs merge=lfs -text
