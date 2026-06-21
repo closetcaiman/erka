@@ -41,8 +41,7 @@ make setup   # installs R dependencies and git hooks
 
 ## CI
 
-Three workflows run on push and pull request:
+Two workflows run on push and pull request:
 
 - **lint** — lintr on all R/Rmd files
 - **fmt** — styler dry-run (fails if any file is unformatted)
-- **render** — renders all cheatsheets to PDF (runs on push to master when `cheatsheets/` changes)
