@@ -1,0 +1,84 @@
+---
+title: "Sheet 06 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 06 — solutions
+
+```{r}
+ga <- read.csv("data/gaData.csv")
+ga$date <- as.Date(ga$date) # ISO format -> parsed automatically
+```
+
+**Ex. 1.**
+
+```{r}
+range(ga$date) # "2011-01-01" "2012-08-22"
+sum(ga$visitsTumblr) # 124156
+```
+
+**Ans.: 2011-01-01 → 2012-08-22; total = 124156.**
+
+**Ex. 2.**
+
+```{r}
+sum(ga$visitsTumblr > 0) # 350
+```
+
+**Ans.: 350 days.**
+
+**Ex. 3.**
+
+```{r}
+sum(ga$visitsTumblr[format(ga$date, "%Y") == "2012"]) # 98808
+```
+
+**Ans.: 98808.**
+
+**Ex. 4.**
+
+```{r}
+ga$dow <- weekdays(ga$date)
+sort(tapply(ga$visitsTumblr, ga$dow, sum), decreasing = TRUE)
+```
+
+**Ans.: Monday — 25440 visits.**
+
+**Ex. 5.**
+
+```{r}
+ga$ym <- format(ga$date, "%Y-%m")
+sort(tapply(ga$visitsTumblr, ga$ym, sum), decreasing = TRUE)[1]
+```
+
+**Ans.: 2012-07 (17 484).**
+
+**Ex. 6.**
+
+```{r}
+ga[which.max(ga$visitsTumblr), c("date", "visitsTumblr")]
+```
+
+**Ans.: 2011-11-28 — 4997 visits.**
+
+**Ex. 7.**
+
+```{r}
+table(format(ga$date, "%Y")) # 2011: 365 ; 2012: 235
+```
+
+**Ans.: 2011 — 365 days, 2012 — 235 days.**
+
+**Ex. 8.** → **`format(d, "%Y")`** (returns text; wrap in `as.numeric()` to get a number).
+
+**Ex. 9.** → **returns the name of the day of the week.**
+
+**Ex. 10.** → **`pdf("f.pdf")` → code → `dev.off()`** (without `dev.off()` the file won't be saved).
+
+**Ex. 11.** → **shows the call stack after an error.**
+
+**Ex. 12.** → **both work** (`substr` on the text representation, `str_extract` with regex).

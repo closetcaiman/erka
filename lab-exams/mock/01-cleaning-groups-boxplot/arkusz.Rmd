@@ -1,0 +1,96 @@
+---
+title: "Sheet 01 — data cleaning, groups, boxplot"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 01 — data cleaning, groups, boxplot
+
+**Data:** `data/Polisy.csv`, `data/Korozja.csv`. **Time:** ~35 min.
+
+Set working directory to this folder (RStudio: Session → Set Working Directory → To Source
+File Location). Solutions: `rozwiazania.Rmd`.
+
+> These are Polish-locale files (separator `;`, decimal comma) — pay attention to which
+> read function you use.
+
+**Ex. 1.** Load `data/Polisy.csv`. How many observations (rows) are there? What will happen
+if you use `read.csv()` instead of `read.csv2()`?
+
+```{r}
+```
+
+**Ex. 2.** What is the mean driver age (`Wiek_kierowcy`) separately for women and men?
+
+```{r}
+```
+
+**Ex. 3.** What percentage of policies ended in a claim (`Szkoda == "Tak"`)?
+
+```{r}
+```
+
+**Ex. 4.** Do drivers with a claim have a longer or shorter mean usage time
+(`Czas_eksploatacji`) than those without a claim? Report both means.
+
+```{r}
+```
+
+**Ex. 5.** Load `data/Korozja.csv`. Draw a boxplot of damage depth by coating type.
+What is the **median** depth for coating A, and for B? Is the thick line in the box the
+median or the mean?
+
+```{r}
+```
+
+**Ex. 6.** Calculate the mean driver age broken down by `Plec` **and** `Szkoda`
+simultaneously (4 groups). What surprising thing do you see for men?
+
+```{r}
+```
+
+**Ex. 7.** What is the correlation between `Wiek_kierowcy` and `Czas_eksploatacji`?
+
+```{r}
+```
+
+**Ex. 8.** Among policies with a claim (`Szkoda == "Tak"`), what percentage are women?
+
+```{r}
+```
+
+**Ex. 9.** For `Korozja.csv`: which coating has greater **spread** of damage depth?
+Compare the standard deviation and IQR for A and B.
+
+```{r}
+```
+
+**Ex. 10.** Draw a boxplot of depth by coating in **ggplot2**, with coating on the x-axis
+and `fill` by coating.
+
+```{r}
+```
+
+**Ex. 11.** (closed) Which function in `tidymodels` splits data into training and test sets?
+
+- `split_test_train()`
+- `train_test_split()`
+- `initial_split()`
+- `data_split()`
+
+**Ex. 12.** (closed) What arguments should you use in `facet_grid()` to split a plot into
+a grid by two variables `var1` and `var2` with "free" scales?
+
+- `facet_grid(var1 + var2, scales="free")`
+- `facet_grid(var1 ~ var2, scales="free")`
+- `facet_grid(var1 | var2, scales="free")`
+
+**Ex. 13.** (closed) What is the key property of an atomic vector in R?
+
+- elements of different classes
+- elements of the same class
+- length < 32768
+- no names

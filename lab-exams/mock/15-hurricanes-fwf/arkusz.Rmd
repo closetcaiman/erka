@@ -1,0 +1,111 @@
+---
+title: "Sheet 15 — hurricanes: read_fwf, wide→long, wind analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Data:** `data/ebtrk_atlc_1988_2015.txt` (11,824 rows, fixed-width format).
+**Time:** ~45 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> A text file **without a header** in FWF (fixed-width format).
+> Each row = one hurricane measurement (every 6 hours).
+> Read with `readr::read_fwf()` and `fwf_widths(c(...), c("name", ...))`.
+> Column widths and names are in the solutions.
+> Key columns: `storm_id`, `storm_name`, `year`, `wind_kts` (wind speed in knots),
+> 12 wind radius columns:
+> `ts_radius_{NE,SE,SW,NW}` (≥34 kt), `r50_{NE,SE,SW,NW}` (≥50 kt), `r64_{NE,SE,SW,NW}` (≥64 kt).
+> Value -99 = missing data.
+
+**Ex. 1.** Load the file using `read_fwf()` with `fwf_widths()`. Check `dim()` and `names()`.
+How many unique hurricanes (`storm_id`) are in the dataset?
+
+```{r}
+```
+
+**Ex. 2.** Convert columns `wind_kts`, `year`, `lat`, `lon` to `numeric` type.
+Replace values of -99 in the wind radius columns with `NA`.
+
+```{r}
+```
+
+**Ex. 3.** What is the year range in the data? How many observations (measurements) does
+each year have — which year had the most hurricane activity?
+
+```{r}
+```
+
+**Ex. 4.** What is the maximum wind speed in the dataset? Which hurricane (`storm_name`)
+achieved it and in which year?
+
+```{r}
+```
+
+**Ex. 5.** How many observations have wind speed ≥ 64 knots (hurricane force on the
+Beaufort scale)? What percentage of all measurements does this represent?
+
+```{r}
+```
+
+**Ex. 6.** Transform the data from wide to long format (`pivot_longer`) for the
+12 wind radius columns (`ts_radius_NE` through `r64_NW`). The resulting data frame should
+have columns `quadrant` and `radius`. Filter out rows with `radius <= 0` or `NA`.
+
+```{r}
+```
+
+**Ex. 7.** After the transformation: how many rows remain after filtering out NA and ≤ 0?
+
+```{r}
+```
+
+**Ex. 8.** Split the `quadrant` column (e.g. "r50_NE") into `threshold` (e.g. "r50")
+and `direction` (e.g. "NE"). Which direction (NE/SE/SW/NW) has the largest mean radius
+for the 50-knot threshold (`r50`)?
+
+```{r}
+```
+
+**Ex. 9.** For each year, compute the maximum wind speed across all measurements.
+Which year had the strongest hurricane? What was its name?
+
+```{r}
+```
+
+**Ex. 10.** Compute the mean wind speed per hurricane (`storm_id`). Which hurricane had
+the highest **mean** (not maximum) wind speed over its entire lifetime?
+
+```{r}
+```
+
+**Ex. 11.** (closed) `fwf_widths(c(7, 10, 6), c("id", "name", "date"))` specifies:
+
+- the number of rows to skip
+- the widths (in characters) of successive columns and their names
+- column separators at positions 7, 10, 6
+- data types of the columns
+
+**Ex. 12.** (closed) `pivot_longer(cols = a:z, names_to = "variable", values_to = "value")` causes:
+
+- column names a…z to become values in the column `variable`
+- the column `variable` to contain numbers from 1 to 26
+- columns a…z to be duplicated
+- values to go into many new columns
+
+**Ex. 13.** (closed) The value -99 in this database means:
+
+- hurricane category -99
+- missing measurement data
+- 99 nautical miles in the westward direction
+- GPS read error
+
+**Ex. 14.** Classify each observation by wind speed:
+"TS" (≥34 kt), "Cat1" (≥64 kt), "Cat3" (≥96 kt), "Cat5" (≥137 kt).
+Count the number of observations in each category.
+
+```{r}
+```

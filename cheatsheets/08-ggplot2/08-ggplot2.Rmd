@@ -1,0 +1,120 @@
+---
+title: "06 — ggplot2 i wizualizacja"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+library(ggplot2)
+```
+
+## ggplot2 anatomy
+
+```{r}
+# Każdy wykres: dane + aes() + geom_*()
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+```{r}
+# Color and shape in aes() → zależy od danych (tworzy legendę)
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl), shape = factor(am))) +
+  geom_point(size = 3)
+```
+
+```{r}
+# Color outside aes() → stały dla wszystkich punktów
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "steelblue", size = 2)
+```
+
+## Geoms
+
+```{r fig.height=3}
+# Histogram
+ggplot(mtcars, aes(x = mpg)) +
+  geom_histogram(bins = 10, fill = "steelblue")
+```
+
+```{r fig.height=3}
+# Boxplot
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_boxplot()
+```
+
+```{r fig.height=3}
+# Boxplot base R (szybszy zapis)
+boxplot(mpg ~ cyl, data = mtcars)
+```
+
+```{r fig.height=3}
+# Line + points
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_line() +
+  geom_point()
+```
+
+```{r fig.height=3}
+# Linear regression
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE)
+```
+
+## Facets
+
+```{r fig.height=4}
+# facet_wrap — jedna zmienna, panele "zawijane"
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_wrap(~cyl)
+```
+
+```{r fig.height=4}
+# facet_grid — siatka wg DWÓCH zmiennych
+# wiersz ~ kolumna; . oznacza brak podziału w tym wymiarze
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_grid(am ~ cyl)
+```
+
+```{r eval=FALSE}
+# scales="free" — każdy panel ma własną oś
+facet_grid(var1 ~ var2, scales = "free")
+facet_grid(. ~ var2) # columns only
+facet_grid(var1 ~ .) # rows only
+```
+
+## Saving plots
+
+```{r eval=FALSE}
+# ggsave — zapisuje ostatni wykres
+ggsave("wykres.pdf", width = 8, height = 6)
+ggsave("wykres.png", dpi = 300)
+
+# Base R — otwórz urządzenie, narysuj, zamknij
+pdf("wykres.pdf")
+plot(mtcars$wt, mtcars$mpg)
+dev.off()
+
+# Copy active graphics window
+dev.copy2pdf(file = "wykres.pdf")
+```
+
+## Base R graphics (szybkie szkice)
+
+```{r fig.height=3}
+plot(mtcars$wt, mtcars$mpg,
+  pch = 16, col = "steelblue",
+  xlab = "Masa (1000 lb)", ylab = "Mile/galon"
+)
+abline(lm(mpg ~ wt, data = mtcars), col = "red")
+```
+
+```{r fig.height=3}
+# Add points do istniejącego wykresu
+plot(mtcars$wt, mtcars$mpg)
+points(mtcars$wt[mtcars$cyl == 8], mtcars$mpg[mtcars$cyl == 8],
+  col = "red", pch = 17
+)
+```

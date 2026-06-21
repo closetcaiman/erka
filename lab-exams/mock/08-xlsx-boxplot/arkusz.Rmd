@@ -1,0 +1,84 @@
+---
+title: "Sheet 08 — Excel (xlsx), boxplot, groups, theory"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 08 — Excel (xlsx), boxplot, groups, theory
+
+**Data:** `data/Prochnica.csv` (separator `;`), `data/Zawaly.xlsx`. **Time:** ~40 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+**Ex. 1.** Load `data/Prochnica.csv`. How many levels does the variable `Substancja_słodząca`
+have and how many observations per level?
+
+```{r}
+```
+
+**Ex. 2.** Draw a boxplot of `Próchnica` by `Substancja_słodząca`. Which substance has
+the highest **mean** caries score?
+
+```{r}
+```
+
+**Ex. 3.** Load `data/Zawaly.xlsx` (package `readxl`). How many rows and columns are there?
+
+```{r}
+```
+
+**Ex. 4.** Compute the mean `BMI` separately for women and men (column `Plec`).
+
+```{r}
+```
+
+**Ex. 5.** Do smokers have a higher mean `Cholesterol calkowity` than non-smokers
+(column `Palenie`)?
+
+```{r}
+```
+
+**Ex. 6.** Which substance in `Prochnica.csv` gives the most **variable** results
+(highest standard deviation)?
+
+```{r}
+```
+
+**Ex. 7.** Columns `HDL`, `LDL`, `Tg` in `Zawaly` form a lipid panel (wide format).
+Transform them to **long** format (`frakcja`, `wartosc`) and compute the mean of each fraction.
+
+```{r}
+```
+
+**Ex. 8.** How many patients belong to each `Rodzaj zawalu`?
+
+```{r}
+```
+
+**Ex. 9.** (closed) Which function loads a `.xlsx` file?
+
+- `read.csv("p.xlsx")`
+- `readxl::read_excel("p.xlsx")`
+- `load("p.xlsx")`
+
+**Ex. 10.** (closed) A column whose name contains a space (`Cholesterol calkowity`)
+in dplyr must be wrapped in:
+
+- double quotes `"..."`
+- backticks `` `...` ``
+- parentheses `(...)`
+
+**Ex. 11.** (closed) In `testthat`, checking that a function **throws an error** uses:
+
+- `expect_equal()`
+- `expect_true()`
+- `expect_error()`
+
+**Ex. 12.** (closed) To load the specific sheet "Dane" from an xlsx file:
+
+- `read_excel("p.xlsx", tab="Dane")`
+- `read_excel("p.xlsx", sheet="Dane")`
+- `read_excel("p.xlsx", page="Dane")`

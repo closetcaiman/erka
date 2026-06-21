@@ -1,0 +1,317 @@
+---
+title: "Sheet 11 — THEORY (quick review, 56 closed questions)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 11 — THEORY (quick review, 56 closed questions)
+
+Questions collected from 11 completed quizzes (some may repeat verbatim). Scope matches
+the exam (Shiny/FlexDashboard omitted — instructor: "won't be tested"). Answer key:
+`rozwiazania.md`. Cover it and quiz yourself.
+
+## A. R Basics
+
+1. What best describes R?
+   - a language for statistics
+   - an operating system
+   - a point-and-click editor
+
+2. Easiest way to save code for later?
+   - the console
+   - the RStudio script panel
+   - Word
+
+3. (T/F) After a trial period, R costs hundreds of dollars.
+
+4. Which are NOT **atomic** types?
+   - matrix
+   - numeric
+   - list
+   - integer
+   - table
+   - array
+   - data frame
+   - character
+   - logical
+   - complex
+
+5. What does `class()` do?
+   - creates a class
+   - assigns a class
+   - returns the class of an object
+
+6. Class of `x <- 4`?
+   - integer
+   - numeric
+   - complex
+   - vector
+
+7. What will `10variable1 <- c(5,19,"a")` do?
+   - store the vector
+   - error: bad name
+   - error: mixed types
+
+8. Class of `c(4, TRUE)`?
+   - logical
+   - numeric
+   - character
+   - list
+
+9. Result of `rbind(c(1,3,5), c(3,2,10))`?
+   - vector of length 3
+   - 3×2 matrix
+   - 2×3 matrix
+   - error
+
+10. Key property of an atomic vector?
+    - elements of different classes
+    - elements of the same class
+    - max length 32768
+
+11. `x <- list(2,"a","b",TRUE)`; what does `x[[2]]` give?
+    - a list with "a"
+    - a character vector "a" (length 1)
+    - a vector "a","b"
+
+12. `x <- 1:4; y <- 2`; result of `x + y`?
+    - 3,2,3,4
+    - 3,4,5,6
+    - 1,2,3,6
+
+13. How to set elements of `x` > 10 to 4?
+    - `x[x>10] <- 4`
+    - `x[x>10] == 4`
+    - `x[x<10] <- 4`
+
+## B. Base Graphics and Devices
+
+14. Principle of analytic graphics?
+    - show comparisons
+    - draw max 2 variables
+    - use colors
+
+15. Role of exploratory plots?
+    - replace modeling
+    - personal understanding
+    - clean axes and legends
+
+16. True statement about base plotting?
+    - built up with separate function calls
+    - always 1 call
+    - automatic margins
+
+17. Valid graphics device?
+    - keyboard
+    - PDF file
+    - CSV
+    - folder
+
+18. Which is **vector-based**?
+    - TIFF
+    - PNG
+    - JPEG
+    - Postscript
+
+19. Bitmap formats best for?
+    - scatterplot with many points
+    - resizing
+    - animations
+
+20. Function that **adds** to an existing plot?
+    - hist()
+    - points()
+    - boxplot()
+    - plot()
+
+21. Screen device on Windows?
+    - postscript()
+    - jpeg()
+    - windows()
+
+22. What does `pch` in `par()` control?
+    - axis labels
+    - point symbol
+    - line width
+
+23. Copy plot from screen to PDF?
+    - dev.copy2pdf()
+    - png()+dev.off()
+    - pdf.save()
+
+## C. ggplot2
+
+24. `ggplot()` — `data` must be?
+    - a data frame
+    - a list
+    - a character vector
+    - a geom
+
+25. Error when `+` is at the start of line 2?
+    - missing data
+    - R treated the call as complete
+    - wrong column
+
+26. Color points by `id` (numeric)?
+    - leave numeric + color()
+    - factor(id) + color=id in aes()
+    - color=id in geom_point
+
+27. Save ggplot to PDF?
+    - pdf("f"){...}
+    - dev.on()→dev.off()
+    - pdf("f")→code→dev.off()
+
+28. Scatterplot colored by `variety`?
+    - aes(...,color=variety) without geom
+    - geom_point(aes(color=variety))
+
+29. "Small multiples"?
+    - facet_wrap/facet_grid
+    - multiple geoms
+    - scales
+
+30. `geom_smooth(method="lm")` adds?
+    - a linear regression line
+    - transparency
+    - a palette
+
+31. Default method of `geom_smooth` (no `method`)?
+    - lm
+    - loess
+    - glm
+    - gam
+
+32. Panel order when faceting?
+    - random
+    - alphabetically/by factor levels
+    - by number of points
+
+33. Restrict x-axis range?
+    - scale()
+    - scale_x_continuous()
+    - geom_scale()
+
+34. Aesthetic for a **stacked** area chart?
+    - stack
+    - color
+    - fill
+
+35. geom to fill under a line?
+    - geom_area()
+    - geom_fill_line()
+    - geom_stack_line()
+
+36. Data format for a **dumbbell** chart?
+    - wide
+    - long
+    - nested
+
+37. Role of `type=` in `ggcorrplot()`?
+    - correlation coefficient
+    - full/upper/lower matrix
+    - shape
+
+## D. Maps
+
+38. geom for geographic boundaries?
+    - geom_spatial()
+    - geom_map()
+    - geom_polygon()
+
+39. aes for choropleth coloring?
+    - color
+    - map
+    - fill
+    - shape
+
+40. Points by latitude/longitude?
+    - geom_bubble()
+    - geom_point()
+    - geom_spatial()
+
+41. Package for simple features?
+    - rmaps
+    - sf
+    - maps
+    - simplefeatures
+
+42. geom for simple features?
+    - geom_sf()
+    - geom_polygon()
+    - geom_map()
+
+43. Point labels without overlapping?
+    - geom_label
+    - geom_text
+    - geom_text_repel
+
+## E. Debugging and Performance
+
+44. Debugging is the process of?
+    - speeding up code
+    - handling errors
+    - aligning expectations with reality
+
+45. Interactive step-by-step debugging?
+    - browser()
+    - stop()
+    - tryCatch()
+
+46. Temporarily inserting code into a function?
+    - browser()
+    - trace()
+    - debug()
+
+47. What does `traceback()` do?
+    - sets a debug flag
+    - shows the call stack after an error
+    - pauses a function
+
+48. What is `microbenchmark` for?
+    - debugging
+    - comparing the speed of several functions
+    - error handling
+
+49. Profiling slow parts of **one** function?
+    - microbenchmark
+    - profvis
+
+50. `user time` in `system.time()`?
+    - CPU time for computation
+    - waiting time
+    - network latency
+
+## F. stringr / tidymodels / testthat
+
+51. `str_detect(x, "pattern")` returns?
+    - matching elements
+    - TRUE/FALSE
+    - indices
+
+52. Difference between `gsub` and `sub`?
+    - gsub replaces the first
+    - gsub replaces all
+    - gsub only numbers
+
+53. Regex for "starts with United"?
+    - grep("United$")
+    - grep("^United")
+    - grep("\*United")
+
+54. Train/test split (tidymodels)?
+    - split()
+    - initial_split()
+    - train_test_split()
+
+55. `facet_grid` 2-variable grid, free?
+    - facet_grid(v1+v2,scales="free")
+    - facet_grid(v1~v2,scales="free")
+
+56. `expect_error()` in testthat?
+    - checks equality
+    - checks whether an error is thrown
+    - checks whether TRUE is returned

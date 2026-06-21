@@ -1,0 +1,93 @@
+---
+title: "Sheet 12 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 12 — solutions
+
+## Theory
+
+- **T1** → `initial_split()`
+- **T2** → `training()` / `testing()`
+- **T3** → `recipe()` + `step_*()`
+- **T4** → `parsnip`
+- **T5** → `workflow()`
+- **T6** → `fit()` / `predict()`
+- **T7** → `yardstick`
+- **T8** → `vfold_cv()`
+
+## Practice — full working code
+
+```{r}
+library(tidymodels) # or: rsample, recipes, parsnip, workflows, yardstick
+load("data/olive.rda")
+
+# P1 — preparation
+ol <- olive %>%
+  mutate(Region = factor(Region)) %>%
+  select(-Area)
+
+# P2 — train/test split (stratified by class)
+set.seed(123)
+podzial <- initial_split(ol, prop = 0.75, strata = Region)
+treningowe <- training(podzial) # 428 obs.
+testowe <- testing(podzial) # 144 obs.
+
+# P3 — recipe: formula + processing steps
+przepis <- recipe(Region ~ ., data = treningowe) %>%
+  step_normalize(all_numeric_predictors())
+
+# P4 — model + workflow + training + evaluation
+model <- decision_tree() %>%
+  set_engine("rpart") %>%
+  set_mode("classification")
+wf <- workflow() %>%
+  add_recipe(przepis) %>%
+  add_model(model)
+fit_wf <- fit(wf, data = treningowe)
+
+pred <- predict(fit_wf, new_data = testowe) %>%
+  bind_cols(testowe %>% select(Region))
+
+accuracy(pred, truth = Region, estimate = .pred_class) # accuracy = 1.00
+conf_mat(pred, truth = Region, estimate = .pred_class) # perfect confusion matrix
+
+# (optional) cross-validation:
+set.seed(1)
+folds <- vfold_cv(treningowe, v = 5, strata = Region)
+```
+
+**Result: accuracy ≈ 1.00** (fatty acids separate the regions very well).
+Other models instead of `decision_tree()`: `rand_forest()` (engine `"ranger"`),
+`multinom_reg()` / `logistic_reg()`, `nearest_neighbor()`.
+
+## Variant WITHOUT tidymodels (if packages are unavailable)
+
+```{r}
+load("data/olive.rda")
+ol <- olive
+ol$Region <- factor(ol$Region)
+ol$Area <- NULL
+set.seed(123)
+idx <- sample(nrow(ol), round(0.75 * nrow(ol)))
+train <- ol[idx, ]
+test <- ol[-idx, ]
+
+library(rpart) # decision tree
+m <- rpart(Region ~ ., data = train, method = "class")
+pred <- predict(m, test, type = "class")
+mean(pred == test$Region) # ≈ 0.986
+table(pred, test$Region)
+
+library(class) # k-NN
+knn(scale(train[, -1]), scale(test[, -1]), train$Region, k = 5) # ≈ 1.00
+```
+
+## tidymodels pipeline (memorise the order!)
+
+`initial_split` → `training`/`testing` → `recipe` + `step_*` → model (`parsnip`) →
+`workflow` (`add_recipe` + `add_model`) → `fit` → `predict` → `metrics`/`accuracy`.

@@ -1,0 +1,103 @@
+---
+title: "Sheet 04 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 04 — solutions
+
+```{r}
+library(dplyr)
+library(stringr)
+cel <- read.csv("data/cel_volden_wiseman.csv", stringsAsFactors = FALSE)
+```
+
+**Ex. 1.**
+```{r}
+cel %>%
+  filter(congress == 110) %>%
+  group_by(dem) %>%
+  summarise(n = n(), srednia_les = mean(les))
+```
+**Ans.: Republicans (dem=0) ≈ 0.448; Democrats (dem=1) ≈ 1.47.**
+
+**Ex. 2.**
+```{r}
+cel$nazwisko <- str_extract(cel$thomas_name, "^[^,]+") # from start, chars != comma
+# base R: sub(",.*$", "", cel$thomas_name)
+```
+
+**Ex. 3.**
+```{r}
+sum(str_detect(cel$thomas_name[cel$congress == 110], "^M")) # 48
+```
+**Ans.: 48.**
+
+**Ex. 4.**
+```{r}
+sum(cel$congress == 110 & cel$female == 1) # 78
+```
+**Ans.: 78.**
+
+**Ex. 5.**
+```{r}
+cel %>%
+  filter(congress == 110) %>%
+  group_by(st_name) %>%
+  summarise(n = n(), les = mean(les)) %>%
+  filter(n >= 5) %>%
+  arrange(desc(les)) %>%
+  head(1)
+```
+**Ans.: MN (Minnesota), mean les ≈ 2.46.**
+
+**Ex. 6.**
+```{r}
+n_distinct(cel$st_name[cel$congress == 110]) # 55
+```
+**Ans.: 55 (50 states + DC/territories).**
+
+**Ex. 7.**
+```{r}
+cel %>%
+  filter(congress == 110) %>%
+  group_by(st_name) %>%
+  mutate(sr_stan = mean(les)) %>%
+  ungroup() %>%
+  summarise(ilu = sum(les > sr_stan))
+```
+**Ans.: 149.**
+
+**Ex. 8.**
+```{r}
+cel %>%
+  filter(congress == 110) %>%
+  arrange(desc(les)) %>%
+  slice(1) %>%
+  select(thomas_name, les)
+```
+**Ans.: Rangel, Charles (les ≈ 18.69).**
+
+**Ex. 9.**
+```{r}
+cel$imie <- str_trim(str_extract(cel$thomas_name, "(?<=,).*")) # after comma
+# simpler: str_trim(sub("^[^,]+,", "", cel$thomas_name))
+```
+
+**Ex. 10.**
+```{r}
+cel %>%
+  filter(congress == 110) %>%
+  group_by(female) %>%
+  summarise(les = mean(les))
+```
+**Ans.: women 1.06 vs men 0.99 → women slightly higher (small difference).**
+
+**Ex. 11.** → **`str_detect()`**.
+
+**Ex. 12.** → **`grep("^United", x)`** (`^` = start of string).
+
+**Ex. 13.** → **replaces all occurrences**.

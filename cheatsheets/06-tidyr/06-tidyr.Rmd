@@ -1,0 +1,104 @@
+---
+title: "03 — tidyr: przestawianie danych"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+library(tidyr)
+library(dplyr)
+```
+
+## pivot_longer — wide → long
+
+```{r}
+# Dane szerokie: osobna kolumna na każdy pomiar
+szer <- data.frame(
+  osoba = c("Anna", "Bartek"),
+  wynik_przed = c(120, 135),
+  wynik_po = c(115, 128)
+)
+szer
+```
+
+```{r}
+dl <- pivot_longer(szer,
+  cols      = c(wynik_przed, wynik_po), # kolumny do przestawienia
+  names_to  = "moment", # nazwa kolumny z dawnymi nagłówkami
+  values_to = "wynik" # nazwa kolumny z wartościami
+)
+dl
+```
+
+```{r}
+# Shorthand — everything except osoba:
+pivot_longer(szer, cols = -osoba, names_to = "moment", values_to = "wynik")
+```
+
+## pivot_wider — long → wide
+
+```{r}
+pivot_wider(dl,
+  names_from  = "moment", # wartości tej kolumny staną się nagłówkami
+  values_from = "wynik"
+)
+```
+
+### Gotcha: duplicate keys in pivot_wider
+
+```{r}
+# Jeśli jest wiele wierszy na tę samą kombinację id+parametr
+# → pivot_wider zwróci kolumnę z listami (list-columns)
+duplikaty <- data.frame(
+  dzien     = c("2024-01-01", "2024-01-01", "2024-01-02"),
+  parametr  = c("SO2", "SO2", "SO2"),
+  wartosc   = c(1.2, 1.5, 2.0)
+)
+# BŁĄD: da list-columns:
+# pivot_wider(duplikaty, names_from=parametr, values_from=wartosc)
+
+# ROZWIĄZANIE: najpierw uśrednij duplikaty
+duplikaty |>
+  group_by(dzien, parametr) |>
+  summarise(v = mean(wartosc), .groups = "drop") |>
+  pivot_wider(names_from = parametr, values_from = v)
+```
+
+## separate — split one column into two
+
+```{r}
+df <- data.frame(data_czas = c("2024-01-15 08:30", "2024-03-22 14:00"))
+separate(df, data_czas, into = c("data", "czas"), sep = " ")
+```
+
+```{r}
+# sep może być regexem
+df2 <- data.frame(nazwisko_imie = c("Kowalski, Jan", "Nowak, Anna"))
+separate(df2, nazwisko_imie, into = c("nazwisko", "imie"), sep = ", ")
+```
+
+## unite — combine columns
+
+```{r}
+df3 <- data.frame(rok = 2024, miesiac = "01", dzien = "15")
+unite(df3, "data", rok, miesiac, dzien, sep = "-")
+```
+
+## Typical workflow: dane z quizów (szeroki → długi → analiza)
+
+```{r eval=FALSE}
+# Dane czasów reakcji: kolumna na każdego uczestnika
+reakcja <- read.csv2("data/Czas reakcji.csv")
+
+# Przestaw do formatu długiego
+dl <- pivot_longer(reakcja,
+  cols      = -Probant,
+  names_to  = "warunek",
+  values_to = "czas"
+)
+
+# Count statystyki per warunek
+dl |>
+  group_by(warunek) |>
+  summarise(srednia = mean(czas))
+```

@@ -1,0 +1,68 @@
+---
+title: "Sheet 10 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 10 — solutions
+
+```{r}
+out <- read.csv("data/outcome-of-care-measures.csv", stringsAsFactors = FALSE)
+hos <- read.csv("data/hospital-data.csv", stringsAsFactors = FALSE)
+out$ha <- as.numeric(out[[11]])
+out$hf <- as.numeric(out[[17]])
+out$pn <- as.numeric(out[[23]])
+library(dplyr)
+```
+
+**Ex. 1.** → **4706**
+```{r}
+j <- inner_join(out, hos, by = "Provider.Number")
+nrow(j)
+```
+
+**Ex. 2.** → **120** hospitals in `hos` without results; **0** `out` records without a match.
+```{r}
+nrow(anti_join(hos, out, by = "Provider.Number")) # 120
+nrow(anti_join(out, hos, by = "Provider.Number")) # 0
+```
+
+**Ex. 3.** → **Acute Care Hospitals** (≈ 12.0)
+```{r}
+j %>%
+  filter(!is.na(pn)) %>%
+  group_by(Hospital.Type) %>%
+  summarise(n = n(), pn = mean(pn)) %>%
+  arrange(pn)
+# Acute Care 12.0 | VA 12.1 | Critical Access 12.4
+```
+
+**Ex. 4.** → **Government Federal** (≈ 10.9)
+```{r}
+j %>%
+  filter(!is.na(hf)) %>%
+  group_by(Hospital.Ownership) %>%
+  summarise(n = n(), hf = mean(hf)) %>%
+  arrange(hf) %>%
+  head(1)
+```
+
+**Ex. 5.** → **53 out of 54 states**
+```{r}
+best <- out %>%
+  filter(!is.na(ha)) %>%
+  group_by(State) %>%
+  slice_min(ha, n = 1, with_ties = FALSE) %>%
+  inner_join(hos, by = "Provider.Number")
+nrow(best) # 54 (states + territories)
+sum(best$Hospital.Type == "Acute Care Hospitals") # 53
+```
+
+**Ex. 6.** → **rows of `a` that DO NOT have a match in `b`**.
+
+**Ex. 7.** → **`group_by() %>% slice_min(x, n=1)`**.
+
+**Ex. 8.** → **keeps all rows of `a`, appends `b`, missing values = NA**.

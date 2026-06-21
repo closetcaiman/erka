@@ -1,0 +1,121 @@
+---
+title: "09 — R Markdown"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+## Document structure
+
+````
+---
+title: "My Report"
+author: "Name"
+date: "`r Sys.Date()`"
+output: html_document   # or pdf_document, word_document
+---
+
+Text goes here. Markdown formatting applies.
+
+```{r chunk-name, echo=TRUE, eval=TRUE}
+# R code here
+mean(1:10)
+```
+````
+
+## Chunk options
+
+| Option       | Default | Effect                                    |
+|--------------|---------|-------------------------------------------|
+| `echo`       | TRUE    | show source code in output                |
+| `eval`       | TRUE    | run the code                              |
+| `include`    | TRUE    | include chunk output in document          |
+| `message`    | TRUE    | show messages (e.g. from library())       |
+| `warning`    | TRUE    | show warnings                             |
+| `fig.height` | 7       | figure height in inches                   |
+| `fig.width`  | 7       | figure width in inches                    |
+| `cache`      | FALSE   | cache results (skip re-running if unchanged) |
+
+```{r eval=FALSE}
+# Global options (in setup chunk)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Inline R
+
+```
+The mean mpg is `r mean(mtcars$mpg)` miles per gallon.
+```
+Renders as: The mean mpg is `r mean(mtcars$mpg)` miles per gallon.
+
+## Markdown formatting
+
+```markdown
+# H1  ## H2  ### H3
+
+**bold**   *italic*   `inline code`   ~~strikethrough~~
+
+- bullet
+  - nested bullet
+
+1. numbered
+2. list
+
+[link text](https://url.com)
+
+| Col1 | Col2 |
+|------|------|
+| a    | b    |
+```
+
+## Output formats
+
+```yaml
+output:
+  html_document:
+    toc: true          # table of contents
+    toc_float: true    # floating TOC
+    theme: flatly
+  pdf_document:
+    toc: true
+```
+
+## Knitting
+
+```{r eval=FALSE}
+rmarkdown::render("report.Rmd") # to HTML (default)
+rmarkdown::render("report.Rmd", output_format = "pdf_document")
+```
+
+## Working directory in Rmd
+
+The working directory for an Rmd file is **the directory containing the file**.
+Use relative paths from there:
+
+```{r eval=FALSE}
+df <- read.csv("data/myfile.csv") # relative to Rmd location
+```
+
+## FlexDashboard skeleton
+
+````
+---
+title: "Dashboard"
+output: flexdashboard::flex_dashboard
+---
+
+Column
+-------
+
+### Chart A
+```{r}
+plot(1:10)
+```
+
+### Chart B
+```{r}
+hist(rnorm(100))
+```
+````

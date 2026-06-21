@@ -1,0 +1,87 @@
+---
+title: "Sheet 03 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 03 — solutions
+
+```{r}
+out <- read.csv("data/outcome-of-care-measures.csv", stringsAsFactors = FALSE)
+hos <- read.csv("data/hospital-data.csv", stringsAsFactors = FALSE)
+out$ha <- as.numeric(out[[11]]) # heart attack mortality (with NA warning)
+library(dplyr)
+```
+
+**Ex. 1.**
+```{r}
+j <- inner_join(out, hos, by = "Provider.Number")
+nrow(j) # 4706
+```
+**Ans.: 4706.**
+
+**Ex. 2.**
+```{r}
+sum(is.na(out$ha)) # 1986
+```
+**Ans.: 1986 `NA`** — those hospitals had the text `"Not Available"` in the column.
+
+**Ex. 3.**
+```{r}
+out %>%
+  filter(State == "TX", !is.na(ha)) %>%
+  arrange(ha, Hospital.Name) %>%
+  slice(1) %>%
+  select(Hospital.Name, ha)
+```
+**Ans.: CYPRESS FAIRBANKS MEDICAL CENTER, value 12.**
+
+**Ex. 4.**
+```{r}
+sort(table(out$State), decreasing = TRUE)[1:3]
+```
+**Ans.: TX (370), CA (341), NY (185).**
+
+**Ex. 5.**
+```{r}
+mean(out$ha, na.rm = TRUE) # 15.449
+```
+**Ans.: ≈ 15.45.**
+
+**Ex. 6.**
+```{r}
+out %>%
+  filter(!is.na(ha)) %>%
+  arrange(desc(ha)) %>%
+  slice(1) %>%
+  select(Hospital.Name, State, ha)
+```
+**Ans.: MEDICAL CENTER SOUTH ARKANSAS (AR), ha = 21.9.**
+
+**Ex. 7.**
+```{r}
+out %>%
+  filter(State == "TX", !is.na(ha)) %>%
+  arrange(ha, Hospital.Name) %>%
+  slice(2)
+```
+**Ans.: HOUSTON NORTHWEST MEDICAL CENTER (ha = 12.4).**
+
+**Ex. 8.**
+```{r}
+sum(out$ha[out$State == "TX"] <= 14, na.rm = TRUE) # 21
+```
+**Ans.: 21.**
+
+**Ex. 9.** → **`inner_join()`**.
+
+**Ex. 10.** → **`sum(is.na(x))`**.
+
+**Ex. 11.** → **PDF** (PNG/JPEG/TIFF are bitmaps).
+
+**Ex. 12.** → **`training()`** (test set: `testing()`).
+
+**Ex. 13.** → **will give the same row count** (all `out` records have a match in `hos`).

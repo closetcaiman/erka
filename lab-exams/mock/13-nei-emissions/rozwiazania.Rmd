@@ -1,0 +1,161 @@
+---
+title: "Sheet 13 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Ex. 1.**
+
+```{r}
+nei <- readRDS("data/summarySCC_PM25.rds")
+scc <- readRDS("data/Source_Classification_Code.rds")
+dim(nei) # 6497651 × 6
+dim(scc) # 11717 × 15
+names(nei)
+names(scc)
+sort(unique(nei$year)) # 1999 2002 2005 2008
+levels(factor(nei$type)) # NON-ROAD NONPOINT ON-ROAD POINT
+```
+
+**Ans.: 4 years (1999/2002/2005/2008), 4 types.**
+
+**Ex. 2.**
+
+```{r}
+library(dplyr)
+nei %>%
+  group_by(year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE)) %>%
+  arrange(year)
+```
+
+**Ans.: Clearly decreasing trend: 7.33 M (1999) → 5.85 M (2002) → 5.54 M (2005) → 3.46 M (2008).**
+
+**Ex. 3.**
+
+```{r}
+t99 <- sum(nei$Emissions[nei$year == 1999], na.rm = TRUE) # 7 332 967
+t08 <- sum(nei$Emissions[nei$year == 2008], na.rm = TRUE) # 3 464 206
+cat("1999:", t99, "\n2008:", t08, "\ndrop:", round((1 - t08 / t99) * 100, 1), "%\n")
+```
+
+**Ans.: drop of ~52.7%.**
+
+**Ex. 4.**
+
+```{r}
+nei %>%
+  filter(fips == "24510") %>%
+  group_by(year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE))
+```
+
+**Ans.: Baltimore: 3274 → 2454 → 3091 → 1862. General downward trend, though 2005 was higher than 2002.**
+
+**Ex. 5.**
+
+```{r}
+nei %>%
+  filter(fips == "24510") %>%
+  group_by(year, type) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE), .groups = "drop") %>%
+  arrange(year, desc(total))
+```
+
+**Ans.: In 1999 NONPOINT dominates (2107), in 2008 it falls to 1509. ON-ROAD drops from 347 to 88.**
+
+**Ex. 6.**
+
+```{r}
+coal_scc <- scc %>%
+  filter(
+    grepl("Combustion", SCC.Level.One, ignore.case = TRUE),
+    grepl("Coal", SCC.Level.Four, ignore.case = TRUE)
+  )
+nrow(coal_scc) # 62
+
+nei %>%
+  filter(SCC %in% coal_scc$SCC) %>%
+  group_by(year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE))
+```
+
+**Ans.: 62 SCC codes. Coal combustion emissions: 551 535 (1999) → 474 709 → 481 834 → 332 024 (2008) — decreasing.**
+
+**Ex. 7.**
+
+```{r}
+nei %>%
+  filter(fips == "24510", type == "ON-ROAD") %>%
+  group_by(year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE))
+```
+
+**Ans.: 347 → 134 → 130 → 88 — strong decline in road traffic emissions in Baltimore.**
+
+**Ex. 8.**
+
+```{r}
+scc_sector <- scc[, c("SCC", "EI.Sector")]
+nei %>%
+  inner_join(scc_sector, by = "SCC") %>%
+  group_by(EI.Sector) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE)) %>%
+  arrange(desc(total)) %>%
+  slice(1:5)
+```
+
+**Ans.: Top sectors: Dust - Unpaved Road Dust (~3.8M), Dust - Paved Road Dust (~2.1M), ...**
+
+**Ex. 9.**
+
+```{r}
+nei %>%
+  filter(type == "ON-ROAD", fips %in% c("24510", "06037")) %>%
+  group_by(fips, year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(
+    names_from = fips, values_from = total,
+    names_prefix = "fips_"
+  )
+```
+
+**Ans.: Los Angeles (06037) has significantly higher ON-ROAD emissions every year. In 2008: LA ~4571, Baltimore ~88.**
+
+**Ex. 10.**
+
+```{r}
+brakujace <- nei %>%
+  anti_join(scc, by = "SCC")
+nrow(brakujace)
+```
+
+**Ans.: number of observations in NEI with no match in SCC (if > 0 — dirty data).**
+
+**Ex. 11.** → **`x <- readRDS("file.rds")`** — readRDS returns the object; you must assign it.
+
+**Ex. 12.** → **rows of A that have no match in B** (`anti_join`).
+
+**Ex. 13.** → **appears in the environment under its own name automatically** (`load()` does not return a value to assign).
+
+**Ex. 14.**
+
+```{r}
+nei %>%
+  inner_join(scc_sector, by = "SCC") %>%
+  filter(year %in% c(1999, 2008)) %>%
+  group_by(EI.Sector, year) %>%
+  summarise(total = sum(Emissions, na.rm = TRUE), .groups = "drop") %>%
+  tidyr::pivot_wider(
+    names_from = year, values_from = total,
+    names_prefix = "y"
+  ) %>%
+  mutate(ratio_2008_1999 = y2008 / y1999) %>%
+  arrange(ratio_2008_1999) %>%
+  slice(1:5)
+```
+
+**Ans.: Sectors with the largest drop are those with a ratio close to 0 (e.g. ON-ROAD categories).**

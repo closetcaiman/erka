@@ -1,0 +1,117 @@
+---
+title: "10 — Advanced Visualization (gganimate, maps)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+library(ggplot2)
+```
+
+## gganimate — animated ggplot2
+
+```{r eval=FALSE}
+library(gganimate)
+
+# transition_states — discrete states (e.g. year)
+p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = continent)) +
+  geom_point(alpha = 0.7) +
+  scale_x_log10() +
+  transition_states(year, transition_length = 2, state_length = 1) +
+  labs(title = "Year: {closest_state}")
+
+animate(p, nframes = 100, fps = 10)
+anim_save("gapminder.gif")
+```
+
+```{r eval=FALSE}
+# transition_time — continuous time variable
+ggplot(data, aes(x, y)) +
+  geom_point() +
+  transition_time(time) +
+  ease_aes("linear") # easing: linear, cubic-in-out, bounce, etc.
+```
+
+```{r eval=FALSE}
+# frame aesthetic (older gganimate API / ggplotly)
+ggplot(data, aes(x, y, frame = year)) +
+  geom_point()
+ggplotly() # makes it interactive with plotly
+```
+
+## Interactive: plotly
+
+```{r eval=FALSE}
+library(plotly)
+p <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point()
+ggplotly(p) # converts ggplot to interactive HTML widget
+```
+
+## Maps — sf package
+
+```{r eval=FALSE}
+library(sf)
+library(ggplot2)
+
+# Read shapefile / geojson
+world <- st_read("world.shp")
+
+# Choropleth map
+ggplot(world) +
+  geom_sf(aes(fill = gdp_per_cap)) +
+  scale_fill_viridis_c() +
+  theme_minimal()
+```
+
+```{r eval=FALSE}
+# Join spatial data with attribute data
+merged <- world |> left_join(data, by = c("iso_a3" = "code"))
+ggplot(merged) +
+  geom_sf(aes(fill = value))
+```
+
+## Maps — geom_polygon (base approach)
+
+```{r eval=FALSE}
+library(maps)
+world_map <- map_data("world")
+
+ggplot(world_map, aes(long, lat, group = group)) +
+  geom_polygon(fill = "lightgray", colour = "white") +
+  coord_fixed(1.3)
+```
+
+## Labels — ggrepel
+
+```{r eval=FALSE}
+library(ggrepel)
+ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars))) +
+  geom_point() +
+  geom_text_repel() # non-overlapping labels
+```
+
+## Hurricane wind radii — wide → long pattern
+
+```{r eval=FALSE}
+library(tidyr)
+library(dplyr)
+
+# 12 wind-radius columns → long format
+hur_long <- hur |>
+  pivot_longer(
+    cols      = ts_radius_NE:r64_NW,
+    names_to  = "quadrant",
+    values_to = "radius"
+  ) |>
+  filter(!is.na(radius), radius > 0) |>
+  separate(quadrant, into = c("threshold", "direction"), sep = "_(?=[A-Z]{2}$)")
+
+# Plot wind radii as a rose
+ggplot(
+  hur_long |> filter(storm_id == "AL0188", threshold == "ts_radius"),
+  aes(x = direction, y = radius, fill = direction)
+) +
+  geom_col() +
+  coord_polar()
+```

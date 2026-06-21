@@ -1,0 +1,81 @@
+---
+title: "Sheet 06 — dates, sorting, extraction"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 06 — dates, sorting, extraction
+
+**Data:** `data/gaData.csv` (columns: `date` as text "YYYY-MM-DD", `visitsTumblr`). **Time:** ~35 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+**Ex. 1.** Load `data/gaData.csv`. Convert `date` to class `Date`. What is the date range
+(from–to)? What is the total number of visits?
+
+```{r}
+```
+
+**Ex. 2.** On how many days was the number of visits greater than 0?
+
+```{r}
+```
+
+**Ex. 3.** How many visits were recorded in total in **2012**? (Extract the year from the date.)
+
+```{r}
+```
+
+**Ex. 4.** Which **day of the week** has the highest total visits?
+
+```{r}
+```
+
+**Ex. 5.** Which **month** (in YYYY-MM format) had the highest total visits?
+
+```{r}
+```
+
+**Ex. 6.** Which single **day** had the most visits and how many?
+
+```{r}
+```
+
+**Ex. 7.** How many days belong to 2011, and how many to 2012?
+
+```{r}
+```
+
+**Ex. 8.** (closed) How do you extract the year from a `Date` object named `d`?
+
+- `year(d)` from base R
+- `format(d, "%Y")`
+- `substr(d, 1, 2)`
+- `d$year`
+
+**Ex. 9.** (closed) What does `weekdays(as.Date("2012-01-02"))` do?
+
+- returns the day number
+- returns the name of the day of the week
+- returns the month
+
+**Ex. 10.** (closed) Correct order for saving a plot to PDF:
+
+- `pdf("f.pdf")` → code → `dev.off()`
+- code → `pdf("f.pdf")` → `dev.off()`
+- `dev.on("f.pdf")` → code → `dev.off()`
+
+**Ex. 11.** (closed) The function `traceback()` is used to:
+
+- set a breakpoint
+- show the call stack after an error
+- measure time
+
+**Ex. 12.** (closed) To extract just the year (4 characters) from the string "2012-01-02":
+
+- `substr(x, 1, 4)`
+- `str_extract(x, "^[0-9]{4}")`
+- both work

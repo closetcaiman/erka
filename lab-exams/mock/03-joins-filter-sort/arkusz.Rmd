@@ -1,0 +1,95 @@
+---
+title: "Sheet 03 — joining data frames (join), sorting, filtering, NA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 03 — joining data frames (join), sorting, filtering, NA
+
+**Data:** `data/outcome-of-care-measures.csv`, `data/hospital-data.csv`. **Time:** ~40 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> American-locale files → use `read.csv()`. Mortality columns contain the text
+> `"Not Available"` → after `as.numeric()` these become `NA`. Column 11 = mortality after
+> heart attack (Heart Attack).
+
+**Ex. 1.** Load both files. Join them on key `Provider.Number` (inner join). How many
+records match?
+
+```{r}
+```
+
+**Ex. 2.** Convert column 11 to numeric. How many missing values (`NA`) are created and why?
+
+```{r}
+```
+
+**Ex. 3.** For state **TX**, find the hospital with the **lowest** mortality after heart attack.
+What is its name and value? (Exclude `NA`.)
+
+```{r}
+```
+
+**Ex. 4.** Which state has the most hospitals in the `outcome` dataset? Give the top 3.
+
+```{r}
+```
+
+**Ex. 5.** What is the **national** mean heart attack mortality (excluding `NA`)?
+
+```{r}
+```
+
+**Ex. 6.** Which hospital has the **highest** (worst) heart attack mortality and in which
+state is it?
+
+```{r}
+```
+
+**Ex. 7.** Which hospital is the **second** best (2nd lowest value) in TX?
+
+```{r}
+```
+
+**Ex. 8.** How many hospitals in TX have heart attack mortality `<= 14`?
+
+```{r}
+```
+
+**Ex. 9.** (closed) Which dplyr function keeps only records matching in BOTH data frames?
+
+- `left_join()`
+- `full_join()`
+- `inner_join()`
+- `bind_rows()`
+
+**Ex. 10.** (closed) How to count how many values in vector `x` are missing?
+
+- `length(x == NA)`
+- `sum(is.na(x))`
+- `count(NA, x)`
+
+**Ex. 11.** (closed) An example of a **vector** graphics device is:
+
+- PNG
+- JPEG
+- PDF
+- TIFF
+
+**Ex. 12.** (closed) After `initial_split()`, you extract the training set with:
+
+- `train()`
+- `training()`
+- `get_train()`
+- `analysis_set()`
+
+**Ex. 13.** (closed) In this dataset (every `out` record has a match in `hos`),
+`left_join(out, hos)` vs `inner_join(out, hos)`:
+
+- will give different row counts
+- will give the same row count
+- left_join will error

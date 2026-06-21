@@ -1,0 +1,125 @@
+---
+title: "02 — dplyr: manipulacja danymi"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+library(dplyr)
+```
+
+## Core verbs
+
+```{r}
+df <- mtcars
+```
+
+```{r}
+# filter — wiersze spełniające warunek
+filter(df, cyl == 6, mpg > 18)
+```
+
+```{r}
+# select — wybór kolumn
+select(df, mpg, cyl, hp) |> head(3)
+```
+
+```{r}
+# mutate — nowe / nadpisane kolumny
+mutate(df, kpl = mpg * 0.425, log_hp = log(hp)) |>
+  select(mpg, kpl, hp, log_hp) |>
+  head(3)
+```
+
+```{r}
+# arrange — sortowanie (domyślnie rosnąco)
+arrange(df, desc(mpg)) |>
+  select(mpg, cyl) |>
+  head(5)
+```
+
+```{r}
+# group_by + summarise
+df |>
+  group_by(cyl) |>
+  summarise(
+    n         = n(),
+    srednia   = mean(mpg),
+    mediana   = median(mpg),
+    maks      = max(mpg),
+    .groups   = "drop"
+  )
+```
+
+```{r}
+# count — szybkie zliczanie
+count(df, cyl)
+```
+
+```{r}
+# slice_max / slice_min — top N wierszy wg kolumny
+slice_max(df, order_by = mpg, n = 3) |> select(mpg, cyl, hp)
+```
+
+```{r}
+# n_distinct — liczba unikalnych wartości
+summarise(df, ile_cylindrow = n_distinct(cyl))
+```
+
+```{r}
+# pull — wyciągnij kolumnę jako wektor (nie ramkę danych)
+pull(df, mpg) |> head(5)
+```
+
+## Joins
+
+```{r}
+A <- data.frame(id = c(1, 2, 3), x = c("a", "b", "c"))
+B <- data.frame(id = c(2, 3, 4), y = c("X", "Y", "Z"))
+```
+
+```{r}
+inner_join(A, B, by = "id") # tylko pasujące w obu
+```
+
+```{r}
+left_join(A, B, by = "id") # wszystkie z A, NA jeśli brak w B
+```
+
+```{r}
+anti_join(A, B, by = "id") # wiersze A bez odpowiednika w B
+```
+
+```{r}
+semi_join(A, B, by = "id") # wiersze A z odpowiednikiem w B (bez kolumn B)
+```
+
+### Compound key (wiele kolumn)
+
+```{r eval=FALSE}
+inner_join(spec, sites,
+  by = c("skey" = "skey", "ckey" = "ckey", "nkey" = "nkey")
+)
+```
+
+### Type mismatch gotcha
+
+```{r}
+# "06" (character) ≠ 6 (numeric) → join nie znajdzie dopasowań
+X <- data.frame(kod = c("06", "07"), val = 1:2)
+Y <- data.frame(kod = c(6, 7), lab = c("a", "b"))
+# Przed joinem ujednolicić:
+X$kod <- as.integer(X$kod)
+Y$kod <- as.integer(Y$kod)
+inner_join(X, Y, by = "kod")
+```
+
+## Pipe: |> vs %>%
+
+```{r}
+# Od R 4.1 natywny pipe |>; wcześniej magrittr %>%
+mtcars |>
+  filter(cyl == 4) |>
+  group_by(am) |>
+  summarise(srednia_mpg = mean(mpg))
+```

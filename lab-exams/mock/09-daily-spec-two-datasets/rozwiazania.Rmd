@@ -1,0 +1,133 @@
+---
+title: "Sheet 09 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 09 — solutions
+
+```{r}
+library(readr)
+library(readxl)
+library(dplyr)
+library(tidyr)
+spec <- read_csv("data/daily_SPEC_2014.csv.bz2") # ~2.1 million rows
+sites <- read_excel("data/aqs_sites.xlsx")
+# integer join key (leading zeros "06" -> 6):
+spec <- spec %>%
+  mutate(
+    skey = as.integer(`State Code`),
+    ckey = as.integer(`County Code`),
+    nkey = as.integer(`Site Num`)
+  )
+sites <- sites %>%
+  mutate(
+    skey = as.integer(`State Code`),
+    ckey = as.integer(`County Code`),
+    nkey = as.integer(`Site Number`)
+  )
+```
+
+**Ex. 1.** → **0.003960**
+```{r}
+spec %>%
+  filter(`State Name` == "Wisconsin", `Parameter Name` == "Bromine PM2.5 LC") %>%
+  summarise(mean(`Arithmetic Mean`, na.rm = TRUE))
+```
+
+**Ex. 2.** → **OC CSN Unadjusted PM2.5 LC TOT** (≈ 67.8)
+```{r}
+params <- c(
+  "Sulfur PM2.5 LC", "OC CSN Unadjusted PM2.5 LC TOT",
+  "EC2 PM2.5 LC", "Sodium PM2.5 LC"
+)
+spec %>%
+  filter(`Parameter Name` %in% params) %>%
+  group_by(`Parameter Name`) %>%
+  summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE)) %>%
+  arrange(desc(m))
+```
+(In the full dataset the highest values belong to meteorological parameters like pressure — that is why
+we restrict to the components from the answer list.)
+
+**Ex. 3.** → **39 / 081 / 0017** (≈ 3.18)
+```{r}
+spec %>%
+  filter(`Parameter Name` == "Sulfate PM2.5 LC") %>%
+  group_by(`State Code`, `County Code`, `Site Num`) %>%
+  summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(m)) %>%
+  head(1)
+```
+
+**Ex. 4.** → **0.018567** (CA 0.198 − AZ 0.179)
+```{r}
+q4 <- spec %>%
+  filter(
+    `Parameter Name` == "EC PM2.5 LC TOR",
+    `State Name` %in% c("California", "Arizona")
+  ) %>%
+  group_by(`State Name`) %>%
+  summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE))
+abs(diff(q4$m))
+```
+
+**Ex. 5.** → **0.4300**
+```{r}
+spec %>%
+  filter(`Parameter Name` == "OC PM2.5 LC TOR", Longitude < -100) %>%
+  summarise(median(`Arithmetic Mean`, na.rm = TRUE))
+```
+
+**Ex. 6.** → **3527**
+```{r}
+sites %>%
+  filter(`Land Use` == "RESIDENTIAL", `Location Setting` == "SUBURBAN") %>%
+  nrow()
+```
+
+**Ex. 7.** → **0.6100** (key step: **join** measurements with metadata)
+```{r}
+rs <- sites %>%
+  filter(`Land Use` == "RESIDENTIAL", `Location Setting` == "SUBURBAN") %>%
+  distinct(skey, ckey, nkey)
+spec %>%
+  semi_join(rs, by = c("skey", "ckey", "nkey")) %>%
+  filter(`Parameter Name` == "EC PM2.5 LC TOR", Longitude >= -100) %>%
+  summarise(median(`Arithmetic Mean`, na.rm = TRUE))
+```
+`semi_join` keeps rows of `spec` that have a match in `rs` (no extra columns added).
+
+**Ex. 8.** → **February** (month 2; ≈ 2.02)
+```{r}
+com <- sites %>%
+  filter(`Land Use` == "COMMERCIAL") %>%
+  distinct(skey, ckey, nkey)
+spec %>%
+  semi_join(com, by = c("skey", "ckey", "nkey")) %>%
+  filter(`Parameter Name` == "Sulfate PM2.5 LC") %>%
+  mutate(miesiac = as.integer(format(`Date Local`, "%m"))) %>%
+  group_by(miesiac) %>%
+  summarise(m = mean(`Arithmetic Mean`, na.rm = TRUE)) %>%
+  arrange(desc(m)) %>%
+  head(1)
+```
+
+**Ex. 9.** → **11**
+```{r}
+q9 <- spec %>%
+  filter(
+    skey == 6, ckey == 65, nkey == 8001,
+    `Parameter Name` %in% c("Sulfate PM2.5 LC", "Total Nitrate PM2.5 LC")
+  ) %>%
+  group_by(`Date Local`, `Parameter Name`) %>% # average duplicates within a day
+  summarise(v = mean(`Arithmetic Mean`, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = `Parameter Name`, values_from = v) %>%
+  mutate(suma = `Sulfate PM2.5 LC` + `Total Nitrate PM2.5 LC`)
+sum(q9$suma > 10, na.rm = TRUE)
+```
+**Pitfall:** `filter(\`State Code\` == 6, ...)` will NOT work — `State Code` is text `"06"`.
+Use the integer key `skey`/`ckey`/`nkey`.

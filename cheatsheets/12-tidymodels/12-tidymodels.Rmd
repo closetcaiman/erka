@@ -1,0 +1,111 @@
+---
+title: "08 — tidymodels: ML pipeline"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+## Pełny pipeline (klasyfikacja)
+
+```{r message=FALSE, warning=FALSE}
+library(tidymodels)
+
+# Dane: oliwa z oliwek, klasyfikacja regionu
+load("../sheets/custom/12-tidymodels/data/olive.rda")
+ol <- olive |>
+  mutate(Region = factor(Region)) |>
+  select(-Area) # Area jest pochodną Regionu — usuń ("ściąga")
+
+head(ol, 3)
+```
+
+### 1. Podział danych
+
+```{r}
+set.seed(123)
+podzial <- initial_split(ol, prop = 0.75, strata = Region)
+treningowe <- training(podzial)
+testowe <- testing(podzial)
+cat("trening:", nrow(treningowe), "| test:", nrow(testowe), "\n")
+```
+
+### 2. Przepis (recipe)
+
+```{r}
+przepis <- recipe(Region ~ ., data = treningowe) |>
+  step_normalize(all_numeric_predictors()) # normalizacja
+przepis
+```
+
+### 3. Model
+
+```{r}
+model <- decision_tree() |>
+  set_engine("rpart") |>
+  set_mode("classification")
+model
+```
+
+### 4. Workflow
+
+```{r}
+wf <- workflow() |>
+  add_recipe(przepis) |>
+  add_model(model)
+```
+
+### 5. Trening
+
+```{r}
+fit_wf <- fit(wf, data = treningowe)
+```
+
+### 6. Predykcja i ocena
+
+```{r}
+pred <- predict(fit_wf, new_data = testowe) |>
+  bind_cols(testowe |> select(Region))
+
+accuracy(pred, truth = Region, estimate = .pred_class)
+```
+
+## Kolejność do zapamiętania
+
+```
+initial_split → training/testing → recipe + step_* →
+set_engine + set_mode → workflow → fit → predict → accuracy
+```
+
+## Kluczowe funkcje
+
+| Krok              | Funkcja                                         | Pakiet     |
+|-------------------|-------------------------------------------------|------------|
+| Podział           | `initial_split(prop=, strata=)`                | rsample    |
+| Zbiory            | `training()`, `testing()`                      | rsample    |
+| Walidacja krzyżowa| `vfold_cv(v=10)`                               | rsample    |
+| Przepis           | `recipe(Y~., data=)` + `step_*()`             | recipes    |
+| Normalizacja      | `step_normalize(all_numeric_predictors())`     | recipes    |
+| Model drzewa      | `decision_tree() |> set_engine("rpart")`       | parsnip    |
+| Regresja log.     | `logistic_reg() |> set_engine("glm")`          | parsnip    |
+| Random forest     | `rand_forest() |> set_engine("ranger")`        | parsnip    |
+| Tryb              | `set_mode("classification"/"regression")`      | parsnip    |
+| Połączenie        | `workflow() |> add_recipe() |> add_model()`   | workflows  |
+| Trening           | `fit(wf, data=treningowe)`                     | parsnip    |
+| Predykcja         | `predict(fit, new_data=testowe)`               | parsnip    |
+| Ocena             | `accuracy()`, `rmse()`, `roc_auc()`           | yardstick  |
+
+## Backup: base R (gdy brak tidymodels)
+
+```{r eval=FALSE}
+library(rpart)
+set.seed(123)
+idx <- sample(nrow(ol), 0.75 * nrow(ol))
+train <- ol[idx, ]
+test <- ol[-idx, ]
+
+drzewo <- rpart(Region ~ ., data = train, method = "class")
+pred <- predict(drzewo, newdata = test, type = "class")
+mean(pred == test$Region) # accuracy
+```

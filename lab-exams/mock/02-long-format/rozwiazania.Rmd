@@ -1,0 +1,80 @@
+---
+title: "Sheet 02 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 02 — solutions
+
+**Ex. 1.**
+```{r}
+cr <- read.csv2("data/Czas reakcji.csv")
+nrow(cr) # 25
+colMeans(cr) # Reakcja_przed 0.2012, Reakcja_po 0.2688
+```
+**Ans.: 25 people; before = 0.2012; after = 0.2688.**
+
+**Ex. 2.**
+```{r}
+library(dplyr)
+library(tidyr)
+cr_long <- cr %>%
+  mutate(id = row_number()) %>%
+  pivot_longer(
+    cols = c(Reakcja_przed, Reakcja_po),
+    names_to = "moment", values_to = "czas"
+  )
+head(cr_long)
+```
+
+**Ex. 3.**
+```{r}
+cr_long %>%
+  group_by(moment) %>%
+  summarise(srednia = mean(czas))
+# po 0.2688 ; przed 0.2012  -> MATCHES
+```
+
+**Ex. 4.**
+```{r}
+sum(cr$Reakcja_po < cr$Reakcja_przed) # 4 people
+mean(cr$Reakcja_po - cr$Reakcja_przed) # 0.0676
+mean(cr$Reakcja_po < cr$Reakcja_przed) * 100 # 16 %
+max(cr$Reakcja_po - cr$Reakcja_przed) # 0.16
+```
+**Ans.: improvement in 4 people (16%); mean difference +0.0676 (reaction time INCREASED on average);
+largest worsening +0.16.**
+
+**Ex. 5.**
+```{r}
+cr_wide <- cr_long %>% pivot_wider(names_from = moment, values_from = czas)
+# columns: id, Reakcja_przed, Reakcja_po (same as original)
+```
+
+**Ex. 6.**
+```{r}
+cr %>%
+  mutate(roznica = Reakcja_po - Reakcja_przed) %>%
+  arrange(desc(roznica)) %>%
+  head(3)
+```
+
+**Ex. 7.**
+```{r}
+library(ggplot2)
+ggplot(cr_long, aes(x = moment, y = czas, group = id)) +
+  geom_line(alpha = 0.4) +
+  geom_point()
+```
+
+**Ex. 8.** → **`pivot_longer()`** (`gather` = longer, `spread` = wider — older names).
+
+**Ex. 9.** → **`separate(df, kol, into=c("kraj","miasto"), sep="-")`**.
+
+**Ex. 10.** → **wide** — `geom_dumbbell` connects two value columns
+(before/after) in one row.
+
+**Ex. 11.** → **returns to wide format** (`pivot_wider` is the inverse of `pivot_longer`).

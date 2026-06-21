@@ -1,0 +1,89 @@
+---
+title: "Sheet 07 — multiple files, loops, custom functions (specdata)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 07 — multiple files, loops, custom functions (specdata)
+
+**Data:** `data/specdata/` — files `001.csv` … `332.csv` (each: `Date`, `sulfate`,
+`nitrate`, `ID`). **Time:** ~45 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> This type of task comes from the "air pollution" quiz: read many files and operate on
+> the combined data.
+
+**Ex. 1.** Write a function `pollutantmean(directory, pollutant, id = 1:332)` that
+reads the files with numbers `id`, combines them, and returns the mean of the specified
+pollutant (ignoring `NA`). What is `pollutantmean("data/specdata", "sulfate", 1:10)`?
+(round to 3 decimal places)
+
+```{r}
+```
+
+**Ex. 2.** What is `pollutantmean("data/specdata", "nitrate", 70:72)`? (3 decimal places)
+
+```{r}
+```
+
+**Ex. 3.** Write a function `complete(directory, id)` that returns a data frame `id, nobs`
+(number of complete rows). How many complete observations does file 54 have?
+
+```{r}
+```
+
+**Ex. 4.** Using `complete`, how many complete observations do files 1–10 have in total?
+
+```{r}
+```
+
+**Ex. 5.** Write a function `corr(directory, threshold = 0)` that, for each monitor with
+more than `threshold` **complete** observations, computes the `sulfate` vs `nitrate`
+correlation and returns a vector of those correlations. What is `length(corr("data/specdata", 150))`?
+
+```{r}
+```
+
+**Ex. 6.** What are `length(corr("data/specdata", 400))` and `length(corr("data/specdata", 1000))`?
+
+```{r}
+```
+
+**Ex. 7.** What is the **mean** correlation for threshold 150?
+
+```{r}
+```
+
+**Ex. 8.** (closed) How do you get all file paths in a directory?
+
+- `read.csv("specdata")`
+- `list.files("specdata", full.names = TRUE)`
+- `dir.exists("specdata")`
+
+**Ex. 9.** (closed) How do you combine a list of data frames `lista` into one data frame?
+
+- `do.call(rbind, lista)`
+- `rbind(lista)`
+- `merge(lista)`
+
+**Ex. 10.** (closed) `complete.cases(df)` returns:
+
+- the number of columns
+- a logical vector TRUE for rows without `NA`
+- a data frame without `NA`
+
+**Ex. 11.** (closed) To compare the speed of two function implementations, you use:
+
+- `profvis()`
+- `microbenchmark()`
+- `traceback()`
+
+**Ex. 12.** (closed) In the `corr` function, `complete.cases(d)` is used to:
+
+- remove columns with NA
+- select rows without `NA` (for computing the correlation)
+- count NA values

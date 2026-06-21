@@ -1,0 +1,88 @@
+---
+title: "Sheet 02 — wide → long format (pivot_longer)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 02 — wide → long format (pivot_longer)
+
+**Data:** `data/Czas reakcji.csv`. **Time:** ~35 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> This is an instructor-style sheet: load the data, **reshape the format**, then compute.
+> The file is in wide format: two measurement columns (`Reakcja_przed`, `Reakcja_po`) for
+> the same person.
+
+**Ex. 1.** Load `data/Czas reakcji.csv`. How many people were studied? What is the mean
+reaction time before and after (separately)?
+
+```{r}
+```
+
+**Ex. 2.** Transform the data from **wide to long** format: instead of columns
+`Reakcja_przed` and `Reakcja_po`, create a column `moment` (before/after) and a column `czas`.
+Show the first rows.
+
+```{r}
+```
+
+**Ex. 3.** On the long-format data, compute the mean reaction time at each moment
+(group by `moment`). Does the result match Ex. 1?
+
+```{r}
+```
+
+**Ex. 4.** How many people **improved** (time after < time before)? What was the mean
+difference (`after − before`)? What was the percentage of people who improved and the
+largest worsening?
+
+```{r}
+```
+
+**Ex. 5.** From the long data, go back to wide format using `pivot_wider`. Verify that you
+recovered the original columns.
+
+```{r}
+```
+
+**Ex. 6.** Add a column `roznica = Reakcja_po − Reakcja_przed`, sort descending by
+worsening and show the 3 people with the largest worsening.
+
+```{r}
+```
+
+**Ex. 7.** Make a "before–after" plot: long data, `ggplot` with `moment` on the x-axis,
+`czas` on the y-axis, connect measurements of the same person with a line (`group = id`).
+
+```{r}
+```
+
+**Ex. 8.** (closed) Which `tidyr` function converts from wide to long format?
+
+- `pivot_wider()`
+- `pivot_longer()`
+- `separate()`
+- `unite()`
+
+**Ex. 9.** (closed) To split `"PL-KRK"` into columns `kraj` and `miasto`:
+
+- `unite(df, kraj, miasto, sep="-")`
+- `separate(df, kol, into=c("kraj","miasto"), sep="-")`
+- `str_split(df$kol)`
+
+**Ex. 10.** (closed) A dumbbell chart (`geom_dumbbell` from `ggalt`) requires data in
+**which** format?
+
+- long
+- wide
+- nested
+
+**Ex. 11.** (closed) `pivot_wider()` applied to the data from Ex. 2:
+
+- returns to wide format
+- gives the same as pivot_longer
+- returns an error

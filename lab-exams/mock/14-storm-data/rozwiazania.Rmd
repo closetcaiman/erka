@@ -1,0 +1,165 @@
+---
+title: "Sheet 14 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Ex. 1.**
+
+```{r}
+storm <- read.csv("data/data_StormData.csv.bz2")
+dim(storm) # 902297 × 37
+length(unique(storm$EVTYPE)) # ~985
+```
+
+**Ans.: 902,297 rows, ~985 unique EVTYPE (lots of inconsistent naming).**
+
+**Ex. 2.**
+
+```{r}
+library(dplyr)
+storm$year <- as.integer(format(as.Date(storm$BGN_DATE, "%m/%d/%Y %H:%M:%S"), "%Y"))
+storm %>%
+  count(year) %>%
+  arrange(desc(n)) %>%
+  slice(1:3)
+```
+
+**Ans.: Years ~2011, 2010, 2009 have the most events (registration increased over time).**
+
+**Ex. 3.**
+
+```{r}
+storm %>%
+  group_by(EVTYPE) %>%
+  summarise(fatal = sum(FATALITIES, na.rm = TRUE)) %>%
+  arrange(desc(fatal)) %>%
+  slice(1:5)
+```
+
+**Ans.: TORNADO — 5,633 fatalities.**
+
+**Ex. 4.**
+
+```{r}
+storm %>%
+  group_by(EVTYPE) %>%
+  summarise(inj = sum(INJURIES, na.rm = TRUE)) %>%
+  arrange(desc(inj)) %>%
+  slice(1:5)
+```
+
+**Ans.: TORNADO — 91,346 injuries.**
+
+**Ex. 5.**
+
+```{r}
+storm %>%
+  group_by(EVTYPE) %>%
+  summarise(total_health = sum(FATALITIES + INJURIES, na.rm = TRUE)) %>%
+  arrange(desc(total_health)) %>%
+  slice(1:5)
+```
+
+**Ans.: TORNADO = 96,979 (combined), far ahead of EXCESSIVE HEAT (8,428).**
+
+**Ex. 6.**
+
+```{r}
+exp_mult <- function(e) {
+  e <- toupper(trimws(as.character(e)))
+  ifelse(e == "K", 1e3,
+    ifelse(e == "M", 1e6,
+      ifelse(e == "B", 1e9,
+        ifelse(grepl("^[0-9]$", e), 10^as.numeric(e), 1)
+      )
+    )
+  )
+}
+
+storm$prop_dmg <- storm$PROPDMG * exp_mult(storm$PROPDMGEXP)
+# Check:
+sum(storm$prop_dmg > 0)
+```
+
+**Key point:** `toupper()` + `trimws()` because the data contains "m", "k", spaces.**
+
+**Ex. 7.**
+
+```{r}
+storm$crop_dmg <- storm$CROPDMG * exp_mult(storm$CROPDMGEXP)
+storm$econ_dmg <- storm$prop_dmg + storm$crop_dmg
+
+storm %>%
+  group_by(EVTYPE) %>%
+  summarise(total_econ = sum(econ_dmg, na.rm = TRUE)) %>%
+  arrange(desc(total_econ)) %>%
+  slice(1:5)
+```
+
+**Ans.: FLOOD ~$150 B, HURRICANE/TYPHOON ~$72 B, TORNADO ~$57 B.**
+
+**Ex. 8.**
+
+```{r}
+storm %>%
+  filter(EVTYPE %in% c("TORNADO", "FLOOD")) %>%
+  group_by(EVTYPE) %>%
+  summarise(
+    zdrowie = sum(FATALITIES + INJURIES, na.rm = TRUE),
+    ekonomia = sum(econ_dmg, na.rm = TRUE)
+  )
+```
+
+**Ans.: TORNADO wins on health (96,979 vs 7,259); FLOOD wins on economics (~$150 B vs ~$57 B).**
+
+**Ex. 9.**
+
+```{r}
+storm %>%
+  filter(EVTYPE == "TORNADO") %>%
+  group_by(STATE) %>%
+  summarise(fatal = sum(FATALITIES, na.rm = TRUE)) %>%
+  arrange(desc(fatal)) %>%
+  slice(1:3)
+```
+
+**Ans.: Alabama (AL) or Texas (TX) — depends on the data scope.**
+
+**Ex. 10.**
+
+```{r}
+storm %>%
+  group_by(EVTYPE) %>%
+  summarise(
+    n_events = n(),
+    fatal    = sum(FATALITIES, na.rm = TRUE),
+    rate     = fatal / n_events
+  ) %>%
+  filter(n_events >= 10) %>%
+  arrange(desc(rate)) %>%
+  slice(1:5)
+```
+
+**Ans.: Highest rate belongs to rare but deadly events (e.g. TORNADOES, TSTM WIND F2).**
+
+**Ex. 11.** → **`read.csv("file.csv.bz2")` — R unpacks `.bz2` automatically.**
+
+**Ex. 12.** → **billions — multiplier 1,000,000,000.**
+
+**Ex. 13.** → **EVTYPE starting with "TORNADO"** (`^` anchors to the start).
+
+**Ex. 14.**
+
+```{r}
+storm %>%
+  filter(year >= 1990, year <= 2010) %>%
+  group_by(year) %>%
+  summarise(total_econ = sum(econ_dmg, na.rm = TRUE)) %>%
+  arrange(desc(total_econ))
+```
+
+**Ans.: Visible increase in later years; 2005 (Katrina) or 2006 often appears as the costliest year.**

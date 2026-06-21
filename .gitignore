@@ -1,10 +1,5 @@
-!/temp/quiz/
-
 /temp/
-
+*.html
+.Rproj.user/
 .Rhistory
 .RData
-.Rproj.user/
-.DS_Store
-*~
-

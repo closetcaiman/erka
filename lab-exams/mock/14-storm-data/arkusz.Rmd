@@ -1,0 +1,104 @@
+---
+title: "Sheet 14 — Storm Data: health and economic damage"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Data:** `data/data_StormData.csv.bz2` (902,297 rows, 37 columns). **Time:** ~45 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> R reads `.bz2` files directly through `read.csv()` — no manual unpacking needed.
+> Key columns: `EVTYPE` (event type), `FATALITIES`, `INJURIES`,
+> `PROPDMG` + `PROPDMGEXP` (property damage), `CROPDMG` + `CROPDMGEXP` (crop damage),
+> `BGN_DATE` (date in format "4/18/1950 0:00:00").
+> `PROPDMGEXP`: K = thousands, M = millions, B = billions; digits = power of 10; rest = 1.
+
+**Ex. 1.** Load `data/data_StormData.csv.bz2`. Check `dim()` and `names()`.
+How many unique event types (`EVTYPE`) are in the dataset?
+
+```{r}
+```
+
+**Ex. 2.** Extract the year from column `BGN_DATE` (format: "4/18/1950 0:00:00").
+Count events per year. Which 3 years have the most events?
+
+```{r}
+```
+
+**Ex. 3.** Which event type (`EVTYPE`) caused the most total fatalities (`FATALITIES`)?
+Give the top 5.
+
+```{r}
+```
+
+**Ex. 4.** Which event type caused the most total injuries (`INJURIES`)? Top 5.
+
+```{r}
+```
+
+**Ex. 5.** Combine fatalities and injuries into one measure `total_health = FATALITIES + INJURIES`.
+Which EVTYPE has the greatest combined health impact?
+
+```{r}
+```
+
+**Ex. 6.** Write a function that converts `PROPDMGEXP` to a numeric multiplier:
+K→1,000, M→1,000,000, B→1,000,000,000, digit n→10^n, rest→1.
+Compute `prop_dmg = PROPDMG * multiplier`.
+
+```{r}
+```
+
+**Ex. 7.** Similarly compute `crop_dmg`. Sum both into `econ_dmg`. Which EVTYPE
+causes the greatest combined economic damage? Top 5.
+
+```{r}
+```
+
+**Ex. 8.** Compare TORNADO and FLOOD: which has greater health damage, and which
+has greater economic damage?
+
+```{r}
+```
+
+**Ex. 9.** Which state (`STATE`) had the most tornado fatalities?
+
+```{r}
+```
+
+**Ex. 10.** Compute the **fatality rate** for each EVTYPE:
+`fatalities / number_of_events`. Which events have the highest rate (min. 10 events)?
+
+```{r}
+```
+
+**Ex. 11.** (closed) How do you load a `.bz2` file in R?
+
+- You must first unpack it with `bunzip2()`, then use `read.csv()`
+- `read.csv("file.csv.bz2")` — R unpacks automatically
+- `readBZ2("file.csv.bz2")`
+- `read.csv(decompress("file.csv.bz2"))`
+
+**Ex. 12.** (closed) `PROPDMGEXP == "B"` means:
+
+- bytes
+- billions — multiplier 1,000,000,000
+- logarithmic base
+- missing data
+
+**Ex. 13.** (closed) `grepl("^TORNADO", EVTYPE)` will return TRUE for:
+
+- only exactly "TORNADO"
+- EVTYPE starting with "TORNADO"
+- EVTYPE ending with "TORNADO"
+- all containing "TORNADO" anywhere
+
+**Ex. 14.** For years 1990–2010, compute total economic damage per year (with correctly
+computed multipliers). Is there an upward trend? Which year was the most costly?
+
+```{r}
+```

@@ -1,0 +1,33 @@
+commit-msg:
+  commands:
+    conventional:
+      run: |
+        msg=$(cat {1})
+        echo "$msg" | grep -qE '^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([^)]+\))?: .+' || {
+          echo ""
+          echo "  Commit message does not follow Conventional Commits format."
+          echo "  Format:  type(scope): subject (max 100 characters)"
+          echo "  Types:    feat fix docs style refactor test chore perf ci build revert"
+          echo "  Example: feat(sheets): add hurricane fwf exercise set"
+          echo ""
+          exit 1
+        }
+
+pre-commit:
+  parallel: true
+  commands:
+    no-html:
+      glob: "*.html"
+      run: |
+        echo ""
+        echo "  Staged .html files detected: {staged_files}"
+        echo "  HTML files are build artifacts and should not be committed."
+        echo ""
+        exit 1
+
+    style:
+      run: Rscript scripts/fmt.R
+      stage_fixed: true
+
+    lint:
+      run: Rscript scripts/check.R

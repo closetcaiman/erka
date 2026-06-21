@@ -1,0 +1,120 @@
+---
+title: "Sheet 09 — TWO datasets: daily PM2.5 measurements + station metadata"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 09 — TWO datasets: daily PM2.5 measurements + station metadata
+
+**Data:** `data/daily_SPEC_2014.csv.bz2` (measurements), `data/aqs_sites.xlsx` (station metadata).
+**Time:** ~50 min. **Level: hard.**
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> Reconstructed "daily measurements quiz". Load measurements with `readr::read_csv`
+> (R unpacks `.bz2` automatically), metadata with `readxl::read_excel`. In all means
+> ignore missing values (`na.rm = TRUE`).
+>
+> **Key pitfall:** in the measurements, `State Code`/`County Code`/`Site Num` are read as
+> text with leading zeros ("06", "081"), while in the metadata they are numbers. Before
+> joining, harmonise types (e.g. `as.integer()` on both sides).
+
+**Ex. 1.** What is the mean `Arithmetic Mean` for `"Bromine PM2.5 LC"` in the state of
+**Wisconsin**?
+
+- 0.003960
+- 1.485826
+- 0.515084
+- 0.458098
+
+```{r}
+```
+
+**Ex. 2.** Which component (`Parameter Name`) has the highest mean?
+
+- Sulfur PM2.5 LC
+- OC CSN Unadjusted PM2.5 LC TOT
+- EC2 PM2.5 LC
+- Sodium PM2.5 LC
+
+```{r}
+```
+
+**Ex. 3.** Which location (State/County/Site) has the highest mean `"Sulfate PM2.5 LC"`?
+
+- 48/203/0002
+- 31/055/0019
+- 10/001/0003
+- 39/081/0017
+
+```{r}
+```
+
+**Ex. 4.** Absolute difference between the means of `"EC PM2.5 LC TOR"` in California
+vs Arizona?
+
+- 0.018567
+- 0.06320775
+- 0.17648069
+- 0.09476190
+
+```{r}
+```
+
+**Ex. 5.** Median of `"OC PM2.5 LC TOR"` in the **west** (Longitude < −100)?
+
+- 0.5175
+- 0.4300
+- 0.2600
+- 0.0269
+
+```{r}
+```
+
+**Ex. 6.** (2 datasets) How many stations have both `Land Use == "RESIDENTIAL"` and
+`Location Setting == "SUBURBAN"`?
+
+- 3527
+- 1610
+- 2233
+- 1008
+
+```{r}
+```
+
+**Ex. 7.** (2 datasets) Median of `"EC PM2.5 LC TOR"` among RESIDENTIAL+SUBURBAN stations
+in the **east** (Longitude ≥ −100)?
+
+- 0.6100
+- 0.0460
+- 0.5880
+- 0.1740
+
+```{r}
+```
+
+**Ex. 8.** (2 datasets) Among `Land Use == "COMMERCIAL"` stations, which **month** has
+the highest mean `"Sulfate PM2.5 LC"`?
+
+- November
+- February
+- August
+- June
+
+```{r}
+```
+
+**Ex. 9.** For monitor State 6 / County 65 / Site 8001: on how many **days** does the
+sum of `"Sulfate PM2.5 LC"` and `"Total Nitrate PM2.5 LC"` exceed 10? (when a day has
+multiple values for a component — average them first)
+
+- 5
+- 11
+- 24
+- 50
+
+```{r}
+```

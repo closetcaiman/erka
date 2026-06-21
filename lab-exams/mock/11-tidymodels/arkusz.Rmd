@@ -1,0 +1,98 @@
+---
+title: "Sheet 12 — tidymodels (ML): olive oil classification"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 12 — tidymodels (ML): olive oil classification
+
+**Data:** `data/olive.rda` (object `olive`). **Time:** ~35 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> `olive`: 572 olive oil samples, composition of 8 fatty acids + `Region` (1/2/3) and `Area` (1–9).
+> Goal: train a model to identify **Region** from fatty acid composition.
+> Note: `Area` is derived from Region (it "cheats") — remove it from the predictors.
+> Loading: `load("data/olive.rda")` creates the object `olive` (NOT `x <- load(...)`).
+
+## Theory section (closed — these are the most frequent instructor questions)
+
+**T1.** Function that splits data into training and test sets:
+
+- `split()`
+- `train_test_split()`
+- `initial_split()`
+- `data_partition()`
+
+**T2.** After `initial_split()`, you extract the sets with:
+
+- `train()` / `test()`
+- `training()` / `testing()`
+- `get_train()` / `get_test()`
+
+**T3.** Feature preparation/transformation (e.g. normalization) in tidymodels:
+
+- `recipe()` + `step_*()`
+- `prep_data()`
+- `mutate()`
+- `transform()`
+
+**T4.** The model definition (type + engine + mode) is created in the package:
+
+- `parsnip`
+- `ggplot2`
+- `dplyr`
+- `caret`
+
+**T5.** Combining a recipe and a model into one object:
+
+- `pipeline()`
+- `workflow()`
+- `bind_rows()`
+- `merge()`
+
+**T6.** Training the model / predicting:
+
+- `fit()` / `predict()`
+- `train()` / `guess()`
+- `learn()` / `apply()`
+
+**T7.** Evaluating quality (accuracy, rmse, roc_auc) — package:
+
+- `yardstick`
+- `metrics2`
+- `scales`
+- `broom`
+
+**T8.** k-fold cross-validation:
+
+- `vfold_cv()`
+- `crossval()`
+- `kfold()`
+- `cv_split()`
+
+## Practical section (run the code)
+
+**P1.** Load `data/olive.rda`. Convert `Region` to `factor`, remove column `Area`.
+
+```{r}
+```
+
+**P2.** Split the data 75/25 with stratification on `Region` (set `set.seed(123)`).
+
+```{r}
+```
+
+**P3.** Build a recipe: `Region ~ .` + normalize the numeric predictors.
+
+```{r}
+```
+
+**P4.** Define a decision tree model (engine `rpart`, classification mode), combine in a
+`workflow`, train it, and compute **accuracy** on the test set.
+
+```{r}
+```

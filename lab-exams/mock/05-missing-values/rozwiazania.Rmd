@@ -1,0 +1,89 @@
+---
+title: "Sheet 05 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 05 — solutions
+
+**Ex. 1.**
+
+```{r}
+aq <- read.csv("data/q1_data.csv")
+mean(aq$Ozone) # NA — any arithmetic with NA gives NA
+mean(aq$Ozone, na.rm = TRUE) # 42.1293
+sum(is.na(aq$Ozone)) # 37
+```
+
+**Ans.: `mean` returns `NA` because the column contains missing values; use `na.rm = TRUE`. Mean
+≈ 42.13; 37 missing values.**
+
+**Ex. 2.**
+
+```{r}
+library(dplyr)
+aq %>%
+  group_by(Month) %>%
+  summarise(srednia_temp = mean(Temp))
+# base: tapply(aq$Temp, aq$Month, mean)
+```
+
+**Ans.: May 65.6; Jun 79.1; Jul 83.9; Aug 84.0; Sep 76.9.**
+
+**Ex. 3.**
+
+```{r}
+aq %>%
+  group_by(Month) %>%
+  summarise(o = mean(Ozone, na.rm = TRUE)) %>%
+  arrange(desc(o)) %>%
+  head(1)
+```
+
+**Ans.: month 8 (August), ≈ 60.0.**
+
+**Ex. 4.**
+
+```{r}
+cor(aq$Ozone, aq$Temp, use = "complete.obs") # 0.6984
+```
+
+**Ans.: ≈ 0.70.**
+
+**Ex. 5.**
+
+```{r}
+sum(complete.cases(aq)) # 111
+nrow(aq) # 153
+```
+
+**Ans.: 111 of 153.**
+
+**Ex. 6.**
+
+```{r}
+mean(aq$Ozone[aq$Temp > 80], na.rm = TRUE) # 64.148
+```
+
+**Ans.: ≈ 64.15.**
+
+**Ex. 7.**
+
+```{r}
+cor(aq[, c("Ozone", "Solar.R", "Wind", "Temp")], use = "complete.obs")
+```
+
+**Ans.: strongest POSITIVE pair: Ozone–Temp (0.699); strongest NEGATIVE pair: Ozone–Wind (−0.612).**
+
+**Ex. 8.** → **numeric** (`TRUE` → `1`).
+
+**Ex. 9.** → **a character vector with the letter "a"** (`[[ ]]` extracts a single element).
+
+**Ex. 10.** → **a 2×3 matrix** (each vector becomes a row).
+
+**Ex. 11.** → **loess**.
+
+**Ex. 12.** → **`cor(x, y, use = "complete.obs")`** (`cor` has no `na.rm` argument).

@@ -1,0 +1,92 @@
+---
+title: "Kolokwium 2026 — Grupa 2 (19-06-2026)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Dane:** `data/GDP.csv` + `data/FEDSTATS_Country.csv`. **Czas:** 80 min, 8 zadań.
+
+Ustaw katalog roboczy na ten folder.
+
+> **Pułapka wczytania GDP.csv:** plik ma 5 wierszy śmieci na górze, brak nagłówka,
+> puste kolumny i liczby z przecinkami np. `"28,750,956"`. Wymagane wstępne czyszczenie.
+
+**Blok wczytujący (musisz to zrobić przed wszystkimi zadaniami):**
+
+```{r}
+library(dplyr)
+library(stringr)
+
+gdp_raw <- read.csv("data/GDP.csv", skip = 5, header = FALSE, stringsAsFactors = FALSE)
+gdp <- gdp_raw[, c(1, 2, 4, 5)]
+names(gdp) <- c("kod", "ranking", "kraj", "pkb")
+gdp <- gdp[!is.na(as.integer(gdp$ranking)) & gdp$kod != "", ]
+gdp$ranking <- as.integer(gdp$ranking)
+gdp$pkb <- as.numeric(gsub("[ ,]", "", gdp$pkb))
+
+fed <- read.csv("data/FEDSTATS_Country.csv", stringsAsFactors = FALSE)
+merged <- merge(gdp, fed, by.x = "kod", by.y = "CountryCode")
+```
+
+---
+
+**Zad. 1.** Usuń przecinki i spacje z liczb PKB i oblicz ich średnią (`mean(gdp$pkb)`).
+
+```{r}
+```
+
+**Zad. 2.** Jaki jest średni ranking PKB (`mean(ranking)`) osobno dla grup
+`"High income: OECD"` i `"High income: nonOECD"`? (Użyj złączonego datasetu `merged`.)
+
+```{r}
+```
+
+**Zad. 3.** Ile krajów w `gdp$kraj` zaczyna się od `"United"`? Użyj `grep("^United", ...)`.
+Wypisz ich nazwy i liczbę.
+
+```{r}
+```
+
+**Zad. 4.** Ile identyfikatorów pasuje po złączeniu GDP z FEDSTATS (`nrow(merged)`)? Posortuj
+`merged` **malejąco** po `ranking` (tak aby USA było na końcu). Jaki jest 13. kraj?
+
+```{r}
+```
+
+**Zad. 5.** Spośród krajów w `merged`, ile kończy rok fiskalny w czerwcu?
+Szukaj frazy `"Fiscal year end: June"` w kolumnie `Special.Notes`.
+
+```{r}
+```
+
+**Zad. 6.** (zamknięte) Użyj pakietu `quantmod` do pobrania danych cen akcji Amazon:
+
+```r
+library(quantmod)
+amzn        <- getSymbols("AMZN", auto.assign = FALSE)
+sampleTimes <- index(amzn)
+```
+
+Ile wartości zebrano w **2012 roku**? Ile z nich przypada na **poniedziałki** w 2012?
+
+- 252 wartości w 2012, 50 poniedziałków
+- 250 wartości w 2012, 51 poniedziałków
+- 251 wartości w 2012, 47 poniedziałków
+- 250 wartości w 2012, 47 poniedziałków
+
+**Zad. 7.** (zamknięte) Która funkcja w `tidymodels` dzieli dane na zbiór treningowy i testowy?
+
+- `split_test_train()`
+- `split()`
+- `train_test_split()`
+- `initial_split()`
+
+**Zad. 8.** (zamknięte) Argumenty `facet_grid()` dla siatki wg `var1` i `var2` ze skalami „free":
+
+- `facet_grid(var1 + var2, scales="free")`
+- `facet_grid(var1 | var2, scales="free")`
+- `facet_grid(var1 , var2, scales="free")`
+- `facet_grid(var1 ~ var2, scales="free")`

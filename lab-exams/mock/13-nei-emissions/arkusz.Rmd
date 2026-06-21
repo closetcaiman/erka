@@ -1,0 +1,105 @@
+---
+title: "Sheet 13 — PM2.5 emissions: two RDS files, join, aggregation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Data:** `data/summarySCC_PM25.rds` (6.5 million rows) and `data/Source_Classification_Code.rds`
+(11,717 rows). **Time:** ~45 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> `summarySCC_PM25.rds`: PM2.5 particulate emissions in the USA for years 1999, 2002, 2005, 2008.
+> Columns: `fips` (county code), `SCC` (source code), `Pollutant`, `Emissions`, `type`, `year`.
+> `Source_Classification_Code.rds`: source dictionary — `SCC`, `EI.Sector`, `SCC.Level.One`…`SCC.Level.Four`.
+> Join key: column `SCC`.
+> Loading: `readRDS("file.rds")` — the object is assigned to a variable (unlike `load()`).
+
+**Ex. 1.** Load both files. Check `dim()` and `names()` of each. What years does
+`summarySCC_PM25.rds` contain? What emission types (`type`)?
+
+```{r}
+```
+
+**Ex. 2.** Compute total emissions (`sum(Emissions)`) for each year. Is the trend
+increasing or decreasing?
+
+```{r}
+```
+
+**Ex. 3.** How much did total emissions in 1999 and in 2008? By what percentage did they fall?
+
+```{r}
+```
+
+**Ex. 4.** For Baltimore (`fips == "24510"`), compute total emissions by year. Does
+Baltimore follow the national trend?
+
+```{r}
+```
+
+**Ex. 5.** Which `type` (POINT / NONPOINT / ON-ROAD / NON-ROAD) emits the most in
+Baltimore in 1999? And in 2008? Did the proportions change?
+
+```{r}
+```
+
+**Ex. 6.** Coal combustion: select from the SCC dictionary rows where `SCC.Level.One`
+contains "Combustion" **and** `SCC.Level.Four` contains "Coal". Join with NEI and compute
+emissions per year. How many SCC codes match this criterion?
+
+```{r}
+```
+
+**Ex. 7.** Motor vehicles in Baltimore: filter NEI for `fips == "24510"` and
+`type == "ON-ROAD"`. Compute emissions per year. Are road traffic emissions rising or falling?
+
+```{r}
+```
+
+**Ex. 8.** Top 5 sectors (`EI.Sector`) by total emissions (all years, entire USA).
+Requires joining NEI with SCC.
+
+```{r}
+```
+
+**Ex. 9.** Compare the ON-ROAD emissions trend in Baltimore (`fips == "24510"`) vs
+Los Angeles (`fips == "06037"`) per year. Which city has higher emissions in 2008?
+
+```{r}
+```
+
+**Ex. 10.** Which `SCC` codes appear in NEI but have **no** match in the SCC table?
+Use `anti_join`. How many such observations are there?
+
+```{r}
+```
+
+**Ex. 11.** (closed) How do you load a `.rds` file?
+
+- `load("file.rds")`
+- `x <- readRDS("file.rds")`
+- `x <- read.rds("file.rds")`
+- `source("file.rds")`
+
+**Ex. 12.** (closed) `anti_join(A, B, by="SCC")` returns:
+
+- rows of A that have a match in B
+- rows of B that have no match in A
+- rows of A that **have no** match in B
+- all rows from A and B
+
+**Ex. 13.** (closed) After `load("file.rda")` the object:
+
+- is returned as a value — you must assign it: `x <- load(...)`
+- appears in the environment under its own name automatically
+- is loaded into a list named `file`
+
+**Ex. 14.** For each `EI.Sector`, compute emissions in 1999 and 2008 and their ratio
+(2008 / 1999). Which sectors reduced emissions the most (lowest ratio)?
+
+```{r}
+```

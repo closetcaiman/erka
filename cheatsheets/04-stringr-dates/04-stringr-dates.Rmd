@@ -1,0 +1,139 @@
+---
+title: "04 — Strings, Regex, Dates"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+library(stringr)
+```
+
+## stringr core functions
+
+```{r}
+x <- c("Smith, John", "Obama, Barack", "United States", "united kingdom")
+
+str_detect(x, "^United") # TRUE/FALSE vector
+str_detect(x, regex("united", ignore_case = TRUE))
+str_extract(x, "[A-Z][a-z]+") # first match per element
+str_extract_all(x, "[A-Z][a-z]+") # all matches (returns list)
+str_replace(x, ",.*", "") # remove from comma onward
+str_replace_all(x, "[, ]", "_") # replace every match
+str_split("a;b;c", ";")
+str_trim("  abc  ") # strip whitespace
+str_sub("2024-01-15", 1, 4) # characters 1–4
+str_length(x)
+```
+
+## Base R equivalents
+
+```{r}
+grep("^United", x) # indices of matches
+grep("^United", x, value = TRUE) # matching values
+grepl("^United", x) # TRUE/FALSE vector
+gsub("[, ]", "_", x) # replace all (= str_replace_all)
+sub("[, ]", "_", x) # replace first only
+```
+
+## Regex patterns
+
+| Pattern      | Meaning                              |
+|--------------|--------------------------------------|
+| `^abc`       | starts with "abc"                    |
+| `abc$`       | ends with "abc"                      |
+| `[0-9]+`     | one or more digits                   |
+| `[0-9]{4}`   | exactly 4 digits                     |
+| `[^,]+`      | one or more non-comma characters     |
+| `.`          | any single character (except `\n`)   |
+| `(a\|b)`     | a or b                               |
+| `\\d`        | digit (= `[0-9]`)                    |
+| `\\s`        | whitespace                           |
+
+## Common string tasks
+
+```{r}
+# Parse "Last, First" → first name
+names <- c("Smith, John", "Obama, Barack")
+str_extract(names, "(?<=, ).+") # lookbehind
+str_trim(str_replace(names, "^[^,]+, ", "")) # alternative
+```
+
+```{r}
+# Count countries starting with "United"
+countries <- c("United States", "Germany", "United Kingdom", "United Arab Emirates")
+sum(str_detect(countries, "^United")) # 3
+length(grep("^United", countries)) # 3
+```
+
+```{r}
+# Remove commas and spaces from numeric strings
+amounts <- c("28,750,956", "1 234 567")
+as.numeric(gsub("[ ,]", "", amounts))
+```
+
+---
+
+## Dates — base R
+
+```{r}
+d <- as.Date("2012-03-15")
+class(d)
+```
+
+```{r}
+# Parsing different formats
+as.Date("15/03/2012", format = "%d/%m/%Y")
+as.Date("4/18/1950 0:00:00", format = "%m/%d/%Y %H:%M:%S")
+```
+
+```{r}
+# Extracting components
+format(d, "%Y") # year as string "2012"
+format(d, "%m") # month "03"
+format(d, "%Y-%m") # year-month "2012-03"
+as.integer(format(d, "%Y")) # year as number
+weekdays(d) # "Thursday" (locale-dependent; Polish: "czwartek")
+months(d)
+```
+
+```{r}
+# Arithmetic
+d2 <- as.Date("2012-12-31")
+as.integer(d2 - d) # days between
+d + 30 # date plus 30 days
+```
+
+```{r}
+# Typical exam pattern: filter by year, count, aggregate
+ga <- read.csv("../../sheets/custom/06-daty/data/gaData.csv")
+ga$date <- as.Date(ga$date)
+sum(ga$visitsTumblr[format(ga$date, "%Y") == "2012"])
+table(format(ga$date, "%Y"))
+```
+
+## lubridate
+
+```{r message=FALSE}
+library(lubridate)
+d <- ymd("2012-03-15")
+dmy("15/03/2012")
+mdy("03/15/2012")
+
+year(d)
+month(d)
+day(d)
+wday(d, label = TRUE) # labelled weekday
+today()
+now()
+```
+
+## format() codes
+
+| Code | Meaning         | Example |
+|------|-----------------|---------|
+| `%Y` | 4-digit year    | 2012    |
+| `%m` | month 01–12     | 03      |
+| `%d` | day 01–31       | 15      |
+| `%H` | hour 00–23      | 08      |
+| `%M` | minute 00–59    | 30      |
+| `%A` | full day name   | Thursday |

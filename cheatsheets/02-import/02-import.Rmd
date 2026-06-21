@@ -1,0 +1,106 @@
+---
+title: "01 — Wczytywanie danych"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+## read.csv vs read.csv2
+
+```{r}
+# "American" file: , separator + . decimal: separator , i kropka dziesiętna
+df_usa <- read.csv("../sheets/custom/05-braki-na/data/q1_data.csv")
+head(df_usa, 3)
+```
+
+```{r}
+# "Polish" file: ; separator + , decimal: separator ; i przecinek dziesiętny
+df_pl <- read.csv2("../sheets/custom/01-czyszczenie-grupy-boxplot/data/Korozja.csv")
+head(df_pl, 3)
+```
+
+> **Pułapka:** `read.csv()` na polskim pliku daje „more columns than column names"
+> bo traktuje przecinek dziesiętny jako separator.
+
+Ręczne ustawienie tych samych parametrów:
+```{r eval=FALSE}
+read.csv("plik.csv", sep = ";", dec = ",") # = read.csv2()
+read.csv("plik.csv", sep = ",", dec = ".") # = read.csv()
+```
+
+## readr (tibble, szybszy)
+
+```{r message=FALSE}
+library(readr)
+df <- read_csv("../sheets/custom/05-braki-na/data/q1_data.csv")
+head(df, 3)
+```
+
+```{r eval=FALSE}
+read_csv2("plik.csv") # ; separator, , dziesiętne
+read_csv("plik.csv", col_types = "cccdc") # ręczne typy kolumn
+read_csv("plik.csv.gz") # gz/bz2 rozpakowane automatycznie
+```
+
+## Excel
+
+```{r eval=FALSE}
+library(readxl)
+df <- read_excel("plik.xlsx")
+df <- read_excel("plik.xlsx", sheet = "Arkusz2")
+df <- read_excel("plik.xlsx", skip = 1, col_names = c("a", "b", "c"))
+```
+
+## RDS and RDA
+
+```{r eval=FALSE}
+# .rds — jeden obiekt, musisz przypisać
+x <- readRDS("plik.rds")
+
+# .rda / .RData — wiele obiektów, wchodzą pod własnymi nazwami
+load("plik.rda") # NIE: x <- load(...)
+```
+
+## Fixed-width (FWF) (FWF)
+
+```{r eval=FALSE}
+library(readr)
+df <- read_fwf(
+  "plik.txt",
+  fwf_widths(c(7, 10, 6, 4), c("id", "nazwa", "data", "rok"))
+)
+```
+
+## Compressed files (.bz2 / .gz)
+
+```{r eval=FALSE}
+# R czyta bz2 i gz wprost — bez rozpakowywania
+df <- read.csv("dane.csv.bz2")
+df <- read_csv("dane.csv.gz")
+```
+
+## Dirty CSV (skip, header=FALSE)
+
+```{r eval=FALSE}
+# Plik z kilkoma wierszami śmieci na górze i bez nagłówka
+raw <- read.csv("GDP.csv", skip = 5, header = FALSE, stringsAsFactors = FALSE)
+raw <- raw[, c(1, 2, 4, 5)] # wybierz kolumny
+names(raw) <- c("kod", "ranking", "kraj", "pkb")
+
+# Liczby z przecinkami jako tysiące: "28,750,956" → numeric
+raw$pkb <- as.numeric(gsub("[ ,]", "", raw$pkb))
+```
+
+## Quick reference
+
+| Format          | Funkcja                        | Pakiet  |
+|-----------------|-------------------------------|---------|
+| CSV (US)        | `read.csv()` / `read_csv()`   | base / readr |
+| CSV (PL)        | `read.csv2()` / `read_csv2()` | base / readr |
+| Excel           | `read_excel()`                | readxl  |
+| RDS             | `readRDS()`                   | base    |
+| RDA / RData     | `load()`                      | base    |
+| FWF             | `read_fwf(fwf_widths(...))`   | readr   |
+| bz2 / gz        | `read.csv()` wprost           | base    |

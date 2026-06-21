@@ -1,0 +1,111 @@
+---
+title: "11 — Statistics (t-test, chi-square, ANOVA)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+## Descriptive statistics
+
+```{r}
+x <- c(55, 62, 48, 71, 59, 44, 67, 53)
+mean(x)
+median(x)
+sd(x)
+var(x)
+range(x)
+diff(range(x)) # min, max, spread
+quantile(x, probs = c(0.25, 0.75))
+IQR(x)
+summary(x)
+```
+
+## One-sample t-test
+
+```{r}
+# H0: population mean = 60
+t.test(x, mu = 60)
+```
+
+## Two-sample independent t-test (Student)
+
+```{r}
+group_a <- c(55, 62, 48, 71, 59)
+group_b <- c(44, 67, 53, 70, 41)
+t.test(group_a, group_b, var.equal = TRUE) # Student (equal variance)
+t.test(group_a, group_b) # Welch (unequal variance, default)
+```
+
+## Paired t-test
+
+```{r}
+before <- c(120, 135, 118, 141, 127)
+after <- c(115, 128, 112, 135, 119)
+t.test(before, after, paired = TRUE)
+# Equivalent:
+t.test(before - after, mu = 0)
+```
+
+## Reading p-value
+
+```{r}
+res <- t.test(group_a, group_b)
+res$p.value # p-value
+res$statistic # t statistic
+res$conf.int # 95% confidence interval
+```
+
+A p-value < 0.05 → reject H0 at 5% significance level.
+
+## Chi-square test (independence)
+
+```{r}
+# Two categorical variables
+tab <- table(mtcars$cyl, mtcars$am)
+tab
+chisq.test(tab)
+```
+
+```{r eval=FALSE}
+# Or from a cross-tabulation
+chisq.test(matrix(c(10, 20, 30, 40), nrow = 2))
+```
+
+## ANOVA (one-way)
+
+```{r}
+# H0: means are equal across groups
+res_aov <- aov(mpg ~ factor(cyl), data = mtcars)
+summary(res_aov)
+```
+
+```{r}
+# Post-hoc: which groups differ?
+TukeyHSD(res_aov)
+```
+
+## Correlation
+
+```{r}
+cor(mtcars$wt, mtcars$mpg) # Pearson (default)
+cor.test(mtcars$wt, mtcars$mpg) # with p-value
+cor(mtcars[, c("mpg", "wt", "hp")]) # correlation matrix
+```
+
+## Normal distribution checks
+
+```{r fig.height=4}
+x <- rnorm(100, mean = 50, sd = 10)
+shapiro.test(x) # H0: data is normally distributed
+qqnorm(x)
+qqline(x) # Q-Q plot: points on line = normal
+```
+
+## tapply — group statistics (base R)
+
+```{r}
+tapply(mtcars$mpg, mtcars$cyl, mean) # mean mpg per cyl group
+tapply(mtcars$mpg, mtcars$cyl, sd)
+```

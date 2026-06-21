@@ -1,0 +1,98 @@
+---
+title: "Sheet 08 — solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 08 — solutions
+
+**Ex. 1.**
+
+```{r}
+pr <- read.csv2("data/Prochnica.csv")
+table(pr$Substancja_słodząca)
+```
+
+**Ans.: 4 levels (Glicyna, Glukoza, Sacharoza, Sorbitol) with 12 observations each.**
+
+**Ex. 2.**
+
+```{r}
+boxplot(Próchnica ~ Substancja_słodząca, data = pr)
+tapply(pr$Próchnica, pr$Substancja_słodząca, mean)
+# Glicyna 20.18; Glukoza 13.01; Sacharoza 38.70; Sorbitol 13.09
+```
+
+**Ans.: Sacharoza (≈ 38.7).**
+
+**Ex. 3.**
+
+```{r}
+library(readxl)
+za <- read_excel("data/Zawaly.xlsx")
+dim(za) # 239 15
+```
+
+**Ans.: 239 rows, 15 columns.**
+
+**Ex. 4.**
+
+```{r}
+library(dplyr)
+za %>%
+  group_by(Plec) %>%
+  summarise(srednie_BMI = mean(BMI, na.rm = TRUE))
+```
+
+**Ans.: Female ≈ 26.5; Male ≈ 27.2.**
+
+**Ex. 5.**
+
+```{r}
+za %>%
+  group_by(Palenie) %>%
+  summarise(chol = mean(`Cholesterol calkowity`, na.rm = TRUE))
+```
+
+**Ans.: smokers ≈ 243, non-smokers ≈ 245 → smokers have SLIGHTLY LOWER total cholesterol (minimal difference).**
+
+**Ex. 6.**
+
+```{r}
+tapply(pr$Próchnica, pr$Substancja_słodząca, sd)
+# Glicyna 2.73; Glukoza 2.85; Sacharoza 4.80; Sorbitol 2.62
+```
+
+**Ans.: Sacharoza (sd ≈ 4.80).**
+
+**Ex. 7.**
+
+```{r}
+library(tidyr)
+za %>%
+  select(HDL, LDL, Tg) %>%
+  pivot_longer(everything(), names_to = "frakcja", values_to = "wartosc") %>%
+  group_by(frakcja) %>%
+  summarise(srednia = mean(wartosc, na.rm = TRUE))
+```
+
+**Ans.: HDL ≈ 44.8; LDL ≈ 166; Tg ≈ 168.**
+
+**Ex. 8.**
+
+```{r}
+table(za[["Rodzaj zawalu"]])
+```
+
+**Ans.: no infarction 103; non-transmural 51; transmural 85.**
+
+**Ex. 9.** → **`readxl::read_excel("p.xlsx")`**.
+
+**Ex. 10.** → **backticks** `` `Cholesterol calkowity` ``.
+
+**Ex. 11.** → **`expect_error()`**.
+
+**Ex. 12.** → **`read_excel("p.xlsx", sheet = "Dane")`**.

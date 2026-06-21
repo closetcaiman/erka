@@ -1,0 +1,86 @@
+---
+title: "Sheet 05 — missing values (NA), grouping, type theory"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 05 — missing values (NA), grouping, type theory
+
+**Data:** `data/q1_data.csv` (`airquality` dataset: Ozone, Solar.R, Wind, Temp, Month, Day).
+**Time:** ~35 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+**Ex. 1.** Load `data/q1_data.csv`. Compute the mean ozone concentration (`Ozone`). Why
+does plain `mean(Ozone)` return `NA` and how do you fix it? How many missing values are
+in `Ozone`?
+
+```{r}
+```
+
+**Ex. 2.** Compute the mean temperature (`Temp`) in each month (`Month`).
+
+```{r}
+```
+
+**Ex. 3.** In which month was the mean ozone concentration highest (excluding `NA`)?
+
+```{r}
+```
+
+**Ex. 4.** What is the correlation between `Ozone` and `Temp` (on complete observations)?
+
+```{r}
+```
+
+**Ex. 5.** How many rows are **complete** (no `NA` at all)? Out of how many total?
+
+```{r}
+```
+
+**Ex. 6.** What is the mean `Ozone` on warm days (`Temp > 80`, excluding `NA`)?
+
+```{r}
+```
+
+**Ex. 7.** Compute the correlation matrix for `Ozone, Solar.R, Wind, Temp` (on complete
+observations). Which pair is most strongly correlated **positively**, and which
+**negatively**?
+
+```{r}
+```
+
+**Ex. 8.** (closed) What is the class of `x <- c(4, TRUE)`?
+
+- logical
+- character
+- numeric
+- list
+
+**Ex. 9.** (closed) What does `x[[2]]` give for `x <- list(2, "a", "b", TRUE)`?
+
+- a list with "a" and "b"
+- a character vector with the letter "a"
+- the number 2
+
+**Ex. 10.** (closed) What will `rbind(c(1,3,5), c(3,2,10))` return?
+
+- a vector of length 3
+- a 3×2 matrix
+- a 2×3 matrix
+
+**Ex. 11.** (closed) Default fitting method in `geom_smooth()` (without `method`)?
+
+- lm
+- loess
+- glm
+- gam
+
+**Ex. 12.** (closed) To make `cor()` compute despite `NA`, you use:
+
+- `cor(x, y, na.rm = TRUE)`
+- `cor(x, y, use = "complete.obs")`
+- `cor(na.omit(x), y)`

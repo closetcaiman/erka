@@ -1,0 +1,140 @@
+---
+title: "01 — R Basics"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+## Vectors
+
+```{r}
+x <- c(1, 2, 3, 4, 5)
+x * 2
+length(x)
+class(x)
+```
+
+```{r}
+# Sequences
+1:10
+seq(0, 1, by = 0.25)
+rep(c(1, 2), times = 3)
+rep(c(1, 2), each = 3)
+```
+
+```{r}
+# Named vectors
+v <- c(a = 1, b = 2, c = 3)
+v["b"]
+names(v)
+```
+
+## Subsetting
+
+```{r}
+x <- c(10, 20, 30, 40, 50)
+x[2] # by index (1-based)
+x[c(1, 3)] # multiple indices
+x[-2] # all except index 2
+x[x > 25] # logical condition
+```
+
+```{r}
+# Named subsetting
+v <- c(a = 1, b = 2, c = 3)
+v[c("a", "c")]
+```
+
+## Missing values (NA)
+
+```{r}
+x <- c(1, NA, 3, NA, 5)
+is.na(x)
+sum(is.na(x)) # count NAs
+x[!is.na(x)] # remove NAs
+mean(x, na.rm = TRUE) # ignore NAs in calculations
+```
+
+## Logic
+
+```{r}
+TRUE & FALSE # AND (vectorised)
+TRUE | FALSE # OR  (vectorised)
+!TRUE # NOT
+TRUE && FALSE # AND (scalar, short-circuit)
+TRUE || FALSE # OR  (scalar, short-circuit)
+xor(TRUE, FALSE)
+```
+
+```{r}
+x <- 5
+x > 3 & x < 10
+x == 5
+x != 4
+x %in% c(3, 4, 5, 6)
+```
+
+## Data types
+
+```{r}
+class(42L) # integer
+class(3.14) # numeric
+class("hello") # character
+class(TRUE) # logical
+class(as.Date("2024-01-01")) # Date
+```
+
+```{r}
+# Type coercion
+as.integer(3.9) # 3 (truncates)
+as.numeric("3.14")
+as.character(42)
+as.logical(0) # FALSE; 1 → TRUE
+```
+
+## Matrices and data frames
+
+```{r}
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+dim(m)
+nrow(m)
+ncol(m)
+m[1, 2] # row 1, col 2
+m[1, ] # entire row 1
+m[, 2] # entire col 2
+```
+
+```{r}
+df <- data.frame(name = c("Alice", "Bob"), age = c(25, 30), score = c(88.5, 92.0))
+df
+df$age
+df[df$age > 26, ]
+nrow(df)
+ncol(df)
+dim(df)
+names(df)
+str(df)
+summary(df)
+```
+
+## Lists
+
+```{r}
+lst <- list(x = 1:3, label = "test", flag = TRUE)
+lst$x
+lst[["label"]]
+length(lst)
+```
+
+## Workspace
+
+```{r eval=FALSE}
+getwd() # current working directory
+setwd("path/") # change working directory
+ls() # list objects in environment
+rm(x) # remove object
+rm(list = ls()) # clear everything
+```

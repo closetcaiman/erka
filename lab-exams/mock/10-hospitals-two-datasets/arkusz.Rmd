@@ -1,0 +1,65 @@
+---
+title: "Sheet 10 — TWO datasets: hospitals (treatment outcomes + hospital data)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 10 — TWO datasets: hospitals (treatment outcomes + hospital data)
+
+**Data:** `data/outcome-of-care-measures.csv` (mortality), `data/hospital-data.csv`
+(type/ownership/location). **Time:** ~40 min. **Level: medium→hard.**
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> Join on `Provider.Number`. Mortality columns are text with `"Not Available"` →
+> `as.numeric()` creates `NA`. Conditions: col. 11 = heart attack (HA), 17 = heart failure
+> (HF), 23 = pneumonia (PN).
+
+**Ex. 1.** Join both datasets (inner join) on `Provider.Number`. How many records match?
+
+```{r}
+```
+
+**Ex. 2.** How many hospitals in `hospital-data.csv` have NO match in `outcome` (anti-join)?
+And how many `outcome` records have no match in `hospital-data`?
+
+```{r}
+```
+
+**Ex. 3.** After joining, compute the mean **pneumonia** mortality (`pn`) by `Hospital.Type`.
+Which type has the lowest mean?
+
+```{r}
+```
+
+**Ex. 4.** Which `Hospital.Ownership` has the lowest mean **heart failure** (`hf`) mortality?
+
+```{r}
+```
+
+**Ex. 5.** For each state, find the hospital with the lowest **heart attack** (`ha`)
+mortality. In how many states is that best hospital of type `"Acute Care Hospitals"`?
+
+```{r}
+```
+
+**Ex. 6.** (closed) `anti_join(a, b, by="k")` returns:
+
+- rows of `a` that HAVE a match in `b`
+- rows of `a` that DO NOT have a match in `b`
+- shared rows
+
+**Ex. 7.** (closed) To keep, for each group, the row with the smallest value of `x`:
+
+- `filter(min(x))`
+- `group_by() %>% slice_min(x, n=1)`
+- `summarise(min(x))`
+
+**Ex. 8.** (closed) `left_join(a, b)` as opposed to `inner_join(a, b)`:
+
+- keeps only shared keys
+- keeps all rows of `a` (missing values = NA)
+- keeps all rows of `b`

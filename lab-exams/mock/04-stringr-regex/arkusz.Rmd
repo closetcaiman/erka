@@ -1,0 +1,95 @@
+---
+title: "Sheet 04 — stringr / regex + filtering and groups"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sheet 04 — stringr / regex + filtering and groups
+
+**Data:** `data/cel_volden_wiseman.csv` (codebook: `data/cel_data_codebook.txt`).
+**Time:** ~40 min.
+
+Set working directory to this folder. Solutions: `rozwiazania.Rmd`.
+
+> Dataset: US Congress members. Key columns: `thomas_name` (format `"Last, First"`),
+> `congress`, `dem` (1 = Democrat), `female` (1 = woman), `st_name` (state),
+> `les` (Legislative Effectiveness Score).
+
+**Ex. 1.** Load the data. For `congress == 110`, compute the mean `les` separately for
+Democrats and Republicans (`dem`).
+
+```{r}
+```
+
+**Ex. 2.** Extract just the **last name** (part before the comma) from `thomas_name` into
+a new column `nazwisko`. Use `stringr`.
+
+```{r}
+```
+
+**Ex. 3.** How many Congress members in `congress == 110` have a last name starting with
+the letter **"M"**?
+
+```{r}
+```
+
+**Ex. 4.** How many women (`female == 1`) served in `congress == 110`?
+
+```{r}
+```
+
+**Ex. 5.** For `congress == 110`, find the state (`st_name`) with the highest mean `les`
+(consider only states with at least 5 observations).
+
+```{r}
+```
+
+**Ex. 6.** How many distinct states (`st_name`) are represented in `congress == 110`?
+
+```{r}
+```
+
+**Ex. 7.** How many Congress members in `congress == 110` have a `les` **above their
+state's mean**? (Compute the state mean and compare to individual `les`.)
+
+```{r}
+```
+
+**Ex. 8.** Who was the most effective (max `les`) Congress member in `congress == 110`?
+
+```{r}
+```
+
+**Ex. 9.** Also extract the **first name** (part after the comma) from `thomas_name` into
+column `imie` and trim the leading space.
+
+```{r}
+```
+
+**Ex. 10.** In `congress == 110`, did women have a higher mean `les` than men?
+
+```{r}
+```
+
+**Ex. 11.** (closed) Which `stringr` function checks whether a string **contains** a
+pattern?
+
+- `str_extract()`
+- `str_detect()`
+- `str_replace()`
+- `str_sub()`
+
+**Ex. 12.** (closed) Regular expression for strings starting with "United":
+
+- `grep("United$", x)`
+- `grep("*United", x)`
+- `grep("^United", x)`
+
+**Ex. 13.** (closed) `gsub("a","b",x)` as opposed to `sub("a","b",x)`:
+
+- replaces only the first occurrence
+- replaces all occurrences
+- removes letters
