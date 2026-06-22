@@ -1,6 +1,6 @@
 # erka — R course materials
 
-AGH R course. Cheat sheets, practice exams.
+AGH R course. Cheat sheets, practice exams, flashcards.
 
 ## What's where
 
@@ -12,6 +12,7 @@ lab-exams/
 materials/
   quiz-upel/     UPeL quiz PDFs
   swirl/         swirl lab packages (Lab*.zip)
+drill/           flashcard file for drill2 + coverage table
 scripts/         R scripts used by make and CI
 ```
 
@@ -39,10 +40,14 @@ Open any file in RStudio, hit Knit.
 
 Set working directory to the sheet folder first (_Session → Set Working Directory → To Source File Location_). Empty `{r}` chunks to fill in; `rozwiazania.Rmd` has the solutions.
 
+## Drill
+
+Closed questions from UPeL quizzes in [drill2](https://gronostajo.github.io/drill2/) format. Load `drill/JR.txt` in the app. See `drill/README.md` for topic coverage.
+
 ## Setup
 
 ```bash
-make setup   # R packages + git hooks, run once after clone
+make setup   # R packages (renv) + git hooks, run once after clone
 ```
 
 ```bash
