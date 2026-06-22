@@ -8,6 +8,6 @@ styler::style_dir(
   ".",
   filetype     = c("R", "Rmd"),
   recursive    = TRUE,
-  exclude_dirs = c(".git", "temp"),
+  exclude_dirs = c(".git", "renv", "temp"),
   dry          = dry
 )
