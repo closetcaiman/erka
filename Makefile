@@ -19,7 +19,7 @@ check:
 	Rscript scripts/check.R
 
 deps:
-	Rscript scripts/install-deps.R
+	Rscript -e "renv::restore()"
 
 hooks:
 	@command -v lefthook >/dev/null 2>&1 || { \
