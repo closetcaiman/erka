@@ -508,7 +508,7 @@ B) renderPlot() powinno być dołączone w funkcji serwera aplikacji Shiny, gdy 
 
 Które z poniższych są odpowiednimi sposobami odpalenia aplikacji Shiny?
 >>>A) Po napisaniu całego kodu zaznacz cały kod i wciśnij go, a shinyApp() będzie ostatnią linią.
->>>B) Weksportuj aplikację do pliku HTML, a następnie otwórz ją z systemu plików komputera.
+B) Weksportuj aplikację do pliku HTML, a następnie otwórz ją z systemu plików komputera.
 >>>C) Po napisaniu całego kodu kliknij "Run app" w RStudio.
 D) Wyślij plik z aplikacją, a następnie użyj programu ShinyViewer, aby go uruchomić i prześlać do Internetu.
 
