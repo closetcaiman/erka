@@ -283,10 +283,9 @@ C) Dodaj orientation: tall do linii 5.
 >>>D) Dodaj orientation: rows do linii 5.
 
 Twój kolega, który ma problemy z tworzeniem dashboardu, wysyła Ci następujący fragment kodu. Nie może zrozumieć, jak umieścić podziały kolumn w swoim dashboardzie. Próbuje różnych rzeczy. Który z poniższych kodów zadziała, aby utworzyć dashboard z dwiema kolumnami?
->>>A) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ### Chart A ggplot(dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ### Chart B ggplot(dat,aes(x=var3))+geom_bar()
-B) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- x ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() y ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
-C) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column
->>>D) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+A) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ### Chart A ggplot(dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ### Chart B ggplot(dat,aes(x=var3))+geom_bar()
+>>>B) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- x ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() y ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+>>>C) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
 
 Twój kolega przychodzi do ciebie i ma dashboard z dwiema wykresami jeden pod drugim. Chciałby żeby wyglądał z zakładkami. Jego kod ma: Column ----- ### Chart 1 ggplot(mtcars,aes(x=cyl))+geom_bar() ### Chart 2 ggplot(mtcars,aes(x=wt,y=mpg))+geom_point(). Co poradzisz?
 A) Zastąp słowo "Chart" słowem "Tab" w liniach 15 i 21.
@@ -508,7 +507,7 @@ B) renderPlot() powinno być dołączone w funkcji serwera aplikacji Shiny, gdy 
 
 Które z poniższych są odpowiednimi sposobami odpalenia aplikacji Shiny?
 >>>A) Po napisaniu całego kodu zaznacz cały kod i wciśnij go, a shinyApp() będzie ostatnią linią.
->>>B) Weksportuj aplikację do pliku HTML, a następnie otwórz ją z systemu plików komputera.
+B) Weksportuj aplikację do pliku HTML, a następnie otwórz ją z systemu plików komputera.
 >>>C) Po napisaniu całego kodu kliknij "Run app" w RStudio.
 D) Wyślij plik z aplikacją, a następnie użyj programu ShinyViewer, aby go uruchomić i prześlać do Internetu.
 
@@ -532,11 +531,6 @@ A) tabPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "N
 >>>B) tabsetPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "Numbers", textOutput("tab_number")))
 C) tabsetPanel(tab(title = "Text", textOutput("tab_text")),tab(title = "Numbers", textOutput("tab_number")))
 
-Załóżmy, że piszesz aplikację Shiny i chcesz wyświetlić tabelę dla ramki danych w interfejsie użytkownika. Jedyne linie, które napisaliśmy to: my_dat <- read_csv("my_dat.csv") ui <- fluidPage(tableOutput("table1")) server <- function(input, output) {} Której funkcji używasz do wyświetlenia tabeli ramki danych w interfejsie użytkownika?
->>>A) output$table1 <- renderTable(my_dat)
-B) output$table1 <- renderDataTable(my_dat)
-C) output$table1 <- renderTable(my_dat)
-
 Która z poniższych funkcji byłaby używana do wyświetlenia dropdown-u, który pozwala użytkownikowi wybrać z zestawu opcji "Firma A", "Firma B", "Firma C" i przypisać do inputId "company"?
 >>>A) selectInput(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
 B) selectDropdown(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
@@ -547,11 +541,11 @@ A) textInput("Enter your Name", "user_name", value="Your name here")
 >>>B) textInput("user_name", "Enter your Name", value="Your name here")
 C) typeInput("user_name", "Enter your Name", value="Your name here")
 
-Pracujesz nad aplikacją Shiny. Kod: dat <- rnorm(1000, 0, 1) ui <- fluidPage(titlePanel("Sampling the Normal Distribution"),sliderInput("obs", "Number of observations:",min = 1, max = 1000, value = 500),plotOutput("distPlot")) server <- function(input, output) {output$disPlot <- renderPlot(hist(sample(dat, input$obs)))} shinyApp(ui, server). Twój szef lubi motyw superbohatera. Jak go zaimplementować?
-A) Zainstaluj pakiet ggthemes(). W linii 1 dodaj: library(ggthemes). W linii 2 dodaj: ggthemes("superhero")
-B) Zainstaluj pakiet shinythemes(). W linii 1 dodaj: library(shinythemes). W linii 2 dodaj: shinytheme("theme_superhero")
-C) Zainstaluj pakiet ggthemes(). W linii 1 dodaj: library(ggthemes). W linii 4 dodaj: theme = getTheme("superhero")
->>>D) Zainstaluj pakiet shinythemes(). W linii 1 dodaj: library(shinythemes). W linii 4 dodaj: theme = shinyTheme("superhero")
+Załóżmy, że chcesz uzyskać określony wygląd aplikacji Shiny i masz następujący przykładowy kod. Jakie jest właściwe polecenie do umieszczenia w linii 8? dat <- rnorm(1000, 0, 1) ui <- fluidPage(titlePanel("Sampling the Normal Distribution"), fluidRow(plotOutput("distPlot"), column(4, ????? sliderInput("obs", "Number of observations:", min = 1, max = 1000, value = 500)))) server <- function(input, output) {output$distPlot <- renderPlot(hist(sample(dat, input$obs)))} shinyApp(ui, server)
+A) bottomPanel(
+B) footerPanel(
+>>>C) wellPanel(
+D) row(
 
 Załóżmy, że piszesz aplikację Shiny i chcesz wyświetlić tabelę dla ramki danych w interfejsie użytkownika Twojej aplikacji. Masz: my_dat <- read_csv("my_dat.csv") ui <- fluidPage(tableOutput("table1")) server <- function(input, output) {}. Którą linię kodu umieszczasz w funkcji server, aby utworzyć tabelę ramki danych?
 >>>A) output$table1 <- renderTable(my_dat)
