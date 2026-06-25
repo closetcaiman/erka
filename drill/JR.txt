@@ -564,6 +564,12 @@ B) Zainstaluj shinythemes(). W linii 1: library(shinythemes). W linii 2: shinyth
 C) Zainstaluj ggthemes(). W linii 1: library(ggthemes). W linii 4: theme = getTheme("superhero")
 >>>D) Zainstaluj shinythemes(). W linii 1: library(shinythemes). W linii 4: theme = shinyTheme("superhero")
 
+Załóżmy, że piszesz aplikację Shiny i chcesz, aby użytkownicy mogli przesuwać suwak w celu wybrania pojedynczej wartości z zakresu od 1 do 5. Suwak ma zaczynać się od 3. Chcesz, aby wartość wybrana na suwaku została przypisana do gniazda wejściowego "slider_value". Który z poniższych kodów jest poprawny?
+>>>A) sliderInput(inputId="slider_value",label="My Label",value=3,min=1,max=5)
+B) sliderInput(inputId="slider_value",label="my_label",start=3,min=1,max=5)
+C) sliderInput(inputId="slider_value",start=3,range=c(1,5))
+D) slider_value<-sliderInput(value=3,min=1,max=5)
+
 Na czym skupia się język R?
 >>>A) analizie statystycznej
 B) sztucznej inteligencji
