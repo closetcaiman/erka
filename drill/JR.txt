@@ -532,11 +532,6 @@ A) tabPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "N
 >>>B) tabsetPanel(tabPanel(title = "Text", textOutput("tab_text")),tabPanel(title = "Numbers", textOutput("tab_number")))
 C) tabsetPanel(tab(title = "Text", textOutput("tab_text")),tab(title = "Numbers", textOutput("tab_number")))
 
-Załóżmy, że piszesz aplikację Shiny i chcesz wyświetlić tabelę dla ramki danych w interfejsie użytkownika. Jedyne linie, które napisaliśmy to: my_dat <- read_csv("my_dat.csv") ui <- fluidPage(tableOutput("table1")) server <- function(input, output) {} Której funkcji używasz do wyświetlenia tabeli ramki danych w interfejsie użytkownika?
->>>A) output$table1 <- renderTable(my_dat)
-B) output$table1 <- renderDataTable(my_dat)
-C) output$table1 <- renderTable(my_dat)
-
 Która z poniższych funkcji byłaby używana do wyświetlenia dropdown-u, który pozwala użytkownikowi wybrać z zestawu opcji "Firma A", "Firma B", "Firma C" i przypisać do inputId "company"?
 >>>A) selectInput(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
 B) selectDropdown(inputId="company",label="Which Company?",choices=c("Company A","Company B","Company C"))
