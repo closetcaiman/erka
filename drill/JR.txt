@@ -283,10 +283,9 @@ C) Dodaj orientation: tall do linii 5.
 >>>D) Dodaj orientation: rows do linii 5.
 
 Twój kolega, który ma problemy z tworzeniem dashboardu, wysyła Ci następujący fragment kodu. Nie może zrozumieć, jak umieścić podziały kolumn w swoim dashboardzie. Próbuje różnych rzeczy. Który z poniższych kodów zadziała, aby utworzyć dashboard z dwiema kolumnami?
->>>A) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ### Chart A ggplot(dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ### Chart B ggplot(dat,aes(x=var3))+geom_bar()
-B) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- x ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() y ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
-C) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column
->>>D) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+A) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ### Chart A ggplot(dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ### Chart B ggplot(dat,aes(x=var3))+geom_bar()
+>>>B) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- x ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() y ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
+>>>C) --- title: "My First Dashboard" output: flexdashboard::flex_dashboard: orientation: column vertical_layout: scroll --- Column {data-width=200} ---- ### Chart A ggplot(my_dat,aes(x=var1,y=var2))+geom_point() Column {data-width=200} ---- ### Chart B ggplot(my_dat,aes(x=var3))+geom_bar()
 
 Twój kolega przychodzi do ciebie i ma dashboard z dwiema wykresami jeden pod drugim. Chciałby żeby wyglądał z zakładkami. Jego kod ma: Column ----- ### Chart 1 ggplot(mtcars,aes(x=cyl))+geom_bar() ### Chart 2 ggplot(mtcars,aes(x=wt,y=mpg))+geom_point(). Co poradzisz?
 A) Zastąp słowo "Chart" słowem "Tab" w liniach 15 i 21.
